@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">TaskManageApp</string>
+
+<!--    OnBoarding page-->
+    <string name="onboarding_first_title">Task Management &amp;\nTo-do List</string>
+    <string name="onboarding_first_description">This productive tool is designed to help\nyou better manage your task\nproject-wise conveniently!</string>
+    <string name="onboarding_first_button_title">Let\'s Start</string>
+    <string name="onboarding_Second_title">Task Management &amp;\nTo-do List 2</string>
+    <string name="onboarding_Second_description">This productive tool is designed to help\nyou better manage your task\nproject-wise conveniently!</string>
+    <string name="onboarding_Second_button_title">Let\'s Start</string>
+</resources>
