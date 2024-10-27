@@ -16,6 +16,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -33,15 +37,17 @@ import androidx.compose.ui.zIndex
 import com.ctp.taskmanageapp.R
 import com.ctp.taskmanageapp.presentation.extensions.getColorFromResources
 import com.ctp.taskmanageapp.presentation.navigation.component.BarShape
+
 @Composable
 fun BottomNavigationBar(
     tabs: List<BottomNavScreen>,
     onTabSelected: (BottomNavScreen) -> Unit,
-    currentTab: BottomNavScreen,
+    selectTab: BottomNavScreen,
     onAddClick: () -> Unit,
     modifier: Modifier = Modifier,
     bottomBarState: Boolean = true
 ) {
+    var currentTab: BottomNavScreen by remember { mutableStateOf(selectTab) }
     val context = LocalContext.current
     val transparentColor = Color(0x00FFFFFF)
     val fabButtonColor = context.getColorFromResources(R.color.button_background_primary)
@@ -94,16 +100,18 @@ fun BottomNavigationBar(
                     .height(dimensionResource(id = R.dimen.bottom_bar))
                     .background(bottomBgColor)
             ) {
-                tabs.forEachIndexed() {index,  item ->
+                tabs.forEachIndexed() { index, item ->
                     BottomNavigationBarCustomItem(
                         context = context,
                         item = item,
-                        onTabSelected = { onTabSelected(item) },
+                        onTabSelected = {
+                            currentTab = item
+                            onTabSelected(item)
+                        },
                         currentTab = currentTab,
                     )
 
-                    if(tabs.size %2 ==0 && (tabs.size/2) == index+1)
-                    {
+                    if (tabs.size % 2 == 0 && (tabs.size / 2) == index + 1) {
                         Box(modifier = Modifier.size(24.dp))
                     }
                 }
@@ -126,7 +134,7 @@ fun BottomNavigationBarCustomItem(
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
-            .clickable {  onTabSelected(item) }
+            .clickable { onTabSelected(item) }
     ) {
         Icon(
             painter = if (isSelected)

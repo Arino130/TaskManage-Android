@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -39,7 +40,7 @@ fun ButtonTMComponent(titleButton: String, iconButtonL: Int? = null, iconButtonR
     ) {
         Row(
             modifier = Modifier
-                .fillMaxWidth(),
+                .fillMaxWidth().height(32.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {

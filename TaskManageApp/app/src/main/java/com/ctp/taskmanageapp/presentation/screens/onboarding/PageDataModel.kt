@@ -14,14 +14,14 @@ data class PageData(
         get() = listOf(
             PageData(
                 backgroundImage = R.drawable.background_onboarding,
-                imageContent = R.drawable.ic_launcher_background,
+                imageContent = R.drawable.on_boarding_first_bg,
                 titlePage = R.string.onboarding_first_title,
                 contentDescription = R.string.onboarding_first_description,
                 titleButton = R.string.onboarding_first_button_title,
                 pageIndex = 1
             ), PageData(
                 backgroundImage = R.drawable.background_onboarding,
-                imageContent = R.drawable.ic_launcher_background,
+                imageContent = R.drawable.on_boarding_first_bg,
                 titlePage = R.string.onboarding_Second_title,
                 contentDescription = R.string.onboarding_Second_description,
                 titleButton = R.string.onboarding_Second_button_title,

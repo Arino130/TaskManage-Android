@@ -1,5 +1,7 @@
 package com.ctp.taskmanageapp.presentation.navigation
 
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
@@ -40,7 +42,7 @@ fun AppNavigation(mainViewModel: MainViewModel) {
                     onAddClick = {
                         // TODO: Handle Fub Menu
                     },
-                    currentTab = currentScreen,
+                    selectTab = currentScreen,
                     bottomBarState = bottomBarState.value
                 )
             }
@@ -62,7 +64,13 @@ fun NavigationController(
     NavHost(
         navController = navController,
         startDestination = Routes.OnBoarding.name,
-        Modifier.padding(innerPadding ?: PaddingValues())
+        Modifier.padding(innerPadding ?: PaddingValues()),
+        enterTransition = {
+            EnterTransition.None
+        },
+        exitTransition = {
+            ExitTransition.None
+        }
     ) {
         composable(route = Routes.OnBoarding.name) {
             OnBoardingScreen(
