@@ -10,49 +10,48 @@ import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.with
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
-import com.ctp.taskmanageapp.R
+import com.ctp.taskmanageapp.presentation.navigation.Routes
 import com.ctp.taskmanageapp.presentation.screens.onboarding.component.OnBoardingPageComponent
-import com.ctp.taskmanageapp.presentation.screens.onboarding.component.PageData
+import com.ctp.taskmanageapp.presentation.viewmodels.MainViewModel
 
 @ExperimentalAnimationApi
 @Composable
-fun OnBoardingScreen() {
-    val context = LocalContext.current
-    val pages = listOf(
-        PageData(
-            backgroundImage = R.drawable.background_onboarding,
-            imageContent = R.drawable.ic_launcher_background,
-            titlePage = R.string.onboarding_first_title,
-            contentDescription = R.string.onboarding_first_description,
-            titleButton = R.string.onboarding_first_button_title,
-            pageIndex = 1
-        ),
-        PageData(
-            backgroundImage = R.drawable.background_onboarding,
-            imageContent = R.drawable.ic_launcher_background,
-            titlePage = R.string.onboarding_Second_title,
-            contentDescription = R.string.onboarding_Second_description,
-            titleButton = R.string.onboarding_Second_button_title,
-            pageIndex = 1
-        )
-    )
+fun OnBoardingScreen(mainViewModel: MainViewModel, onFinishScreen: (route: String) -> Unit) {
+    LaunchedEffect(Unit) {
+        mainViewModel.toggleBottomBar(false)
+    }
     val currentPage = remember { mutableStateOf(0) }
+    val durationMillis = 400
+    val pages = remember {
+        PageData().onBoardingPage
+    }
     AnimatedContent(
         targetState = currentPage.value,
         modifier = Modifier.fillMaxSize(), label = "",
         transitionSpec = {
-            slideInHorizontally(initialOffsetX = { 1000 }) + fadeIn(animationSpec = tween(durationMillis = 300)) with
-                    slideOutHorizontally(targetOffsetX = { -1000 }) + fadeOut(animationSpec = tween(durationMillis = 300))
+            slideInHorizontally(initialOffsetX = { 1000 }) + fadeIn(
+                animationSpec = tween(
+                    durationMillis = durationMillis
+                )
+            ) with
+                    slideOutHorizontally(targetOffsetX = { -1000 }) + fadeOut(
+                animationSpec = tween(
+                    durationMillis = durationMillis
+                )
+            )
         }
     ) { targetState ->
         OnBoardingPageComponent(pages[targetState]) {
-            if (currentPage.value < pages.size-1) {
+            if (currentPage.value < pages.size - 1) {
                 currentPage.value += 1
+            } else {
+                // Finished
+                onFinishScreen(Routes.Home.name)
             }
         }
     }
@@ -62,5 +61,5 @@ fun OnBoardingScreen() {
 @Preview
 @Composable
 fun OnBoardingScreenReview() {
-    OnBoardingScreen()
+    OnBoardingScreen(MainViewModel()) {}
 }

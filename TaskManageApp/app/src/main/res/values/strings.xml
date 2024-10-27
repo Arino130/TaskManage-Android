@@ -1,7 +1,12 @@
 <resources>
+    <!--Common-->
     <string name="app_name">TaskManageApp</string>
 
-<!--    OnBoarding page-->
+    <!--Navigation-->
+    <string name="home_label_nav">Home</string>
+    <string name="setting_label_nav">Settings</string>
+
+    <!--OnBoarding page-->
     <string name="onboarding_first_title">Task Management &amp;\nTo-do List</string>
     <string name="onboarding_first_description">This productive tool is designed to help\nyou better manage your task\nproject-wise conveniently!</string>
     <string name="onboarding_first_button_title">Let\'s Start</string>

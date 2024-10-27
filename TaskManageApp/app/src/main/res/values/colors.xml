@@ -13,4 +13,8 @@
 
     <color name="button_background_default">#FFFFFF</color>
     <color name="button_content_default">#FF000000</color>
+
+    <color name="bottom_background">#EEE9FF</color>
+    <color name="bottom_active_nav">#5F33E1</color>
+    <color name="bottom_inactive_nav">#B5A0F4</color>
 </resources>

@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import com.ctp.taskmanageapp.R
 import com.ctp.taskmanageapp.presentation.common.h1TitleStyle
 import com.ctp.taskmanageapp.presentation.common.h3TextStyle
+import com.ctp.taskmanageapp.presentation.screens.onboarding.PageData
 import com.ctp.taskmanageapp.widget.components.ButtonTMComponent
 import com.ctp.taskmanageapp.widget.components.ButtonType
 
@@ -139,12 +140,3 @@ fun OnBoardingPageComponentReview() {
         )
     ) {}
 }
-
-data class PageData(
-    val backgroundImage: Int?,
-    val imageContent: Int?,
-    val titlePage: Int?,
-    val contentDescription: Int?,
-    val titleButton: Int?,
-    val pageIndex: Int
-)

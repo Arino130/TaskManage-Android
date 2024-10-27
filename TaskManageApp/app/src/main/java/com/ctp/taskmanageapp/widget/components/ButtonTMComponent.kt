@@ -1,11 +1,10 @@
 package com.ctp.taskmanageapp.widget.components
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -56,7 +55,7 @@ fun ButtonTMComponent(titleButton: String, iconButtonL: Int? = null, iconButtonR
                     ),
                     modifier = Modifier.size(20.dp)
                 )
-            }
+            } ?: Box(modifier = Modifier.size(20.dp))
             Text(
                 text = titleButton,
                 style = buttonTextPrimaryStyle,
@@ -74,7 +73,7 @@ fun ButtonTMComponent(titleButton: String, iconButtonL: Int? = null, iconButtonR
                     ),
                     modifier = Modifier.size(20.dp)
                 )
-            }
+            } ?: Box(modifier = Modifier.size(20.dp))
         }
     }
 }
