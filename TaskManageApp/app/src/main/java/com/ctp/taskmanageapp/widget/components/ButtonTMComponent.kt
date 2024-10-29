@@ -23,10 +23,16 @@ import com.ctp.taskmanageapp.R
 import com.ctp.taskmanageapp.presentation.common.buttonTextPrimaryStyle
 
 @Composable
-fun ButtonTMComponent(titleButton: String, iconButtonL: Int? = null, iconButtonR: Int? = null, buttonType: ButtonType, onClickEvent: () -> Unit) {
+fun ButtonTMComponent(
+    titleButton: String,
+    iconButtonL: Int? = null,
+    iconButtonR: Int? = null,
+    buttonType: ButtonType,
+    onClickEvent: () -> Unit
+) {
     val context = LocalContext.current
+    val isHaveIcon = (iconButtonL != null || iconButtonR != null)
     Button(
-        modifier = Modifier.fillMaxWidth(),
         onClick = onClickEvent,
         colors = ButtonDefaults.buttonColors(
             containerColor = Color(ContextCompat.getColor(context, buttonType.containerColor)),
@@ -40,41 +46,53 @@ fun ButtonTMComponent(titleButton: String, iconButtonL: Int? = null, iconButtonR
     ) {
         Row(
             modifier = Modifier
-                .fillMaxWidth().height(32.dp),
+                .fillMaxWidth()
+                .height(32.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            iconButtonL?.let {
-                Icon(
-                    painter = painterResource(id = it),
-                    contentDescription = null,
-                    tint = Color(
-                        ContextCompat.getColor(
-                            context,
-                            buttonType.contentColor
-                        )
-                    ),
-                    modifier = Modifier.size(20.dp)
-                )
-            } ?: Box(modifier = Modifier.size(20.dp))
+            if (isHaveIcon) {
+                iconButtonL?.let {
+                    Icon(
+                        painter = painterResource(id = it),
+                        contentDescription = null,
+                        tint = Color(
+                            ContextCompat.getColor(
+                                context,
+                                buttonType.contentColor
+                            )
+                        ),
+                        modifier = Modifier.size(20.dp)
+                    )
+                } ?: Box(modifier = Modifier.size(20.dp))
+            }
             Text(
                 text = titleButton,
                 style = buttonTextPrimaryStyle,
-                modifier = Modifier.weight(1f)
-            )
-            iconButtonR?.let {
-                Icon(
-                    painter = painterResource(id = it),
-                    contentDescription = null,
-                    tint = Color(
-                        ContextCompat.getColor(
-                            context,
-                            buttonType.contentColor
-                        )
-                    ),
-                    modifier = Modifier.size(20.dp)
+                modifier = Modifier.weight(1f),
+                color = Color(
+                    ContextCompat.getColor(
+                        context,
+                        buttonType.contentColor
+                    )
                 )
-            } ?: Box(modifier = Modifier.size(20.dp))
+            )
+
+            if (isHaveIcon) {
+                iconButtonR?.let {
+                    Icon(
+                        painter = painterResource(id = it),
+                        contentDescription = null,
+                        tint = Color(
+                            ContextCompat.getColor(
+                                context,
+                                buttonType.contentColor
+                            )
+                        ),
+                        modifier = Modifier.size(20.dp)
+                    )
+                } ?: Box(modifier = Modifier.size(20.dp))
+            }
         }
     }
 }
@@ -87,6 +105,10 @@ enum class ButtonType(
         containerColor = R.color.button_background_primary,
         contentColor = R.color.button_content_primary
     ),
+    Normal(
+        containerColor = R.color.button_background_light,
+        contentColor = R.color.button_content_light
+    ),
     Default(
         containerColor = R.color.button_background_default,
         contentColor = R.color.button_content_default
@@ -96,7 +118,9 @@ enum class ButtonType(
 @Preview
 @Composable
 fun ButtonTMComponentReview() {
-    ButtonTMComponent("Click Test",
+    ButtonTMComponent(
+        "Click Test",
         iconButtonL = R.drawable.ic_arrow_right,
-        iconButtonR = R.drawable.ic_arrow_right, ButtonType.Primary) {}
+        iconButtonR = R.drawable.ic_arrow_right, ButtonType.Primary
+    ) {}
 }

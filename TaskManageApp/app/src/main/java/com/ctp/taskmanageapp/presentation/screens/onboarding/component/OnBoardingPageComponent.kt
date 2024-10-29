@@ -113,11 +113,13 @@ fun OnBoardingPageComponent(pageData: PageData, onclickDone: () -> Unit) {
                                     )
                                 )
                         ) {
-                            ButtonTMComponent(
-                                titleButton = context.getString(it),
-                                iconButtonR = R.drawable.ic_arrow_right,
-                                buttonType = ButtonType.Primary,
-                            ) { onclickDone() }
+                            Box(modifier = Modifier.fillMaxWidth()) {
+                                ButtonTMComponent(
+                                    titleButton = context.getString(it),
+                                    iconButtonR = R.drawable.ic_arrow_right,
+                                    buttonType = ButtonType.Primary,
+                                ) { onclickDone() }
+                            }
                         }
                     }
                 }

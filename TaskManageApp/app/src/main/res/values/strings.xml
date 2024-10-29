@@ -13,4 +13,8 @@
     <string name="onboarding_Second_title">Task Management &amp;\nTo-do List 2</string>
     <string name="onboarding_Second_description">This productive tool is designed to help\nyou better manage your task\nproject-wise conveniently!</string>
     <string name="onboarding_Second_button_title">Let\'s Start</string>
+
+    <!--HomeScreen-->
+    <string name="home_overview_card_title">Your today\'s task\nalmost done!</string>
+    <string name="home_view_task_button">View Task</string>
 </resources>
