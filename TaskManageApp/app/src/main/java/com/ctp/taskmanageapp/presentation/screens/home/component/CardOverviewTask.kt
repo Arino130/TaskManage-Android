@@ -27,8 +27,8 @@ import com.ctp.taskmanageapp.presentation.common.CIRCULAR_LARGE_SIZE
 import com.ctp.taskmanageapp.presentation.common.ICON_SMALL_SIZE
 import com.ctp.taskmanageapp.presentation.common.h3TextStyle
 import com.ctp.taskmanageapp.presentation.extensions.getColorFromResources
-import com.ctp.taskmanageapp.widget.components.Buttons.ButtonTMComponent
-import com.ctp.taskmanageapp.widget.components.Buttons.ButtonType
+import com.ctp.taskmanageapp.widget.components.buttons.ButtonTMComponent
+import com.ctp.taskmanageapp.widget.components.buttons.ButtonType
 import com.ctp.taskmanageapp.widget.components.reports.CircularProgressBar
 
 @Composable

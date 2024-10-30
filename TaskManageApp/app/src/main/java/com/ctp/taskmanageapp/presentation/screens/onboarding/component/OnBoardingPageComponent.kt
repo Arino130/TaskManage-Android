@@ -29,8 +29,8 @@ import com.ctp.taskmanageapp.R
 import com.ctp.taskmanageapp.presentation.common.h1TitleStyle
 import com.ctp.taskmanageapp.presentation.common.h3TextStyle
 import com.ctp.taskmanageapp.presentation.screens.onboarding.PageData
-import com.ctp.taskmanageapp.widget.components.Buttons.ButtonTMComponent
-import com.ctp.taskmanageapp.widget.components.Buttons.ButtonType
+import com.ctp.taskmanageapp.widget.components.buttons.ButtonTMComponent
+import com.ctp.taskmanageapp.widget.components.buttons.ButtonType
 
 @Composable
 fun OnBoardingPageComponent(pageData: PageData, onclickDone: () -> Unit) {

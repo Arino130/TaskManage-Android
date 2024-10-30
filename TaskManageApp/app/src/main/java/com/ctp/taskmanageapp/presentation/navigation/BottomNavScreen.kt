@@ -14,7 +14,7 @@ sealed class BottomNavScreen(
         BottomNavScreen(Routes.Home, R.string.home_label_nav, R.drawable.ic_nav_home, R.drawable.ic_nav_home)
 
     data object Calendar :
-        BottomNavScreen(Routes.Settings, R.string.setting_label_nav, R.drawable.ic_nav_calendar, R.drawable.ic_nav_calendar)
+        BottomNavScreen(Routes.Calendar, R.string.setting_label_nav, R.drawable.ic_nav_calendar, R.drawable.ic_nav_calendar)
 
     data object Task :
         BottomNavScreen(Routes.Settings, R.string.setting_label_nav, R.drawable.ic_nav_task, R.drawable.ic_nav_task)

@@ -29,7 +29,7 @@ import com.ctp.taskmanageapp.data.local.taskgroups.TaskGroup
 import com.ctp.taskmanageapp.data.local.taskgroups.TaskGroupType
 import com.ctp.taskmanageapp.presentation.common.AVATAR_DEFAULT_SIZE
 import com.ctp.taskmanageapp.presentation.common.SPACE_CONTENT_SIZE
-import com.ctp.taskmanageapp.presentation.common.SPACE_SMALL_X2_SIZE
+import com.ctp.taskmanageapp.presentation.common.SPACE_SMALL_8_SIZE
 import com.ctp.taskmanageapp.presentation.common.h1TitleStyle
 import com.ctp.taskmanageapp.presentation.common.h2TextStyle
 import com.ctp.taskmanageapp.presentation.common.h4TextStyle
@@ -47,7 +47,7 @@ fun HomeScreen(mainViewModel: MainViewModel) {
     val taskGroupNumber = 4
     val taskGroups = listOf(
         TaskGroup(
-            titleGroup = "Grocery shopping app design",
+            titleGroup = "Grocery shopping app design by Phuong",
             taskGroupType = TaskGroupType.OfficeProject
         ),
         TaskGroup(
@@ -55,7 +55,7 @@ fun HomeScreen(mainViewModel: MainViewModel) {
             taskGroupType = TaskGroupType.PersonalProject
         ),
         TaskGroup(
-            titleGroup = "Grocery shopping app design by Phuong",
+            titleGroup = "Grocery shopping app design by Phuong  by Phuong by Phuong",
             taskGroupType = TaskGroupType.OfficeProject
         ),
         TaskGroup(
@@ -90,7 +90,7 @@ fun HomeScreen(mainViewModel: MainViewModel) {
             )
             Column(
                 modifier = Modifier.padding(
-                    paddingValues = PaddingValues(horizontal = SPACE_SMALL_X2_SIZE)
+                    paddingValues = PaddingValues(horizontal = SPACE_SMALL_8_SIZE)
                 ),
                 verticalArrangement = Arrangement.Center
             ) {

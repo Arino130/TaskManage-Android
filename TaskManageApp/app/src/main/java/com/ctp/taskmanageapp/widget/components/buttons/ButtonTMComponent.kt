@@ -1,4 +1,4 @@
-package com.ctp.taskmanageapp.widget.components.Buttons
+package com.ctp.taskmanageapp.widget.components.buttons
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box

@@ -16,6 +16,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.ctp.taskmanageapp.presentation.screens.calendar.CalendarScreen
 import com.ctp.taskmanageapp.presentation.screens.home.HomeScreen
 import com.ctp.taskmanageapp.presentation.screens.onboarding.OnBoardingScreen
 import com.ctp.taskmanageapp.presentation.screens.settings.SettingsScreen
@@ -85,6 +86,10 @@ fun NavigationController(
 
         composable(route = Routes.Home.name) {
             HomeScreen(mainViewModel = mainViewModel)
+        }
+
+        composable(route = Routes.Calendar.name) {
+            CalendarScreen(mainViewModel = mainViewModel)
         }
 
         composable(route = Routes.Settings.name) {

@@ -26,4 +26,14 @@
     <!--Type Group-->
     <string name="type_group_office">Office Project</string>
     <string name="type_group_personal">Personal Project</string>
+
+    <!--Status Filter-->
+    <string name="all_type">All</string>
+    <string name="todo_type">To Do</string>
+    <string name="in_progress_type">In Progress</string>
+    <string name="done_type">Done</string>
+
+    <!--CalendarScreen-->
+    <string name="calendar_title">Today\'s Tasks</string>
+
 </resources>

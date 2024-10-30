@@ -12,8 +12,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import com.ctp.taskmanageapp.R
-import com.ctp.taskmanageapp.presentation.common.SPACE_SMALL_SIZE
-import com.ctp.taskmanageapp.presentation.common.SPACE_SMALL_X1_SIZE
+import com.ctp.taskmanageapp.presentation.common.SPACE_SMALL_4_SIZE
+import com.ctp.taskmanageapp.presentation.common.SPACE_SMALL_6_SIZE
 import com.ctp.taskmanageapp.presentation.common.h1TitleStyle
 import com.ctp.taskmanageapp.presentation.extensions.getColorFromResources
 
@@ -35,7 +35,7 @@ fun LabelCircular(
     ) {
         Text(
             modifier = Modifier
-                .padding(vertical = SPACE_SMALL_SIZE, horizontal = SPACE_SMALL_X1_SIZE),
+                .padding(vertical = SPACE_SMALL_4_SIZE, horizontal = SPACE_SMALL_6_SIZE),
             text = (textId?.let { context.getString(textId) } ?: textStr),
             style = textStyle,
             color = context.getColorFromResources(colorText)
