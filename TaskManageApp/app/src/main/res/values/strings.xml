@@ -1,6 +1,7 @@
 <resources>
     <!--Common-->
     <string name="app_name">TaskManageApp</string>
+    <string name="task_count">%1$d Tasks</string>
 
     <!--Navigation-->
     <string name="home_label_nav">Home</string>
@@ -17,4 +18,12 @@
     <!--HomeScreen-->
     <string name="home_overview_card_title">Your today\'s task\nalmost done!</string>
     <string name="home_view_task_button">View Task</string>
+    <string name="home_in_progress">In Progress</string>
+    <string name="home_task_group">Task Group</string>
+    <string name="home_content_hello">Hello!</string>
+    <string name="home_username_mock">Phuong Minh</string>
+
+    <!--Type Group-->
+    <string name="type_group_office">Office Project</string>
+    <string name="type_group_personal">Personal Project</string>
 </resources>

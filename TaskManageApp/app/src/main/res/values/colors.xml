@@ -7,6 +7,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="text_blank_color">#24252D</color>
 
     <color name="button_background_primary">#5F33E1</color>
     <color name="button_content_primary">#FFFFFF</color>
@@ -19,4 +20,15 @@
     <color name="bottom_inactive_nav">#B5A0F4</color>
     <color name="CircularProgressBarPrimary">#EEE9FF</color>
     <color name="CircularProgressBarSecondary">#8764FF</color>
+    <color name="label_background">#EEE9FF</color>
+    <color name="sub_text_dark">#6F6A7C</color>
+
+    <color name="group_office_background">#C0E0FD</color>
+    <color name="group_office_line_progress">#0287FF</color>
+    <color name="group_office_circular_secondary">#FFE4F2</color>
+    <color name="group_office_circular_progress">#F478B8</color>
+    <color name="group_personal_background">#FFE9E1</color>
+    <color name="group_personal_line_progress">#FF7D53</color>
+    <color name="group_personal_circular_secondary">#EDE5FF</color>
+    <color name="group_personal_circular_progress">#FF7D53</color>
 </resources>

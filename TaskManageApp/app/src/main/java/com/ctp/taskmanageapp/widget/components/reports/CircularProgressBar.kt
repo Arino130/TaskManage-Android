@@ -27,17 +27,17 @@ import kotlin.math.*
 
 @Composable
 fun CircularProgressBar(
-    modifier: Modifier = Modifier,
     size: Dp = 200.dp,
     initialValue: Int,
     primaryColor: Color,
     secondaryColor: Color,
+    textColor: Color,
     minValue: Int = 0,
     maxValue: Int = 100,
-    onPositionChange: (Int) -> Unit
+    onPositionChange: (Int) -> Unit = {}
 ) {
 
-    val context = LocalContext.current
+    val durationMillis = remember { 500 }
     val circleCenter = remember { mutableStateOf(Offset.Zero) }
     val positionValue = remember { mutableStateOf(initialValue) }
     val oldPositionValue = remember { mutableStateOf(initialValue) }
@@ -52,11 +52,14 @@ fun CircularProgressBar(
                 .pointerInput(Unit) {
                     detectDragGestures(
                         onDrag = { change, _ ->
-                            val touchAngle = calculateTouchAngle(change.position, circleCenter.value)
+                            val touchAngle =
+                                calculateTouchAngle(change.position, circleCenter.value)
                             val currentAngle = animatedValue.value.toAngle(maxValue, minValue)
 
                             if (touchAngle.isWithinThreshold(currentAngle)) {
-                                positionValue.value = (oldPositionValue.value + (touchAngle - currentAngle).toPositionValue(maxValue, minValue)).coerceIn(minValue, maxValue)
+                                positionValue.value = (oldPositionValue.value
+                                        + (touchAngle - currentAngle).toPositionValue(
+                                    maxValue, minValue)).coerceIn(minValue, maxValue)
                             }
                         },
                         onDragEnd = {
@@ -66,7 +69,7 @@ fun CircularProgressBar(
                     )
                 }
         ) {
-            val circleThickness = with(density) { size.toPx() / 12f } // Convert thickness to pixels
+            val circleThickness = with(density) { size.toPx() / 12f }
             circleCenter.value = Offset(size.toPx() / 2f, size.toPx() / 2f)
 
             drawCircle(
@@ -81,7 +84,8 @@ fun CircularProgressBar(
                 startAngle = 90f,
                 sweepAngle = (360f / maxValue) * animatedValue.value,
                 useCenter = false,
-                topLeft = Offset((size.toPx() - circleRadius * 2f) / 2f, (size.toPx() - circleRadius * 2f) / 2f),
+                topLeft = Offset((size.toPx()
+                        - circleRadius * 2f) / 2f, (size.toPx() - circleRadius * 2f) / 2f),
                 size = Size(circleRadius * 2f, circleRadius * 2f),
                 style = Stroke(width = circleThickness, cap = StrokeCap.Round)
             )
@@ -91,7 +95,7 @@ fun CircularProgressBar(
                 val textPaint = Paint().apply {
                     textSize = with(density) { size.toPx() / 5 }
                     textAlign = Paint.Align.CENTER
-                    color = context.getColorFromResources(R.color.white).toArgb()
+                    color = textColor.toArgb()
                     isFakeBoldText = true
                 }
                 val x = circleCenter.value.x
@@ -110,7 +114,7 @@ fun CircularProgressBar(
     LaunchedEffect(initialValue) {
         animatedValue.animateTo(
             targetValue = initialValue.toFloat(),
-            animationSpec = tween(durationMillis = 500, easing = LinearEasing)
+            animationSpec = tween(durationMillis = durationMillis, easing = LinearEasing)
         )
     }
 }
@@ -134,11 +138,11 @@ private fun Float.toPositionValue(maxValue: Int, minValue: Int) =
 fun Preview() {
     val context = LocalContext.current
     CircularProgressBar(
-        modifier = Modifier.size(250.dp),
         initialValue = 50,
         size = 150.dp,
         primaryColor = context.getColorFromResources(R.color.CircularProgressBarPrimary),
         secondaryColor = context.getColorFromResources(R.color.CircularProgressBarSecondary),
+        textColor = context.getColorFromResources(R.color.white),
         onPositionChange = {
 
         }

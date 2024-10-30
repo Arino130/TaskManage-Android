@@ -40,7 +40,7 @@ fun AppNavigation(mainViewModel: MainViewModel) {
                         }
                     },
                     onAddClick = {
-                        // TODO: Handle Fub Menu
+                        // TODO: Handle Fab Menu
                     },
                     selectTab = currentScreen,
                     bottomBarState = bottomBarState.value
@@ -63,7 +63,7 @@ fun NavigationController(
 ) {
     NavHost(
         navController = navController,
-        startDestination = Routes.Home.name,
+        startDestination = Routes.OnBoarding.name,
         Modifier.padding(innerPadding ?: PaddingValues()),
         enterTransition = {
             EnterTransition.None

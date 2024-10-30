@@ -49,7 +49,7 @@ fun BottomNavigationBar(
 ) {
     var currentTab: BottomNavScreen by remember { mutableStateOf(selectTab) }
     val context = LocalContext.current
-    val transparentColor = Color(0x00FFFFFF)
+    val transparentColor = Color.Transparent
     val fabButtonColor = context.getColorFromResources(R.color.button_background_primary)
     val fabButtonIconColor = context.getColorFromResources(R.color.white)
     val bottomBgColor = context.getColorFromResources(R.color.bottom_background)

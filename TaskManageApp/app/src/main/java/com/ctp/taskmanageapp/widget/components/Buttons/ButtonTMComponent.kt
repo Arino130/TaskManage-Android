@@ -1,4 +1,4 @@
-package com.ctp.taskmanageapp.widget.components
+package com.ctp.taskmanageapp.widget.components.Buttons
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -28,12 +29,14 @@ fun ButtonTMComponent(
     iconButtonL: Int? = null,
     iconButtonR: Int? = null,
     buttonType: ButtonType,
+    radiusShape: Int = 20,
     onClickEvent: () -> Unit
 ) {
     val context = LocalContext.current
     val isHaveIcon = (iconButtonL != null || iconButtonR != null)
     Button(
         onClick = onClickEvent,
+        shape = RoundedCornerShape(radiusShape),
         colors = ButtonDefaults.buttonColors(
             containerColor = Color(ContextCompat.getColor(context, buttonType.containerColor)),
             contentColor = Color(

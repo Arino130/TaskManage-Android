@@ -6,7 +6,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import com.ctp.taskmanageapp.R
-import java.time.format.TextStyle
 
 val fontBold = FontFamily(Font(R.font.sf_bold))
 val fontHeavy = FontFamily(Font(R.font.sf_heavy))
@@ -29,6 +28,42 @@ var h2TextStyle = androidx.compose.ui.text.TextStyle(
 
 var h3TextStyle = androidx.compose.ui.text.TextStyle(
     fontSize = 16.sp,
+    fontFamily = fontMedium,
+    fontWeight = FontWeight.Normal
+)
+
+var h4TextStyle = androidx.compose.ui.text.TextStyle(
+    fontSize = 14.sp,
+    fontFamily = fontMedium,
+    fontWeight = FontWeight.Normal
+)
+
+var h5TextStyle = androidx.compose.ui.text.TextStyle(
+    fontSize = 12.sp,
+    fontFamily = fontMedium,
+    fontWeight = FontWeight.Normal
+)
+
+var h6TextStyle = androidx.compose.ui.text.TextStyle(
+    fontSize = 10.sp,
+    fontFamily = fontMedium,
+    fontWeight = FontWeight.Normal
+)
+
+var h7TextStyle = androidx.compose.ui.text.TextStyle(
+    fontSize = 6.sp,
+    fontFamily = fontMedium,
+    fontWeight = FontWeight.Normal
+)
+
+var h8TextStyle = androidx.compose.ui.text.TextStyle(
+    fontSize = 4.sp,
+    fontFamily = fontMedium,
+    fontWeight = FontWeight.Normal
+)
+
+var h9TextStyle = androidx.compose.ui.text.TextStyle(
+    fontSize = 2.sp,
     fontFamily = fontMedium,
     fontWeight = FontWeight.Normal
 )

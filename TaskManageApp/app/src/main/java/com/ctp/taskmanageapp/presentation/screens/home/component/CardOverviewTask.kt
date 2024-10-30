@@ -23,10 +23,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ctp.taskmanageapp.R
+import com.ctp.taskmanageapp.presentation.common.CIRCULAR_LARGE_SIZE
+import com.ctp.taskmanageapp.presentation.common.ICON_SMALL_SIZE
 import com.ctp.taskmanageapp.presentation.common.h3TextStyle
 import com.ctp.taskmanageapp.presentation.extensions.getColorFromResources
-import com.ctp.taskmanageapp.widget.components.ButtonTMComponent
-import com.ctp.taskmanageapp.widget.components.ButtonType
+import com.ctp.taskmanageapp.widget.components.Buttons.ButtonTMComponent
+import com.ctp.taskmanageapp.widget.components.Buttons.ButtonType
 import com.ctp.taskmanageapp.widget.components.reports.CircularProgressBar
 
 @Composable
@@ -36,7 +38,7 @@ fun CardOverviewTask() {
         modifier = Modifier
             .fillMaxWidth()
             .height(150.dp)
-            .padding(8.dp),
+            .padding(vertical = 8.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
         colors = CardDefaults.cardColors(
             containerColor = context.getColorFromResources(
@@ -54,7 +56,7 @@ fun CardOverviewTask() {
             Column(
                 horizontalAlignment = Alignment.Start,
                 modifier = Modifier
-                    .padding(paddingValues = PaddingValues(horizontal = 15.dp)),
+                    .padding(paddingValues = PaddingValues(horizontal = 4.dp)),
             ) {
                 Text(
                     text = context.getString(R.string.home_overview_card_title),
@@ -65,7 +67,7 @@ fun CardOverviewTask() {
                     modifier = Modifier
                         .width(130.dp)
                         .height(70.dp)
-                        .padding(paddingValues = PaddingValues(top = 20.dp, bottom = 14.dp))
+                        .padding(paddingValues = PaddingValues(top = 20.dp, bottom = 8.dp))
                 ) {
                     ButtonTMComponent(
                         titleButton = context.getString(R.string.home_view_task_button),
@@ -77,22 +79,16 @@ fun CardOverviewTask() {
             }
             Box(modifier = Modifier.padding(paddingValues = PaddingValues(top = 10.dp))) {
                 CircularProgressBar(
-                    modifier = Modifier
-                        .size(250.dp)
-                        .padding(paddingValues = PaddingValues(top = 20.dp)),
                     initialValue = 50,
-                    size = 80.dp,
+                    size = CIRCULAR_LARGE_SIZE,
                     primaryColor = context.getColorFromResources(R.color.CircularProgressBarPrimary),
                     secondaryColor = context.getColorFromResources(R.color.CircularProgressBarSecondary),
-                    onPositionChange = {
-
-                    }
+                    textColor = context.getColorFromResources(R.color.white)
                 )
             }
             Image(
                 modifier = Modifier
-                    .height(20.dp)
-                    .width(20.dp),
+                    .size(ICON_SMALL_SIZE),
                 painter = painterResource(id = R.drawable.ic_button_three_dot),
                 contentDescription = null,
                 contentScale = ContentScale.FillBounds
