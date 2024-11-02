@@ -22,6 +22,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ctp.taskmanageapp.R
@@ -41,7 +42,6 @@ import com.ctp.taskmanageapp.widget.components.reports.LineProgressBar
 fun CardTaskGroup(
     groupType: TaskGroupType,
     groupTitle: String,
-    maxWordsTitle: Int = 50,
     progress: Int
 ) {
     val context = LocalContext.current
@@ -86,23 +86,17 @@ fun CardTaskGroup(
                     contentScale = ContentScale.FillBounds
                 )
             }
-            val groupTitleSubStr =
-                if (groupTitle.count() > maxWordsTitle) "${
-                    groupTitle.subSequence(
-                        0,
-                        maxWordsTitle
-                    )
-                }..."
-                else groupTitle
             Text(
                 modifier = Modifier.padding(
                     paddingValues = PaddingValues(vertical = SPACE_SMALL_8_SIZE)
                 ),
-                text = groupTitleSubStr,
+                text = groupTitle,
                 style = h3TextStyle,
                 color = context.getColorFromResources(
                     R.color.text_blank_color
-                )
+                ),
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis
             )
             Spacer(modifier = Modifier.weight(1f))
             LineProgressBar(

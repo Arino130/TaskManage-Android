@@ -8,12 +8,10 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
@@ -24,6 +22,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.content.ContextCompat
 import com.ctp.taskmanageapp.R
@@ -62,13 +61,13 @@ fun CalendarTaskItem(task: TaskInfo, onClick: (TaskInfo) -> Unit) {
             Column(
                 horizontalAlignment = Alignment.Start,
                 modifier = Modifier
-                    .wrapContentWidth()
-                    .fillMaxHeight()
+                    .weight(1f)
                     .padding(
                         paddingValues = PaddingValues(
                             horizontal = SPACE_SMALL_12_SIZE
                         )
-                    ),
+                    )
+                    .fillMaxHeight(),
                 verticalArrangement = Arrangement.Center
             ) {
                 Text(
@@ -81,21 +80,26 @@ fun CalendarTaskItem(task: TaskInfo, onClick: (TaskInfo) -> Unit) {
                     )
                 )
                 Text(
-                    modifier = Modifier.padding(
-                        paddingValues = PaddingValues(
-                            top = SPACE_SMALL_8_SIZE, bottom = SPACE_SMALL_8_SIZE
+                    modifier = Modifier
+                        .padding(
+                            paddingValues = PaddingValues(
+                                top = SPACE_SMALL_8_SIZE, bottom = SPACE_SMALL_8_SIZE
+                            )
                         )
-                    ),
-                    text = task.titleTask, style = h3TextStyle, color = Color(
+                        .fillMaxWidth(),
+                    text = task.titleTask,
+                    style = h3TextStyle,
+                    color = Color(
                         ContextCompat.getColor(
                             context, R.color.text_blank_color
                         )
-                    )
+                    ),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
                 )
                 Row {
                     Image(
-                        modifier = Modifier
-                            .size(ICON_MINI_SIZE),
+                        modifier = Modifier.size(ICON_MINI_SIZE),
                         painter = painterResource(id = R.drawable.ic_clock),
                         contentDescription = null,
                         contentScale = ContentScale.FillBounds
@@ -114,7 +118,7 @@ fun CalendarTaskItem(task: TaskInfo, onClick: (TaskInfo) -> Unit) {
             }
             Column(
                 modifier = Modifier
-                    .fillMaxSize()
+                    .fillMaxHeight()
                     .padding(
                         paddingValues = PaddingValues(SPACE_SMALL_12_SIZE)
                     ),
