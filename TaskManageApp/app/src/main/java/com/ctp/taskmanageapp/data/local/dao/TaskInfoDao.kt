@@ -10,7 +10,7 @@ import com.ctp.taskmanageapp.domain.models.tasks.TaskInfo
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface TaskDao {
+interface TaskInfoDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTask(task: TaskInfo)
 
@@ -20,19 +20,19 @@ interface TaskDao {
     @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun updateTask(task: TaskInfo)
 
-    @Query("SELECT * FROM tasks_info_table WHERE id=:id")
+    @Query("SELECT * FROM ctp_task_info_table WHERE id=:id")
     suspend fun getTaskById(id: Int): TaskInfo
 
-    @Query("SELECT * FROM tasks_info_table")
+    @Query("SELECT * FROM ctp_task_info_table")
     fun getAllTasks(): Flow<List<TaskInfo>>
 
-    @Query("SELECT * FROM tasks_info_table WHERE DATE(startTime) = :startDate")
+    @Query("SELECT * FROM ctp_task_info_table WHERE DATE(startTime) = :startDate")
     fun getTasksByStartDate(startDate: String): Flow<List<TaskInfo>>
 
-    @Query("SELECT * FROM tasks_info_table WHERE DATE(endTime) = :endDate")
+    @Query("SELECT * FROM ctp_task_info_table WHERE DATE(endTime) = :endDate")
     fun getTasksByEndDate(endDate: String): Flow<List<TaskInfo>>
 
-    @Query("DELETE FROM tasks_info_table")
+    @Query("DELETE FROM ctp_task_info_table")
     suspend fun deleteAllTasks()
 
 }

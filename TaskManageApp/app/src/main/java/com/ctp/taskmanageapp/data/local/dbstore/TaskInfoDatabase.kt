@@ -1,14 +1,11 @@
 package com.ctp.taskmanageapp.data.local.dbstore
 
-import android.app.TaskInfo
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.ctp.taskmanageapp.data.local.dao.TaskDao
+import com.ctp.taskmanageapp.data.local.dao.TaskInfoDao
+import com.ctp.taskmanageapp.domain.models.tasks.TaskInfo
 
-@Database(
-    entities = [TaskInfo::class],
-    version = 2,
-)
+@Database(entities = [TaskInfo::class], version = 1)
 abstract class TaskInfoDatabase : RoomDatabase() {
-    abstract fun taskDao(): TaskDao
+    abstract fun taskInfoDao(): TaskInfoDao
 }

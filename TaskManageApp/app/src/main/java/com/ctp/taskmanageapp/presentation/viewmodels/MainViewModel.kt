@@ -3,6 +3,7 @@ package com.ctp.taskmanageapp.presentation.viewmodels
 import com.ctp.taskmanageapp.domain.models.filters.StatusTask
 import com.ctp.taskmanageapp.domain.models.TaskGroupType
 import com.ctp.taskmanageapp.domain.models.tasks.TaskInfo
+import com.ctp.taskmanageapp.domain.usecase.TaskInfoUseCases
 import com.ctp.taskmanageapp.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,7 +13,9 @@ import java.time.LocalDateTime
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor() : BaseViewModel() {
+class MainViewModel @Inject constructor(
+    private val taskUseCases: TaskInfoUseCases?
+) : BaseViewModel() {
     private val _showBottomBar = MutableStateFlow(true)
     val showBottomBar = _showBottomBar.asStateFlow()
 

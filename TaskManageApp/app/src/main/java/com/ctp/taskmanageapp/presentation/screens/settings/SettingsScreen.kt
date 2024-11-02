@@ -17,5 +17,5 @@ fun SettingsScreen(mainViewModel: MainViewModel) {
 @Preview
 @Composable
 fun SettingsScreenReview() {
-    SettingsScreen(MainViewModel())
+    SettingsScreen(MainViewModel(null))
 }

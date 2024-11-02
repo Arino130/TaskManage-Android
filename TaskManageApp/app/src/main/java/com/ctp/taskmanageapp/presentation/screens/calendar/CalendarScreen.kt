@@ -85,5 +85,5 @@ fun CalendarScreen(mainViewModel: MainViewModel) {
 @Preview
 @Composable
 fun CalendarScreenPreview() {
-    CalendarScreen(MainViewModel())
+    CalendarScreen(MainViewModel(null))
 }

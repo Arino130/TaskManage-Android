@@ -1,24 +1,30 @@
 package com.ctp.taskmanageapp.data.repositories
 
-import com.ctp.taskmanageapp.data.local.dao.TaskDao
+import com.ctp.taskmanageapp.data.local.dao.TaskInfoDao
 import com.ctp.taskmanageapp.domain.models.tasks.TaskInfo
+import com.ctp.taskmanageapp.domain.repository.TaskInfoRepositoryInterface
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class TaskInfoRepository(private val taskDao: TaskDao) {
+class TaskInfoRepository @Inject constructor(
+    private val taskDao: TaskInfoDao
+) : TaskInfoRepositoryInterface {
 
-    suspend fun insertTask(task: TaskInfo) = taskDao.insertTask(task)
+    override suspend fun insertTask(task: TaskInfo) = taskDao.insertTask(task)
 
-    suspend fun deleteTask(task: TaskInfo) = taskDao.deleteTask(task)
+    override suspend fun deleteTask(task: TaskInfo) = taskDao.deleteTask(task)
 
-    suspend fun updateTask(task: TaskInfo) = taskDao.updateTask(task)
+    override suspend fun updateTask(task: TaskInfo) = taskDao.updateTask(task)
 
-    suspend fun getTaskById(id: Int): TaskInfo = taskDao.getTaskById(id)
+    override suspend fun getTaskById(id: Int): TaskInfo = taskDao.getTaskById(id)
 
-    fun getAllTasks(): Flow<List<TaskInfo>> = taskDao.getAllTasks()
+    override fun getAllTasks(): Flow<List<TaskInfo>> = taskDao.getAllTasks()
 
-    fun getTasksByStartDate(startDate: String): Flow<List<TaskInfo>> = taskDao.getTasksByStartDate(startDate)
+    override fun getTasksByStartDate(startDate: String): Flow<List<TaskInfo>> =
+        taskDao.getTasksByStartDate(startDate)
 
-    fun getTasksByEndDate(endDate: String): Flow<List<TaskInfo>> = taskDao.getTasksByEndDate(endDate)
+    override fun getTasksByEndDate(endDate: String): Flow<List<TaskInfo>> =
+        taskDao.getTasksByEndDate(endDate)
 
-    suspend fun deleteAllTasks() = taskDao.deleteAllTasks()
+    override suspend fun deleteAllTasks() = taskDao.deleteAllTasks()
 }
