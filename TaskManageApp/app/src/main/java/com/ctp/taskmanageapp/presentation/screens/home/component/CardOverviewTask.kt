@@ -25,6 +25,9 @@ import androidx.compose.ui.unit.dp
 import com.ctp.taskmanageapp.R
 import com.ctp.taskmanageapp.presentation.common.CIRCULAR_LARGE_SIZE
 import com.ctp.taskmanageapp.presentation.common.ICON_SMALL_SIZE
+import com.ctp.taskmanageapp.presentation.common.SPACE_CONTENT_20_SIZE
+import com.ctp.taskmanageapp.presentation.common.SPACE_SMALL_10_SIZE
+import com.ctp.taskmanageapp.presentation.common.SPACE_SMALL_8_SIZE
 import com.ctp.taskmanageapp.presentation.common.h3TextStyle
 import com.ctp.taskmanageapp.presentation.extensions.getColorFromResources
 import com.ctp.taskmanageapp.widget.components.buttons.ButtonTMComponent
@@ -67,7 +70,11 @@ fun CardOverviewTask() {
                     modifier = Modifier
                         .width(130.dp)
                         .height(70.dp)
-                        .padding(paddingValues = PaddingValues(top = 20.dp, bottom = 8.dp))
+                        .padding(
+                            paddingValues = PaddingValues(
+                                top = SPACE_CONTENT_20_SIZE, bottom = SPACE_SMALL_8_SIZE
+                            )
+                        )
                 ) {
                     ButtonTMComponent(
                         titleButton = context.getString(R.string.home_view_task_button),
@@ -77,12 +84,18 @@ fun CardOverviewTask() {
                     }
                 }
             }
-            Box(modifier = Modifier.padding(paddingValues = PaddingValues(top = 10.dp))) {
+            Box(
+                modifier = Modifier.padding(
+                    paddingValues = PaddingValues(top = SPACE_SMALL_10_SIZE)
+                )
+            ) {
                 CircularProgressBar(
                     initialValue = 50,
                     size = CIRCULAR_LARGE_SIZE,
-                    primaryColor = context.getColorFromResources(R.color.CircularProgressBarPrimary),
-                    secondaryColor = context.getColorFromResources(R.color.CircularProgressBarSecondary),
+                    primaryColor =
+                        context.getColorFromResources(R.color.CircularProgressBarPrimary),
+                    secondaryColor =
+                        context.getColorFromResources(R.color.CircularProgressBarSecondary),
                     textColor = context.getColorFromResources(R.color.white)
                 )
             }

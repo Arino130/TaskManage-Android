@@ -64,7 +64,7 @@ fun NavigationController(
 ) {
     NavHost(
         navController = navController,
-        startDestination = Routes.OnBoarding.name,
+        startDestination = Routes.Calendar.name,
         Modifier.padding(innerPadding ?: PaddingValues()),
         enterTransition = {
             EnterTransition.None

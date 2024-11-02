@@ -27,8 +27,16 @@
     <color name="group_office_line_progress">#0287FF</color>
     <color name="group_office_circular_secondary">#FFE4F2</color>
     <color name="group_office_circular_progress">#F478B8</color>
+
     <color name="group_personal_background">#FFE9E1</color>
     <color name="group_personal_line_progress">#FF7D53</color>
     <color name="group_personal_circular_secondary">#EDE5FF</color>
     <color name="group_personal_circular_progress">#FF7D53</color>
+
+    <color name="status_todo_label_background">#E3F2FF</color>
+    <color name="status_todo_label">#0287FF</color>
+    <color name="status_in_progress_label_background">#FFE9E1</color>
+    <color name="status_in_progress_label">#FF7D53</color>
+    <color name="status_done_label_background">#EDE8FF</color>
+    <color name="status_done_label">#5F33E1</color>
 </resources>

@@ -28,6 +28,9 @@ import com.ctp.taskmanageapp.presentation.extensions.getColorFromResources
 import com.ctp.taskmanageapp.data.local.taskgroups.TaskGroupType
 import com.ctp.taskmanageapp.presentation.common.CIRCULAR_SMALL_SIZE
 import com.ctp.taskmanageapp.presentation.common.ICON_LARGE_SIZE
+import com.ctp.taskmanageapp.presentation.common.SPACE_CONTENT_SIZE
+import com.ctp.taskmanageapp.presentation.common.SPACE_SMALL_12_SIZE
+import com.ctp.taskmanageapp.presentation.common.SPACE_SMALL_4_SIZE
 import com.ctp.taskmanageapp.presentation.common.h3TextStyle
 import com.ctp.taskmanageapp.widget.components.reports.CircularProgressBar
 
@@ -45,13 +48,17 @@ fun CardGroupTaskItem(groupType: TaskGroupType, taskCount: Int = 0, progress: In
             )
         )
     ) {
-        Box(modifier = Modifier.padding(paddingValues =
-            PaddingValues(start = 15.dp, end = 15.dp))) {
+        Box(
+            modifier = Modifier.padding(
+                paddingValues =
+                PaddingValues(start = SPACE_CONTENT_SIZE, end = SPACE_CONTENT_SIZE)
+            )
+        ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(paddingValues = PaddingValues(vertical = 15.dp))
+                    .padding(paddingValues = PaddingValues(vertical = SPACE_CONTENT_SIZE))
             ) {
                 Image(
                     modifier = Modifier
@@ -63,8 +70,12 @@ fun CardGroupTaskItem(groupType: TaskGroupType, taskCount: Int = 0, progress: In
                 Column(
                     horizontalAlignment = Alignment.Start,
                     modifier = Modifier
-                        .padding(paddingValues =
-                            PaddingValues(vertical = 4.dp, horizontal = 12.dp)),
+                        .padding(
+                            paddingValues =
+                            PaddingValues(
+                                vertical = SPACE_SMALL_4_SIZE, horizontal = SPACE_SMALL_12_SIZE
+                            )
+                        ),
                 ) {
                     Text(
                         text = context.getString(groupType.typeTitleId),
@@ -95,9 +106,9 @@ fun CardGroupTaskItem(groupType: TaskGroupType, taskCount: Int = 0, progress: In
                         initialValue = progress,
                         size = CIRCULAR_SMALL_SIZE,
                         primaryColor =
-                            context.getColorFromResources(groupType.progressCircularColor),
+                        context.getColorFromResources(groupType.progressCircularColor),
                         secondaryColor =
-                            context.getColorFromResources(groupType.progressCircularSecondaryColor),
+                        context.getColorFromResources(groupType.progressCircularSecondaryColor),
                         textColor = context.getColorFromResources(R.color.text_blank_color)
                     )
                 }

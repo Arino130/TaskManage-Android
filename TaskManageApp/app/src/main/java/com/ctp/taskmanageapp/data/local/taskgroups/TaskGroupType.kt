@@ -19,7 +19,7 @@ enum class TaskGroupType(
         progressCircularSecondaryColor = R.color.group_office_circular_secondary
     ),
     PersonalProject(
-        typeTitleId = R.string.type_group_office,
+        typeTitleId = R.string.type_group_personal,
         typeIcon = R.drawable.ic_group_personal,
         background = R.color.group_personal_background,
         progressLineColor = R.color.group_personal_line_progress,

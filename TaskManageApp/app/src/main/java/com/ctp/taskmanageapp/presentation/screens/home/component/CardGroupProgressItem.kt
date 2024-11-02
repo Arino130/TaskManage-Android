@@ -30,6 +30,10 @@ import com.ctp.taskmanageapp.presentation.extensions.getColorFromResources
 import com.ctp.taskmanageapp.data.local.taskgroups.TaskGroupType
 import com.ctp.taskmanageapp.presentation.common.ELEVATION_DEFAULT_SIZE
 import com.ctp.taskmanageapp.presentation.common.ICON_SMALL_SIZE
+import com.ctp.taskmanageapp.presentation.common.SPACE_DEFAULT_SIZE
+import com.ctp.taskmanageapp.presentation.common.SPACE_SMALL_10_SIZE
+import com.ctp.taskmanageapp.presentation.common.SPACE_SMALL_6_SIZE
+import com.ctp.taskmanageapp.presentation.common.SPACE_SMALL_8_SIZE
 import com.ctp.taskmanageapp.presentation.common.h4TextStyle
 import com.ctp.taskmanageapp.widget.components.reports.LineProgressBar
 
@@ -43,7 +47,8 @@ fun CardTaskGroup(
     val context = LocalContext.current
     Card(
         modifier = Modifier
-            .height(150.dp).width(260.dp),
+            .height(150.dp)
+            .width(260.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = ELEVATION_DEFAULT_SIZE),
         colors = CardDefaults.cardColors(
             containerColor = context.getColorFromResources(
@@ -54,7 +59,11 @@ fun CardTaskGroup(
         Column(
             horizontalAlignment = Alignment.Start,
             modifier = Modifier
-                .padding(horizontal = 15.dp, vertical = 10.dp).fillMaxSize(),
+                .padding(
+                    horizontal = SPACE_DEFAULT_SIZE,
+                    vertical = SPACE_SMALL_10_SIZE
+                )
+                .fillMaxSize(),
         ) {
             Row(
                 modifier = Modifier
@@ -86,7 +95,9 @@ fun CardTaskGroup(
                 }..."
                 else groupTitle
             Text(
-                modifier = Modifier.padding(paddingValues = PaddingValues(vertical = 8.dp)),
+                modifier = Modifier.padding(
+                    paddingValues = PaddingValues(vertical = SPACE_SMALL_8_SIZE)
+                ),
                 text = groupTitleSubStr,
                 style = h3TextStyle,
                 color = context.getColorFromResources(
@@ -97,11 +108,16 @@ fun CardTaskGroup(
             LineProgressBar(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(paddingValues = PaddingValues(vertical = 14.dp, horizontal = 6.dp)),
+                    .padding(
+                        paddingValues = PaddingValues(
+                            vertical = SPACE_DEFAULT_SIZE,
+                            horizontal = SPACE_SMALL_6_SIZE
+                        )
+                    ),
                 progress = progress,
                 backgroundColor = Color.White,
                 progressColor = context.getColorFromResources(groupType.progressLineColor),
-                barHeight = 10.dp
+                barHeight = SPACE_SMALL_10_SIZE
             )
         }
     }

@@ -29,17 +29,17 @@ import java.time.format.TextStyle
 import java.util.Locale
 import kotlinx.coroutines.launch
 
-data class CalendarDate(val day: String, val month: String, val weekday: String)
-
 @Composable
-fun CalendarScrollPicker() {
+fun CalendarScrollPicker(
+    selectDate: LocalDate = LocalDate.now(),
+    onClickDate: (LocalDate) -> Unit
+) {
     val context = LocalContext.current
-    val today = LocalDate.now()
-    val dates = generateDateList(today)
+    val dates = generateDateList(selectDate)
     val initialCenterIndex = dates.size / 2
     val listState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
-    var selectedDateIndex by remember { mutableStateOf(initialCenterIndex) }
+    var selectedDate by remember { mutableStateOf(dates.first { it == selectDate }) }
     val screenWidth = LocalConfiguration.current.screenWidthDp.dp
     val cardWidth = 60.dp
     val centerOffset =
@@ -59,15 +59,14 @@ fun CalendarScrollPicker() {
         itemsIndexed(dates) { index, date ->
             CardCalendarItem(
                 context = context,
-                day = date.day,
-                month = date.month,
-                weekday = date.weekday,
-                isSelected = index == selectedDateIndex,
+                localDate = date,
+                isSelected = date == selectedDate,
                 onClick = {
-                    selectedDateIndex = index
+                    selectedDate = it
                     coroutineScope.launch {
-                        listState.animateScrollToItem(index, centerOffset)
+                        listState.animateScrollToItem(index, -centerOffset)
                     }
+                    onClickDate(selectedDate)
                 }
             )
         }
@@ -78,17 +77,11 @@ fun generateDateList(
     today: LocalDate,
     daysBefore: Int = 15,
     daysAfter: Int = 15
-): List<CalendarDate> {
-    val dates = mutableListOf<CalendarDate>()
+): List<LocalDate> {
+    val dates = mutableListOf<LocalDate>()
     for (i in -daysBefore..daysAfter) {
         val date = today.plusDays(i.toLong())
-        dates.add(
-            CalendarDate(
-                day = date.dayOfMonth.toString(),
-                month = date.month.getDisplayName(TextStyle.SHORT, Locale.getDefault()),
-                weekday = date.dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.getDefault())
-            )
-        )
+        dates.add(date)
     }
     return dates
 }
@@ -96,11 +89,9 @@ fun generateDateList(
 @Composable
 fun CardCalendarItem(
     context: Context,
-    day: String,
-    month: String,
-    weekday: String,
+    localDate: LocalDate,
     isSelected: Boolean,
-    onClick: () -> Unit
+    onClick: (LocalDate) -> Unit
 ) {
     val backgroundColor = if (isSelected)
         context.getColorFromResources(R.color.button_background_primary)
@@ -112,7 +103,7 @@ fun CardCalendarItem(
         modifier = Modifier
             .width(66.dp)
             .height(100.dp)
-            .clickable { onClick() },
+            .clickable { onClick(localDate) },
         colors = CardDefaults.cardColors(containerColor = backgroundColor),
         elevation = CardDefaults.cardElevation(ELEVATION_DEFAULT_SIZE),
     ) {
@@ -124,20 +115,26 @@ fun CardCalendarItem(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = month, color = textColor, style = h4TextStyle,
+                text = localDate.month.getDisplayName(
+                    TextStyle.SHORT, Locale.getDefault()
+                ),
+                color = textColor, style = h4TextStyle,
                 fontWeight = FontWeight.Normal
             )
             Text(
                 modifier = Modifier.padding(
                     paddingValues = PaddingValues(vertical = SPACE_SMALL_12_SIZE)
                 ),
-                text = day,
+                text = localDate.dayOfMonth.toString(),
                 color = textColor,
                 style = h3TextStyle,
                 fontWeight = FontWeight.Bold
             )
             Text(
-                text = weekday, color = textColor, style = h4TextStyle,
+                text = localDate.dayOfWeek.getDisplayName(
+                    TextStyle.SHORT, Locale.getDefault()
+                ),
+                color = textColor, style = h4TextStyle,
                 fontWeight = FontWeight.Normal
             )
         }
@@ -147,5 +144,5 @@ fun CardCalendarItem(
 @Preview
 @Composable
 fun CalendarScrollPickerPreview() {
-    CalendarScrollPicker()
+    CalendarScrollPicker {}
 }
