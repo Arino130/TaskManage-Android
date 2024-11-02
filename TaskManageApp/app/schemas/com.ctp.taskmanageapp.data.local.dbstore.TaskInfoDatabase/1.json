@@ -2,10 +2,10 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "010a1753f79e1bf75573106b5373df7b",
+    "identityHash": "cc94d9a5b10eb15950181683b6790d73",
     "entities": [
       {
-        "tableName": "ctp_task_info_table",
+        "tableName": "task_info_table",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `taskGroupType` TEXT NOT NULL, `titleTask` TEXT NOT NULL, `content` TEXT NOT NULL, `startTime` TEXT NOT NULL, `endTime` TEXT NOT NULL, `statusTask` TEXT NOT NULL)",
         "fields": [
           {
@@ -64,7 +64,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '010a1753f79e1bf75573106b5373df7b')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'cc94d9a5b10eb15950181683b6790d73')"
     ]
   }
 }

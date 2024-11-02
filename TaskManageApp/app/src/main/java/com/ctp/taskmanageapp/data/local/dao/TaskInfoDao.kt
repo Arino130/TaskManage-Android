@@ -20,19 +20,19 @@ interface TaskInfoDao {
     @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun updateTask(task: TaskInfo)
 
-    @Query("SELECT * FROM ctp_task_info_table WHERE id=:id")
+    @Query("SELECT * FROM task_info_table WHERE id=:id")
     suspend fun getTaskById(id: Int): TaskInfo
 
-    @Query("SELECT * FROM ctp_task_info_table")
+    @Query("SELECT * FROM task_info_table")
     fun getAllTasks(): Flow<List<TaskInfo>>
 
-    @Query("SELECT * FROM ctp_task_info_table WHERE DATE(startTime) = :startDate")
+    @Query("SELECT * FROM task_info_table WHERE DATE(startTime) = :startDate")
     fun getTasksByStartDate(startDate: String): Flow<List<TaskInfo>>
 
-    @Query("SELECT * FROM ctp_task_info_table WHERE DATE(endTime) = :endDate")
+    @Query("SELECT * FROM task_info_table WHERE DATE(endTime) = :endDate")
     fun getTasksByEndDate(endDate: String): Flow<List<TaskInfo>>
 
-    @Query("DELETE FROM ctp_task_info_table")
+    @Query("DELETE FROM task_info_table")
     suspend fun deleteAllTasks()
 
 }

@@ -13,7 +13,7 @@ import com.ctp.taskmanageapp.domain.models.TaskGroupType
 import java.time.LocalDate
 import java.time.LocalDateTime
 
-@Entity(tableName = "ctp_task_info_table")
+@Entity(tableName = "task_info_table")
 @TypeConverters(
     TaskGroupTypeConverter::class,
     LocalDateTimeConverter::class,
