@@ -21,6 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import com.ctp.taskmanageapp.R
+import com.ctp.taskmanageapp.presentation.common.SPACE_CONTENT_20_SIZE
 import com.ctp.taskmanageapp.presentation.common.buttonTextPrimaryStyle
 
 @Composable
@@ -65,9 +66,9 @@ fun ButtonTMComponent(
                                 buttonType.contentColor
                             )
                         ),
-                        modifier = Modifier.size(20.dp)
+                        modifier = Modifier.size(SPACE_CONTENT_20_SIZE)
                     )
-                } ?: Box(modifier = Modifier.size(20.dp))
+                } ?: Box(modifier = Modifier.size(SPACE_CONTENT_20_SIZE))
             }
             Text(
                 text = titleButton,
@@ -92,9 +93,9 @@ fun ButtonTMComponent(
                                 buttonType.contentColor
                             )
                         ),
-                        modifier = Modifier.size(20.dp)
+                        modifier = Modifier.size(SPACE_CONTENT_20_SIZE)
                     )
-                } ?: Box(modifier = Modifier.size(20.dp))
+                } ?: Box(modifier = Modifier.size(SPACE_CONTENT_20_SIZE))
             }
         }
     }
