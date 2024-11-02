@@ -1,8 +1,8 @@
 package com.ctp.taskmanageapp.presentation.viewmodels
 
-import com.ctp.taskmanageapp.data.local.filters.StatusTask
-import com.ctp.taskmanageapp.data.local.taskgroups.TaskGroupType
-import com.ctp.taskmanageapp.data.local.tasks.TaskInfo
+import com.ctp.taskmanageapp.domain.models.filters.StatusTask
+import com.ctp.taskmanageapp.domain.models.TaskGroupType
+import com.ctp.taskmanageapp.domain.models.tasks.TaskInfo
 import com.ctp.taskmanageapp.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

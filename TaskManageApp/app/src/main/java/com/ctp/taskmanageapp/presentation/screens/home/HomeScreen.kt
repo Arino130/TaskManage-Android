@@ -25,8 +25,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import com.ctp.taskmanageapp.R
-import com.ctp.taskmanageapp.data.local.taskgroups.TaskGroup
-import com.ctp.taskmanageapp.data.local.taskgroups.TaskGroupType
+import com.ctp.taskmanageapp.domain.models.TaskGroup
+import com.ctp.taskmanageapp.domain.models.TaskGroupType
 import com.ctp.taskmanageapp.presentation.common.AVATAR_DEFAULT_SIZE
 import com.ctp.taskmanageapp.presentation.common.SPACE_CONTENT_SIZE
 import com.ctp.taskmanageapp.presentation.common.SPACE_SMALL_8_SIZE

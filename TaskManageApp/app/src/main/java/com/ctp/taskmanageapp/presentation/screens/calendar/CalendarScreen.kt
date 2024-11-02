@@ -15,7 +15,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.ctp.taskmanageapp.R
-import com.ctp.taskmanageapp.data.local.filters.StatusTask
+import com.ctp.taskmanageapp.domain.models.filters.StatusTask
 import com.ctp.taskmanageapp.presentation.common.SPACE_CONTENT_SIZE
 import com.ctp.taskmanageapp.presentation.common.SPACE_SMALL_8_SIZE
 import com.ctp.taskmanageapp.presentation.screens.calendar.component.CalendarScrollPicker

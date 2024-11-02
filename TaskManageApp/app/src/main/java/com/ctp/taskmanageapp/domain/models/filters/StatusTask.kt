@@ -1,4 +1,4 @@
-package com.ctp.taskmanageapp.data.local.filters
+package com.ctp.taskmanageapp.domain.models.filters
 
 import com.ctp.taskmanageapp.R
 

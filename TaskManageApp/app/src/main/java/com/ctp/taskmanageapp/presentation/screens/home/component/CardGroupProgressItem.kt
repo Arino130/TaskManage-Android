@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.dp
 import com.ctp.taskmanageapp.R
 import com.ctp.taskmanageapp.presentation.common.h3TextStyle
 import com.ctp.taskmanageapp.presentation.extensions.getColorFromResources
-import com.ctp.taskmanageapp.data.local.taskgroups.TaskGroupType
+import com.ctp.taskmanageapp.domain.models.TaskGroupType
 import com.ctp.taskmanageapp.presentation.common.ELEVATION_DEFAULT_SIZE
 import com.ctp.taskmanageapp.presentation.common.ICON_SMALL_SIZE
 import com.ctp.taskmanageapp.presentation.common.SPACE_DEFAULT_SIZE

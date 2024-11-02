@@ -7,8 +7,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.ctp.taskmanageapp.data.local.taskgroups.TaskGroup
-import com.ctp.taskmanageapp.data.local.taskgroups.TaskGroupType
+import com.ctp.taskmanageapp.domain.models.TaskGroup
+import com.ctp.taskmanageapp.domain.models.TaskGroupType
 import com.ctp.taskmanageapp.presentation.common.SPACE_DEFAULT_SIZE
 
 @Composable

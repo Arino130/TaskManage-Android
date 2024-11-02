@@ -30,7 +30,7 @@ import com.ctp.taskmanageapp.presentation.common.ELEVATION_DEFAULT_SIZE
 import com.ctp.taskmanageapp.presentation.common.SPACE_CONTENT_SEGMENT_SIZE
 import com.ctp.taskmanageapp.presentation.common.SPACE_SMALL_6_SIZE
 import com.ctp.taskmanageapp.presentation.common.SPACE_SMALL_8_SIZE
-import com.ctp.taskmanageapp.presentation.common.h3TextStyle
+import com.ctp.taskmanageapp.presentation.common.h4TextStyle
 import com.ctp.taskmanageapp.presentation.extensions.getColorFromResources
 import com.ctp.taskmanageapp.widget.components.buttons.model.SegmentModel
 
@@ -98,7 +98,7 @@ fun SegmentedItem(
                     context.getString(it)
                 } ?: segmentItem.textStr,
                 color = textColor,
-                style = h3TextStyle
+                style = h4TextStyle
             )
         }
     }

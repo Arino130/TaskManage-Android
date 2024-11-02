@@ -1,6 +1,6 @@
-package com.ctp.taskmanageapp.data.local.taskgroups
+package com.ctp.taskmanageapp.domain.models
 
-import com.ctp.taskmanageapp.data.local.tasks.TaskInfo
+import com.ctp.taskmanageapp.domain.models.tasks.TaskInfo
 
 data class TaskGroup(
     val titleGroup: String,

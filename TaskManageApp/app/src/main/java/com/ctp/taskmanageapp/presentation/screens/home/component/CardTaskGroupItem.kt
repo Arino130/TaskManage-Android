@@ -25,7 +25,7 @@ import androidx.core.content.ContextCompat
 import com.ctp.taskmanageapp.R
 import com.ctp.taskmanageapp.presentation.common.h4TextStyle
 import com.ctp.taskmanageapp.presentation.extensions.getColorFromResources
-import com.ctp.taskmanageapp.data.local.taskgroups.TaskGroupType
+import com.ctp.taskmanageapp.domain.models.TaskGroupType
 import com.ctp.taskmanageapp.presentation.common.CIRCULAR_SMALL_SIZE
 import com.ctp.taskmanageapp.presentation.common.ICON_LARGE_SIZE
 import com.ctp.taskmanageapp.presentation.common.SPACE_CONTENT_SIZE
