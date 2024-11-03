@@ -22,6 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.ctp.taskmanageapp.R
+import com.ctp.taskmanageapp.presentation.common.COLUMN_CONTENT_SIZE
 import com.ctp.taskmanageapp.presentation.extensions.getColorFromResources
 import kotlin.math.*
 
@@ -139,7 +140,7 @@ fun Preview() {
     val context = LocalContext.current
     CircularProgressBar(
         initialValue = 50,
-        size = 150.dp,
+        size = COLUMN_CONTENT_SIZE,
         primaryColor = context.getColorFromResources(R.color.CircularProgressBarPrimary),
         secondaryColor = context.getColorFromResources(R.color.CircularProgressBarSecondary),
         textColor = context.getColorFromResources(R.color.white),

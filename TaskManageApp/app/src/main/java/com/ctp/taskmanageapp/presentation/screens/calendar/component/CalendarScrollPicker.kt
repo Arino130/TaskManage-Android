@@ -122,9 +122,7 @@ fun CardCalendarItem(
                 fontWeight = FontWeight.Normal
             )
             Text(
-                modifier = Modifier.padding(
-                    paddingValues = PaddingValues(vertical = SPACE_SMALL_12_SIZE)
-                ),
+                modifier = Modifier.padding(vertical = SPACE_SMALL_12_SIZE),
                 text = localDate.dayOfMonth.toString(),
                 color = textColor,
                 style = h3TextStyle,

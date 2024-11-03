@@ -62,11 +62,7 @@ fun CalendarTaskItem(task: TaskInfo, onClick: (TaskInfo) -> Unit) {
                 horizontalAlignment = Alignment.Start,
                 modifier = Modifier
                     .weight(1f)
-                    .padding(
-                        paddingValues = PaddingValues(
-                            horizontal = SPACE_SMALL_12_SIZE
-                        )
-                    )
+                    .padding(horizontal = SPACE_SMALL_12_SIZE)
                     .fillMaxHeight(),
                 verticalArrangement = Arrangement.Center
             ) {

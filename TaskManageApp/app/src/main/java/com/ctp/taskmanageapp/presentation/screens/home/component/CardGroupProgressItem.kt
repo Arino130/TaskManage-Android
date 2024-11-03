@@ -29,6 +29,7 @@ import com.ctp.taskmanageapp.R
 import com.ctp.taskmanageapp.presentation.common.h3TextStyle
 import com.ctp.taskmanageapp.presentation.extensions.getColorFromResources
 import com.ctp.taskmanageapp.domain.models.TaskGroupType
+import com.ctp.taskmanageapp.presentation.common.COLUMN_CONTENT_SIZE
 import com.ctp.taskmanageapp.presentation.common.ELEVATION_DEFAULT_SIZE
 import com.ctp.taskmanageapp.presentation.common.ICON_SMALL_SIZE
 import com.ctp.taskmanageapp.presentation.common.SPACE_DEFAULT_SIZE
@@ -47,7 +48,7 @@ fun CardTaskGroup(
     val context = LocalContext.current
     Card(
         modifier = Modifier
-            .height(150.dp)
+            .height(COLUMN_CONTENT_SIZE)
             .width(260.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = ELEVATION_DEFAULT_SIZE),
         colors = CardDefaults.cardColors(

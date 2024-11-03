@@ -2,6 +2,7 @@
     <!--Common-->
     <string name="app_name">TaskManageApp</string>
     <string name="task_count">%1$d Tasks</string>
+    <string name="date_time_picker_title">Pick a Date and Time</string>
 
     <!--Navigation-->
     <string name="home_label_nav">Home</string>
@@ -35,5 +36,14 @@
 
     <!--CalendarScreen-->
     <string name="calendar_title">Today\'s Tasks</string>
+
+    <!--AddTaskScreen-->
+    <string name="add_task_screen_title">Add Task</string>
+    <string name="add_task_screen_task_name_field">Task Name</string>
+    <string name="add_task_screen_task_name_field_hint">Enter the name of the task (e.g., \'Prepare presentation\').</string>
+    <string name="add_task_screen_description_field">Description</string>
+    <string name="add_task_screen_description_field_hint">Describe the objectives and goals of the task.</string>
+    <string name="add_task_screen_start_datetime_title">Start Date</string>
+    <string name="add_task_screen_end_datetime_title">End Date</string>
 
 </resources>

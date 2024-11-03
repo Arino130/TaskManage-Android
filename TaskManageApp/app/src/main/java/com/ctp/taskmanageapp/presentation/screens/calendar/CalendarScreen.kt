@@ -2,7 +2,6 @@ package com.ctp.taskmanageapp.presentation.screens.calendar
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -10,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -28,6 +28,9 @@ import java.time.LocalDate
 
 @Composable
 fun CalendarScreen(mainViewModel: MainViewModel) {
+    LaunchedEffect(Unit) {
+        mainViewModel.toggleBottomBar(true)
+    }
     val filterTypes: List<SegmentModel> = remember {
         StatusTask.values().toList().mapIndexed { index, item ->
             SegmentModel(textId = item.fullNameId).apply {
@@ -46,12 +49,7 @@ fun CalendarScreen(mainViewModel: MainViewModel) {
             modifier = Modifier
                 .fillMaxHeight()
                 .fillMaxWidth()
-                .padding(
-                    paddingValues = PaddingValues(
-                        vertical = SPACE_CONTENT_SIZE,
-                        horizontal = SPACE_CONTENT_SIZE
-                    )
-                )
+                .padding(vertical = SPACE_CONTENT_SIZE, horizontal = SPACE_CONTENT_SIZE)
         ) {
             Box(
                 modifier = Modifier.padding(vertical = SPACE_CONTENT_SIZE)

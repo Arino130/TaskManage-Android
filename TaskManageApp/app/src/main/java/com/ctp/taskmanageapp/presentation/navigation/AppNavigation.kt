@@ -1,8 +1,9 @@
 package com.ctp.taskmanageapp.presentation.navigation
 
-import androidx.compose.animation.EnterTransition
-import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -20,6 +21,7 @@ import com.ctp.taskmanageapp.presentation.screens.calendar.CalendarScreen
 import com.ctp.taskmanageapp.presentation.screens.home.HomeScreen
 import com.ctp.taskmanageapp.presentation.screens.onboarding.OnBoardingScreen
 import com.ctp.taskmanageapp.presentation.screens.settings.SettingsScreen
+import com.ctp.taskmanageapp.presentation.screens.taskinfo.AddTaskScreen
 import com.ctp.taskmanageapp.presentation.viewmodels.MainViewModel
 
 @ExperimentalAnimationApi
@@ -41,7 +43,7 @@ fun AppNavigation(mainViewModel: MainViewModel) {
                         }
                     },
                     onAddClick = {
-                        // TODO: Handle Fab Menu
+                        navController.navigate(Routes.AddTask.name)
                     },
                     selectTab = currentScreen,
                     bottomBarState = bottomBarState.value
@@ -64,13 +66,13 @@ fun NavigationController(
 ) {
     NavHost(
         navController = navController,
-        startDestination = Routes.Calendar.name,
+        startDestination = Routes.OnBoarding.name,
         Modifier.padding(innerPadding ?: PaddingValues()),
         enterTransition = {
-            EnterTransition.None
+            fadeIn(animationSpec = tween(700))
         },
         exitTransition = {
-            ExitTransition.None
+            fadeOut(animationSpec = tween(700))
         }
     ) {
         composable(route = Routes.OnBoarding.name) {
@@ -94,6 +96,10 @@ fun NavigationController(
 
         composable(route = Routes.Settings.name) {
             SettingsScreen(mainViewModel = mainViewModel)
+        }
+
+        composable(route = Routes.AddTask.name) {
+            AddTaskScreen(mainViewModel = mainViewModel)
         }
     }
 }

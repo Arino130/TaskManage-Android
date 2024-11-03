@@ -58,7 +58,7 @@ fun CardGroupTaskItem(groupType: TaskGroupType, taskCount: Int = 0, progress: In
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(paddingValues = PaddingValues(vertical = SPACE_CONTENT_SIZE))
+                    .padding(vertical = SPACE_CONTENT_SIZE)
             ) {
                 Image(
                     modifier = Modifier

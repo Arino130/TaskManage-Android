@@ -4,5 +4,6 @@ enum class Routes {
     OnBoarding,
     Home,
     Calendar,
-    Settings
+    Settings,
+    AddTask
 }

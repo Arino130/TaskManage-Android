@@ -29,6 +29,8 @@ import com.ctp.taskmanageapp.domain.models.TaskGroup
 import com.ctp.taskmanageapp.domain.models.TaskGroupType
 import com.ctp.taskmanageapp.presentation.common.AVATAR_DEFAULT_SIZE
 import com.ctp.taskmanageapp.presentation.common.SPACE_CONTENT_SIZE
+import com.ctp.taskmanageapp.presentation.common.SPACE_SMALL_4_SIZE
+import com.ctp.taskmanageapp.presentation.common.SPACE_SMALL_6_SIZE
 import com.ctp.taskmanageapp.presentation.common.SPACE_SMALL_8_SIZE
 import com.ctp.taskmanageapp.presentation.common.h1TitleStyle
 import com.ctp.taskmanageapp.presentation.common.h2TextStyle
@@ -77,9 +79,7 @@ fun HomeScreen(mainViewModel: MainViewModel) {
             .padding(paddingValues = PaddingValues(top = SPACE_CONTENT_SIZE))
     ) {
         Row(
-            modifier = Modifier.padding(
-                paddingValues = PaddingValues(horizontal = SPACE_CONTENT_SIZE)
-            )
+            modifier = Modifier.padding(horizontal = SPACE_CONTENT_SIZE)
         ) {
             Image(
                 modifier = Modifier
@@ -89,9 +89,7 @@ fun HomeScreen(mainViewModel: MainViewModel) {
                 contentScale = ContentScale.FillBounds
             )
             Column(
-                modifier = Modifier.padding(
-                    paddingValues = PaddingValues(horizontal = SPACE_SMALL_8_SIZE)
-                ),
+                modifier = Modifier.padding(horizontal = SPACE_SMALL_8_SIZE),
                 verticalArrangement = Arrangement.Center
             ) {
                 Text(
@@ -123,16 +121,12 @@ fun HomeScreen(mainViewModel: MainViewModel) {
                 .verticalScroll(rememberScrollState())
         ) {
             Box(
-                modifier = Modifier.padding(
-                    paddingValues = PaddingValues(
-                        horizontal = SPACE_CONTENT_SIZE
-                    )
-                )
+                modifier = Modifier.padding(horizontal = SPACE_CONTENT_SIZE)
             ) {
                 Column(
                     horizontalAlignment = Alignment.Start,
                     modifier = Modifier
-                        .padding(paddingValues = PaddingValues(horizontal = 4.dp)),
+                        .padding(horizontal = SPACE_SMALL_4_SIZE),
                 ) {
                     Box(modifier = Modifier.padding(top = SPACE_CONTENT_SIZE)) {
                         CardOverviewTask()
@@ -157,11 +151,8 @@ fun HomeScreen(mainViewModel: MainViewModel) {
                             )
                         )
                         Box(
-                            modifier = Modifier.padding(
-                                paddingValues = PaddingValues(horizontal = 6.dp)
-                            )
-                        )
-                        {
+                            modifier = Modifier.padding(horizontal = SPACE_SMALL_6_SIZE)
+                        ) {
                             LabelCircular(inProgressNumber.toString(), textStyle = h5TextStyle)
                         }
                     }
@@ -184,11 +175,8 @@ fun HomeScreen(mainViewModel: MainViewModel) {
                             )
                         )
                         Box(
-                            modifier = Modifier.padding(
-                                paddingValues = PaddingValues(horizontal = 6.dp)
-                            )
-                        )
-                        {
+                            modifier = Modifier.padding(horizontal = SPACE_SMALL_6_SIZE)
+                        ) {
                             LabelCircular(taskGroupNumber.toString(), textStyle = h5TextStyle)
                         }
                     }

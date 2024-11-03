@@ -24,9 +24,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ctp.taskmanageapp.R
 import com.ctp.taskmanageapp.presentation.common.CIRCULAR_LARGE_SIZE
+import com.ctp.taskmanageapp.presentation.common.COLUMN_CONTENT_SIZE
 import com.ctp.taskmanageapp.presentation.common.ICON_SMALL_SIZE
 import com.ctp.taskmanageapp.presentation.common.SPACE_CONTENT_20_SIZE
+import com.ctp.taskmanageapp.presentation.common.SPACE_DEFAULT_SIZE
 import com.ctp.taskmanageapp.presentation.common.SPACE_SMALL_10_SIZE
+import com.ctp.taskmanageapp.presentation.common.SPACE_SMALL_4_SIZE
 import com.ctp.taskmanageapp.presentation.common.SPACE_SMALL_8_SIZE
 import com.ctp.taskmanageapp.presentation.common.h3TextStyle
 import com.ctp.taskmanageapp.presentation.extensions.getColorFromResources
@@ -40,7 +43,7 @@ fun CardOverviewTask() {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .height(150.dp)
+            .height(COLUMN_CONTENT_SIZE)
             .padding(vertical = 8.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
         colors = CardDefaults.cardColors(
@@ -54,12 +57,12 @@ fun CardOverviewTask() {
             verticalAlignment = Alignment.Top,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(paddingValues = PaddingValues(vertical = 15.dp))
+                .padding(vertical = SPACE_DEFAULT_SIZE)
         ) {
             Column(
                 horizontalAlignment = Alignment.Start,
                 modifier = Modifier
-                    .padding(paddingValues = PaddingValues(horizontal = 4.dp)),
+                    .padding(horizontal = SPACE_SMALL_4_SIZE),
             ) {
                 Text(
                     text = context.getString(R.string.home_overview_card_title),
