@@ -4,19 +4,29 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.displayCutoutPadding
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.ctp.taskmanageapp.presentation.extensions.navigateAndClearBackStack
+import com.ctp.taskmanageapp.presentation.extensions.popBackStackTo
 import com.ctp.taskmanageapp.presentation.screens.calendar.CalendarScreen
 import com.ctp.taskmanageapp.presentation.screens.home.HomeScreen
 import com.ctp.taskmanageapp.presentation.screens.onboarding.OnBoardingScreen
@@ -24,28 +34,34 @@ import com.ctp.taskmanageapp.presentation.screens.settings.SettingsScreen
 import com.ctp.taskmanageapp.presentation.screens.taskinfo.AddTaskScreen
 import com.ctp.taskmanageapp.presentation.viewmodels.MainViewModel
 
+
 @ExperimentalAnimationApi
 @Composable
 fun AppNavigation(mainViewModel: MainViewModel) {
     val navController = rememberNavController()
     val showBottomBar by mainViewModel.showBottomBar.collectAsState()
-    var currentScreen: BottomNavScreen = BottomNavScreen.Home
+    val currentScreen: MutableState<BottomNavScreen> = remember {
+        mutableStateOf(BottomNavScreen.Home)
+    }
     if (showBottomBar) {
         val bottomBarState = rememberSaveable { (mutableStateOf(true)) }
         Scaffold(
+            modifier = Modifier
+                .fillMaxHeight()
+                .navigationBarsPadding(),
             bottomBar = {
                 BottomNavigationBar(
                     tabs = getBottomNavScreen(),
                     onTabSelected = {
                         if (currentScreen != it) {
-                            currentScreen = it
-                            navController.navigate(currentScreen.route.name)
+                            currentScreen.value = it
+                            navController.navigate(currentScreen.value.route.name)
                         }
                     },
                     onAddClick = {
                         navController.navigate(Routes.AddTask.name)
                     },
-                    selectTab = currentScreen,
+                    selectTab = currentScreen.value,
                     bottomBarState = bottomBarState.value
                 )
             }
@@ -53,7 +69,21 @@ fun AppNavigation(mainViewModel: MainViewModel) {
             NavigationController(mainViewModel, navController, innerPadding)
         }
     } else {
-        NavigationController(mainViewModel, navController)
+        Box(
+            modifier = Modifier
+                .displayCutoutPadding()
+                .navigationBarsPadding()
+        ) {
+            NavigationController(mainViewModel, navController)
+        }
+    }
+
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    LaunchedEffect(navBackStackEntry) {
+        val currentRoute = navController.currentBackStackEntry?.destination?.route
+        getBottomNavScreen().firstOrNull {
+            it.route.name == currentRoute
+        }?.let { currentScreen.value = it }
     }
 }
 
@@ -66,7 +96,7 @@ fun NavigationController(
 ) {
     NavHost(
         navController = navController,
-        startDestination = Routes.OnBoarding.name,
+        startDestination = Routes.Home.name,
         Modifier.padding(innerPadding ?: PaddingValues()),
         enterTransition = {
             fadeIn(animationSpec = tween(700))
@@ -79,9 +109,7 @@ fun NavigationController(
             OnBoardingScreen(
                 mainViewModel = mainViewModel,
                 onFinishScreen = {
-                    navController.navigate(Routes.Home.name) {
-                        popUpTo(0) { inclusive = true }
-                    }
+                    navController.navigateAndClearBackStack(Routes.Home.name)
                 }
             )
         }
@@ -99,7 +127,10 @@ fun NavigationController(
         }
 
         composable(route = Routes.AddTask.name) {
-            AddTaskScreen(mainViewModel = mainViewModel)
+            AddTaskScreen(mainViewModel = mainViewModel, onBack = {
+                val previousEntry = navController.previousBackStackEntry
+                navController.popBackStackTo(previousEntry?.destination?.route.toString())
+            })
         }
     }
 }

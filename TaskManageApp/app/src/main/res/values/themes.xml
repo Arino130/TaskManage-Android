@@ -2,10 +2,15 @@
 <resources>
 
     <style name="Theme.TaskManager" parent="android:Theme.Material.NoActionBar">
-        <item name="android:statusBarColor">#000</item>
+        <item name="colorPrimary">#FFFFFF</item>
+        <item name="android:statusBarColor">#FFFFFF</item>
+        <item name="android:windowLightStatusBar">true</item>
     </style>
 
     <style name="Theme.App.Starting" parent="Theme.SplashScreen">
+        <item name="colorPrimary">#FFFFFF</item>
+        <item name="android:statusBarColor">#FFFFFF</item>
+        <item name="android:windowLightStatusBar">true</item>
         <item name="windowSplashScreenBackground">#161A30</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_background</item>
         <item name="postSplashScreenTheme">@style/Theme.TaskManager</item>

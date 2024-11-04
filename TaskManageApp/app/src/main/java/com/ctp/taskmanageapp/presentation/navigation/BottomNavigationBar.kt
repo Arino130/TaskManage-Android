@@ -16,10 +16,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -47,7 +43,6 @@ fun BottomNavigationBar(
     modifier: Modifier = Modifier,
     bottomBarState: Boolean = true
 ) {
-    var currentTab: BottomNavScreen by remember { mutableStateOf(selectTab) }
     val context = LocalContext.current
     val transparentColor = Color.Transparent
     val fabButtonColor = context.getColorFromResources(R.color.button_background_primary)
@@ -105,10 +100,9 @@ fun BottomNavigationBar(
                         context = context,
                         item = item,
                         onTabSelected = {
-                            currentTab = item
                             onTabSelected(item)
                         },
-                        currentTab = currentTab,
+                        currentTab = selectTab,
                     )
 
                     if (tabs.size % 2 == 0 && (tabs.size / 2) == index + 1) {
