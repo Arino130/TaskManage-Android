@@ -102,7 +102,7 @@ fun CalendarTaskItem(task: TaskInfo, onClick: (TaskInfo) -> Unit) {
                     )
                     Spacer(modifier = Modifier.size(SPACE_SMALL_4_SIZE))
                     Text(
-                        text = task.startTimeFormat,
+                        text = "${task.startTimeFormat} - ${task.endTimeFormat}",
                         style = h4TextStyle,
                         color = Color(
                             ContextCompat.getColor(

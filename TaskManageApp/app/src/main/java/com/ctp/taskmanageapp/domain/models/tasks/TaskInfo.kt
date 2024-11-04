@@ -36,4 +36,13 @@ data class TaskInfo(
                 startTime.getFormat12Hour()
             }
         }
+
+    val endTimeFormat: String
+        get() {
+            return if (LocalDate.now() != endTime.toLocalDate()) {
+                endTime.getFormatDate()
+            } else {
+                endTime.getFormat12Hour()
+            }
+        }
 }
