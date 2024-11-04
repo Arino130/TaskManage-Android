@@ -22,13 +22,13 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import com.ctp.taskmanageapp.R
 import com.ctp.taskmanageapp.domain.models.TaskGroup
 import com.ctp.taskmanageapp.domain.models.TaskGroupType
 import com.ctp.taskmanageapp.presentation.common.AVATAR_DEFAULT_SIZE
 import com.ctp.taskmanageapp.presentation.common.SPACE_CONTENT_SIZE
+import com.ctp.taskmanageapp.presentation.common.SPACE_DEFAULT_SIZE
 import com.ctp.taskmanageapp.presentation.common.SPACE_SMALL_4_SIZE
 import com.ctp.taskmanageapp.presentation.common.SPACE_SMALL_6_SIZE
 import com.ctp.taskmanageapp.presentation.common.SPACE_SMALL_8_SIZE
@@ -156,11 +156,11 @@ fun HomeScreen(mainViewModel: MainViewModel) {
                             LabelCircular(inProgressNumber.toString(), textStyle = h5TextStyle)
                         }
                     }
-                    Box(modifier = Modifier.padding(vertical = 15.dp)) {
+                    Box(modifier = Modifier.padding(vertical = SPACE_DEFAULT_SIZE)) {
                         ProgressGroupListView(taskGroups)
                     }
                     Row(
-                        modifier = Modifier.padding(paddingValues = PaddingValues(top = 8.dp)),
+                        modifier = Modifier.padding(top = SPACE_SMALL_8_SIZE),
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
