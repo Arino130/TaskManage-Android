@@ -46,5 +46,9 @@
     <string name="add_task_screen_start_datetime_title">Start Date</string>
     <string name="add_task_screen_end_datetime_title">End Date</string>
     <string name="add_task_screen_button_save_title">Save</string>
+    <string name="add_task_task_name_valid">Task name cannot be empty!</string>
+    <string name="add_task_descriptions_valid">Description cannot be empty!</string>
+    <string name="add_task_end_time_error">End date cannot be earlier than the start date.</string>
+    <string name="add_task_success_message">Your task has been saved!</string>
 
 </resources>

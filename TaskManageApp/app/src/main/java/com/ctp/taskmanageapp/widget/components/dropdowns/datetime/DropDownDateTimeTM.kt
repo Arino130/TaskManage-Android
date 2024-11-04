@@ -130,6 +130,7 @@ fun DropDownDateTimeTM(
                 ) {
                     DateTimePicker(onChangeLocalDateTime.value) {
                         onChangeLocalDateTime.value = it
+                        onChanged(it)
                     }
                 }
             }

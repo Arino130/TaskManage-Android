@@ -19,6 +19,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import com.ctp.taskmanageapp.R
 import com.ctp.taskmanageapp.domain.models.TaskGroupType
+import com.ctp.taskmanageapp.domain.models.filters.StatusTask
+import com.ctp.taskmanageapp.domain.models.tasks.TaskInfo
 import com.ctp.taskmanageapp.presentation.common.SPACE_CONTENT_40_SIZE
 import com.ctp.taskmanageapp.presentation.common.SPACE_DEFAULT_SIZE
 import com.ctp.taskmanageapp.presentation.common.SPACE_SMALL_12_SIZE
@@ -33,6 +35,7 @@ import com.ctp.taskmanageapp.widget.components.dropdowns.models.DropDownTMModel
 import com.ctp.taskmanageapp.widget.components.headers.HeaderSubScreen
 import com.ctp.taskmanageapp.widget.components.inputs.InputTM
 import com.ctp.taskmanageapp.widget.components.inputs.InputType
+import java.time.LocalDateTime
 
 @Composable
 fun AddTaskScreen(mainViewModel: MainViewModel, onBack: () -> Unit) {
@@ -49,6 +52,16 @@ fun AddTaskScreen(mainViewModel: MainViewModel, onBack: () -> Unit) {
             )
         }
     }
+    val startTime = remember { LocalDateTime.now() }
+    val endTime = remember { LocalDateTime.now() }
+    var taskInfo = remember {
+        TaskInfo(
+            taskGroupType = TaskGroupType.values().toList().first(),
+            startTime = startTime,
+            endTime = endTime,
+            statusTask = StatusTask.TODO
+        )
+    }
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -57,7 +70,8 @@ fun AddTaskScreen(mainViewModel: MainViewModel, onBack: () -> Unit) {
     ) {
         Column(
             modifier = Modifier
-                .padding(horizontal = SPACE_SMALL_12_SIZE).padding(bottom = SPACE_CONTENT_40_SIZE)
+                .padding(horizontal = SPACE_SMALL_12_SIZE)
+                .padding(bottom = SPACE_CONTENT_40_SIZE)
         ) {
             HeaderSubScreen(titleId = R.string.add_task_screen_title) {
                 onBack()
@@ -70,39 +84,46 @@ fun AddTaskScreen(mainViewModel: MainViewModel, onBack: () -> Unit) {
                     .padding(top = SPACE_DEFAULT_SIZE, bottom = SPACE_CONTENT_40_SIZE)
             ) {
                 DropDownTM(taskGroupTypes) {
-                    // TODO: Select Group Type
+                    taskInfo = taskInfo.copy(taskGroupType = it.rootData)
                 }
                 InputTM(
                     inputType = InputType.SINGLE_INPUT,
                     labelId = R.string.add_task_screen_task_name_field,
                     hintId = R.string.add_task_screen_task_name_field_hint
-                ) {}
+                ) {
+                    taskInfo = taskInfo.copy(titleTask = it)
+                }
                 Spacer(modifier = Modifier.padding(top = SPACE_SMALL_8_SIZE))
                 InputTM(
                     inputType = InputType.AREA_INPUT,
                     labelId = R.string.add_task_screen_description_field,
                     hintId = R.string.add_task_screen_description_field_hint
-                ) {}
+                ) {
+                    taskInfo = taskInfo.copy(content = it)
+                }
                 Spacer(modifier = Modifier.padding(top = SPACE_SMALL_8_SIZE))
                 DropDownDateTimeTM(titleId = R.string.add_task_screen_start_datetime_title) {
-                    // TODO: Onchange start datetime
+                    taskInfo = taskInfo.copy(startTime = it)
                 }
                 Spacer(modifier = Modifier.padding(top = SPACE_SMALL_8_SIZE))
                 DropDownDateTimeTM(titleId = R.string.add_task_screen_end_datetime_title) {
-                    // TODO: Onchange end datetime
+                    taskInfo = taskInfo.copy(endTime = it)
                 }
             }
         }
         Box(
             modifier = Modifier
-                .fillMaxSize().padding(SPACE_SMALL_12_SIZE),
+                .fillMaxSize()
+                .padding(SPACE_SMALL_12_SIZE),
             contentAlignment = Alignment.BottomCenter
         ) {
             ButtonTMComponent(
                 titleButton = context.getString(R.string.add_task_screen_button_save_title),
                 buttonType = ButtonType.Primary
             ) {
-                //TODO: OnClick Add Task
+                mainViewModel.createTaskInfo(taskInfo){
+                    onBack()
+                }
             }
         }
     }

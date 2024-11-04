@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import com.ctp.taskmanageapp.presentation.common.SnackBarApp
 import com.ctp.taskmanageapp.presentation.navigation.AppNavigation
 import com.ctp.taskmanageapp.presentation.ui.theme.ThemeApp
 import com.ctp.taskmanageapp.presentation.viewmodels.MainViewModel
@@ -25,10 +26,12 @@ class MainActivity : ComponentActivity() {
     private fun initApp() {
         installSplashScreen()
         enableEdgeToEdge()
+        mainViewModel.initUI()
 
         setContent {
             ThemeApp {
                 AppNavigation(mainViewModel)
+                SnackBarApp()
             }
         }
     }
