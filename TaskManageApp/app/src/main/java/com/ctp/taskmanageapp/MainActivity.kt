@@ -7,16 +7,15 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import com.ctp.taskmanageapp.presentation.common.SnackBarApp
 import com.ctp.taskmanageapp.presentation.navigation.AppNavigation
 import com.ctp.taskmanageapp.presentation.ui.theme.ThemeApp
 import com.ctp.taskmanageapp.presentation.viewmodels.MainViewModel
+import com.ctp.taskmanageapp.widget.components.snackbar.SnackBarApp
 import dagger.hilt.android.AndroidEntryPoint
 
 @ExperimentalAnimationApi
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-
     private val mainViewModel by viewModels<MainViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
