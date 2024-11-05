@@ -9,7 +9,7 @@ import com.ctp.taskmanageapp.domain.models.Type
 import com.ctp.taskmanageapp.domain.models.tasks.TaskInfo
 import com.ctp.taskmanageapp.domain.usecase.TaskInfoUseCases
 import com.ctp.taskmanageapp.presentation.base.BaseViewModel
-import com.ctp.taskmanageapp.presentation.common.SnackBarController
+import com.ctp.taskmanageapp.widget.components.snackbar.SnackBarController
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -23,65 +23,18 @@ class MainViewModel @Inject constructor(
 ) : BaseViewModel() {
     private val _showBottomBar = MutableStateFlow(true)
     val showBottomBar = _showBottomBar.asStateFlow()
-
-//    private val taskInfoAll: List<TaskInfo> = listOf(
-//        TaskInfo(
-//            taskGroupType = TaskGroupType.PersonalProject,
-//            titleTask = "Lorem Ipsum is simply dummy text 123456789",
-//            content = "Lorem Ipsum is simply dummy text of the printing",
-//            startTime = LocalDateTime.now(),
-//            endTime = LocalDateTime.now().plusHours(2),
-//            statusTask = StatusTask.TODO
-//        ),
-//        TaskInfo(
-//            taskGroupType = TaskGroupType.OfficeProject,
-//            titleTask = "Lorem Ipsum is simply dummy text 2",
-//            content = "Lorem Ipsum is simply dummy text of the printing",
-//            startTime = LocalDateTime.now(),
-//            endTime = LocalDateTime.now().plusDays(2),
-//            statusTask = StatusTask.IN_PROGRESS
-//        ),
-//        TaskInfo(
-//            taskGroupType = TaskGroupType.OfficeProject,
-//            titleTask = "Lorem Ipsum is simply dummy text 7",
-//            content = "Lorem Ipsum is simply dummy text of the printing",
-//            startTime = LocalDateTime.now(),
-//            endTime = LocalDateTime.now().plusDays(2),
-//            statusTask = StatusTask.DONE
-//        ),
-//        TaskInfo(
-//            taskGroupType = TaskGroupType.OfficeProject,
-//            titleTask = "Lorem Ipsum is simply dummy text 3",
-//            content = "Lorem Ipsum is simply dummy text of the printing",
-//            startTime = LocalDateTime.now().plusMonths(2),
-//            endTime = LocalDateTime.now().plusMonths(2).plusHours(2),
-//            statusTask = StatusTask.DONE
-//        ),
-//        TaskInfo(
-//            taskGroupType = TaskGroupType.OfficeProject,
-//            titleTask = "Lorem Ipsum is simply dummy text 4",
-//            content = "Lorem Ipsum is simply dummy text of the printing",
-//            startTime = LocalDateTime.now().plusDays(5),
-//            endTime = LocalDateTime.now().plusDays(10),
-//            statusTask = StatusTask.IN_PROGRESS
-//        ),
-//        TaskInfo(
-//            taskGroupType = TaskGroupType.OfficeProject,
-//            titleTask = "Lorem Ipsum is simply dummy text 5",
-//            content = "Lorem Ipsum is simply dummy text of the printing",
-//            startTime = LocalDateTime.now().minusDays(5),
-//            endTime = LocalDateTime.now().minusDays(1),
-//            statusTask = StatusTask.IN_PROGRESS
-//        )
-//    )
-
     private var taskInfoAll: List<TaskInfo> = listOf()
 
     fun initUI() {
         viewModelScope.launch {
-            taskUseCases?.getAllTasks()?.collect { tasks ->
-                taskInfoAll = tasks
-            }
+            getAllTasks {}
+        }
+    }
+
+    private suspend fun getAllTasks(onSuccess: () -> Unit) {
+        taskUseCases?.getAllTasks()?.collect { tasks ->
+            taskInfoAll = tasks
+            onSuccess()
         }
     }
 
@@ -105,11 +58,47 @@ class MainViewModel @Inject constructor(
         if (isValid) {
             viewModelScope.launch {
                 taskUseCases?.insertTask(taskInfo)
-                SnackBarController.showSnackBar(SnackBarType(R.string.add_task_success_message, Type.SUCCESS))
+                SnackBarController.showSnackBar(
+                    SnackBarType(
+                        R.string.add_task_success_message,
+                        Type.SUCCESS
+                    )
+                )
                 onSuccess()
             }
         } else {
             SnackBarController.showSnackBar(SnackBarType(errorMessage, Type.ERROR))
+        }
+    }
+
+    fun onNextStatusTask(taskInfo: TaskInfo, onSuccess: () -> Unit) {
+        val status = when (taskInfo.statusTask) {
+            StatusTask.TODO -> Pair(true, StatusTask.IN_PROGRESS)
+            StatusTask.IN_PROGRESS -> Pair(true, StatusTask.DONE)
+            StatusTask.DONE -> Pair(false, StatusTask.DONE)
+            else -> Pair(false, StatusTask.TODO)
+        }
+        if (status.first) {
+            updateStatus(taskInfo, status = status.second, onSuccess)
+        }
+    }
+
+    private fun updateStatus(
+        taskInfo: TaskInfo,
+        status: StatusTask = StatusTask.IN_PROGRESS,
+        onSuccess: () -> Unit
+    ) {
+        viewModelScope.launch {
+            taskUseCases?.updateTask(taskInfo.copy(statusTask = status))
+            getAllTasks {
+                SnackBarController.showSnackBar(
+                    SnackBarType(
+                        R.string.calendar_change_status_success,
+                        Type.SUCCESS
+                    )
+                )
+                onSuccess.invoke()
+            }
         }
     }
 }

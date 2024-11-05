@@ -3,6 +3,12 @@
     <string name="app_name">TaskManageApp</string>
     <string name="task_count">%1$d Tasks</string>
     <string name="date_time_picker_title">Pick a Date and Time</string>
+    <string name="confirm">Confirm</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+
+    <string name="dialog_confirm_done_task_title">Mark Task as Done?</string>
+    <string name="dialog_confirm_done_task_body">Are you sure you want to mark this task as done? This action cannot be undone.</string>
 
     <!--Navigation-->
     <string name="home_label_nav">Home</string>
@@ -36,6 +42,7 @@
 
     <!--CalendarScreen-->
     <string name="calendar_title">Today\'s Tasks</string>
+    <string name="calendar_change_status_success">Your task has been updated!</string>
 
     <!--AddTaskScreen-->
     <string name="add_task_screen_title">Add Task</string>

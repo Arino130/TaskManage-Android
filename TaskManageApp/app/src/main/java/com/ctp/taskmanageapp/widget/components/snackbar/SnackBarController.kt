@@ -1,4 +1,4 @@
-package com.ctp.taskmanageapp.presentation.common
+package com.ctp.taskmanageapp.widget.components.snackbar
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.animateFloatAsState
@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.ctp.taskmanageapp.domain.models.SnackBarType
 import com.ctp.taskmanageapp.domain.models.Type
+import com.ctp.taskmanageapp.presentation.common.SPACE_CONTENT_SIZE
 import kotlinx.coroutines.delay
 import kotlin.math.abs
 import kotlin.math.roundToInt
