@@ -76,7 +76,9 @@ fun DateTimePicker(
             selectedMonth.toInt(),
             selectedDay.toInt(),
             hour,
-            selectedMinute.toInt()
+            selectedMinute.toInt(),
+            0,
+            0
         )
 
         onChanged(newDateTime)
