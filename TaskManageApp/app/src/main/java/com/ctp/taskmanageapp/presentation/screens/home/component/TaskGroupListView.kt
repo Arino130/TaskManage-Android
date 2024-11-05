@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.ctp.taskmanageapp.domain.models.TaskGroup
 import com.ctp.taskmanageapp.domain.models.TaskGroupType
-import com.ctp.taskmanageapp.presentation.common.SPACE_DEFAULT_SIZE
+import com.ctp.taskmanageapp.presentation.common.SPACE_SMALL_4_SIZE
 
 @Composable
 fun TaskGroupListView(taskGroups: List<TaskGroup>) {
@@ -17,7 +17,7 @@ fun TaskGroupListView(taskGroups: List<TaskGroup>) {
         taskGroups.forEach { item ->
             Box(
                 modifier = Modifier.padding(
-                    paddingValues = PaddingValues(bottom = SPACE_DEFAULT_SIZE)
+                    paddingValues = PaddingValues(vertical = SPACE_SMALL_4_SIZE)
                 )
             ) {
                 CardGroupTaskItem(item.taskGroupType, item.taskCounts, item.progressNumber)

@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.ctp.taskmanageapp.domain.models.TaskGroup
 import com.ctp.taskmanageapp.domain.models.TaskGroupType
-import com.ctp.taskmanageapp.presentation.common.SPACE_DEFAULT_SIZE
+import com.ctp.taskmanageapp.presentation.common.SPACE_SMALL_8_SIZE
 
 @Composable
 fun ProgressGroupListView(taskGroups: List<TaskGroup>) {
@@ -19,7 +19,7 @@ fun ProgressGroupListView(taskGroups: List<TaskGroup>) {
         taskGroups.forEach { item ->
             Box(
                 modifier = Modifier.padding(
-                    paddingValues = PaddingValues(end = SPACE_DEFAULT_SIZE)
+                    paddingValues = PaddingValues(end = SPACE_SMALL_8_SIZE)
                 )
             ) {
                 CardTaskGroup(

@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
@@ -20,6 +21,7 @@ import com.ctp.taskmanageapp.domain.models.filters.StatusTask
 import com.ctp.taskmanageapp.domain.models.tasks.TaskInfo
 import com.ctp.taskmanageapp.presentation.common.SPACE_CONTENT_SIZE
 import com.ctp.taskmanageapp.presentation.common.SPACE_DEFAULT_SIZE
+import com.ctp.taskmanageapp.presentation.common.SPACE_SMALL_4_SIZE
 import com.ctp.taskmanageapp.presentation.common.SPACE_SMALL_8_SIZE
 import com.ctp.taskmanageapp.presentation.screens.calendar.component.CalendarScrollPicker
 import com.ctp.taskmanageapp.presentation.screens.calendar.component.CalendarTaskItem
@@ -30,6 +32,7 @@ import com.ctp.taskmanageapp.widget.components.dialogs.DialogNotify
 import com.ctp.taskmanageapp.widget.components.dialogs.models.DialogInfo
 import com.ctp.taskmanageapp.widget.components.dialogs.models.DialogType
 import com.ctp.taskmanageapp.widget.components.headers.HeaderScreen
+import com.ctp.taskmanageapp.widget.components.swipe.SwipeActionBox
 import java.time.LocalDate
 
 @Composable
@@ -73,39 +76,47 @@ fun CalendarScreen(mainViewModel: MainViewModel) {
             modifier = Modifier
                 .fillMaxHeight()
                 .fillMaxWidth()
-                .padding(vertical = SPACE_CONTENT_SIZE, horizontal = SPACE_CONTENT_SIZE)
+                .padding(horizontal = SPACE_CONTENT_SIZE)
         ) {
             Box(
-                modifier = Modifier.padding(vertical = SPACE_CONTENT_SIZE)
+                modifier = Modifier.padding(top = SPACE_CONTENT_SIZE)
             ) {
                 SegmentedControl(filterTypes) {
                     filterStatusSelected.value = it
                 }
             }
-            Spacer(modifier = Modifier.padding(top = SPACE_SMALL_8_SIZE))
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .fillMaxHeight()
+                    .padding(top = SPACE_CONTENT_SIZE)
                     .verticalScroll(rememberScrollState())
             ) {
                 taskData.value.forEach { item ->
-                    CalendarTaskItem(
-                        item
-                    ) {
-                        if (it.statusTask == StatusTask.IN_PROGRESS) {
-                            showConfirmDoneTask.value = it
-                        } else {
-                            mainViewModel.onNextStatusTask(it) {
-                                taskData.value = getFilteredTaskInfoData(
-                                    mainViewModel,
-                                    filterStatusSelected.value,
-                                    filterDatetimeSelected.value
-                                )
+                    Box(modifier = Modifier.padding(vertical = SPACE_SMALL_4_SIZE)) {
+                        SwipeActionBox(item = item, onAction = {
+                            // TODO: See details task
+                        })
+                        {
+                            CalendarTaskItem(
+                                item
+                            ) {
+                                if (it.statusTask == StatusTask.IN_PROGRESS) {
+                                    showConfirmDoneTask.value = it
+                                } else {
+                                    mainViewModel.onNextStatusTask(it) {
+                                        taskData.value = getFilteredTaskInfoData(
+                                            mainViewModel,
+                                            filterStatusSelected.value,
+                                            filterDatetimeSelected.value
+                                        )
+                                    }
+                                }
                             }
                         }
                     }
                 }
+                Spacer(modifier = Modifier.size(SPACE_SMALL_8_SIZE))
             }
         }
     }

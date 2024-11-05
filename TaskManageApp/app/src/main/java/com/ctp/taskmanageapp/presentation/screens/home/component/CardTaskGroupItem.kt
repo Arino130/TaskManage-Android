@@ -27,6 +27,7 @@ import com.ctp.taskmanageapp.presentation.common.h4TextStyle
 import com.ctp.taskmanageapp.presentation.extensions.getColorFromResources
 import com.ctp.taskmanageapp.domain.models.TaskGroupType
 import com.ctp.taskmanageapp.presentation.common.CIRCULAR_SMALL_SIZE
+import com.ctp.taskmanageapp.presentation.common.ELEVATION_DEFAULT_SIZE
 import com.ctp.taskmanageapp.presentation.common.ICON_LARGE_SIZE
 import com.ctp.taskmanageapp.presentation.common.SPACE_CONTENT_SIZE
 import com.ctp.taskmanageapp.presentation.common.SPACE_SMALL_12_SIZE
@@ -41,7 +42,7 @@ fun CardGroupTaskItem(groupType: TaskGroupType, taskCount: Int = 0, progress: In
         modifier = Modifier
             .fillMaxWidth()
             .height(90.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = ELEVATION_DEFAULT_SIZE),
         colors = CardDefaults.cardColors(
             containerColor = context.getColorFromResources(
                 R.color.white

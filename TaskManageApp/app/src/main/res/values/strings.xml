@@ -6,6 +6,7 @@
     <string name="confirm">Confirm</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="see_details">See Details</string>
 
     <string name="dialog_confirm_done_task_title">Mark Task as Done?</string>
     <string name="dialog_confirm_done_task_body">Are you sure you want to mark this task as done? This action cannot be undone.</string>

@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import com.ctp.taskmanageapp.R
 import com.ctp.taskmanageapp.presentation.common.CIRCULAR_LARGE_SIZE
 import com.ctp.taskmanageapp.presentation.common.COLUMN_CONTENT_SIZE
+import com.ctp.taskmanageapp.presentation.common.ELEVATION_DEFAULT_SIZE
 import com.ctp.taskmanageapp.presentation.common.ICON_SMALL_SIZE
 import com.ctp.taskmanageapp.presentation.common.SPACE_CONTENT_20_SIZE
 import com.ctp.taskmanageapp.presentation.common.SPACE_DEFAULT_SIZE
@@ -44,8 +45,8 @@ fun CardOverviewTask() {
         modifier = Modifier
             .fillMaxWidth()
             .height(COLUMN_CONTENT_SIZE)
-            .padding(vertical = 8.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+            .padding(vertical = SPACE_SMALL_8_SIZE),
+        elevation = CardDefaults.cardElevation(defaultElevation = ELEVATION_DEFAULT_SIZE),
         colors = CardDefaults.cardColors(
             containerColor = context.getColorFromResources(
                 R.color.button_background_primary
