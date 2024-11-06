@@ -21,12 +21,12 @@ import java.time.LocalDateTime
 )
 data class TaskInfo(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
-    val taskGroupType: TaskGroupType,
+    val taskGroupType: TaskGroupType = TaskGroupType.OfficeProject,
     val titleTask: String = "",
     val content: String = "",
-    val startTime: LocalDateTime,
-    val endTime: LocalDateTime,
-    val statusTask: StatusTask
+    val startTime: LocalDateTime = LocalDateTime.now(),
+    val endTime: LocalDateTime = LocalDateTime.now(),
+    val statusTask: StatusTask = StatusTask.TODO
 ) {
     val startTimeFormat: String
         get() {
@@ -45,4 +45,7 @@ data class TaskInfo(
                 endTime.getFormat12Hour()
             }
         }
+
+    val isTaskDone: Boolean
+        get() = statusTask == StatusTask.DONE
 }

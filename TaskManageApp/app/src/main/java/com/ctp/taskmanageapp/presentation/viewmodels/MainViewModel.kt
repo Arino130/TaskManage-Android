@@ -83,7 +83,7 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    private fun updateStatus(
+    fun updateStatus(
         taskInfo: TaskInfo,
         status: StatusTask = StatusTask.IN_PROGRESS,
         onSuccess: () -> Unit
@@ -98,6 +98,14 @@ class MainViewModel @Inject constructor(
                     )
                 )
                 onSuccess.invoke()
+            }
+        }
+    }
+
+    fun getTaskById(taskId: Int, onSuccess: (TaskInfo) -> Unit) {
+        viewModelScope.launch {
+            taskUseCases?.getTaskById(taskId)?.let {
+                onSuccess(it)
             }
         }
     }

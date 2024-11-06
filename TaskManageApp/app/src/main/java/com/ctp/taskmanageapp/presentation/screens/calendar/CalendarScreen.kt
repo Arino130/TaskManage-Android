@@ -36,7 +36,7 @@ import com.ctp.taskmanageapp.widget.components.swipe.SwipeActionBox
 import java.time.LocalDate
 
 @Composable
-fun CalendarScreen(mainViewModel: MainViewModel) {
+fun CalendarScreen(mainViewModel: MainViewModel, onDetailsTask: (Int) -> Unit) {
     LaunchedEffect(Unit) {
         mainViewModel.toggleBottomBar(true)
     }
@@ -70,6 +70,7 @@ fun CalendarScreen(mainViewModel: MainViewModel) {
         HeaderScreen(titleId = R.string.calendar_title)
         Spacer(modifier = Modifier.padding(top = SPACE_DEFAULT_SIZE))
         CalendarScrollPicker {
+            taskData.value = listOf()
             filterDatetimeSelected.value = it
         }
         Column(
@@ -82,6 +83,7 @@ fun CalendarScreen(mainViewModel: MainViewModel) {
                 modifier = Modifier.padding(top = SPACE_CONTENT_SIZE)
             ) {
                 SegmentedControl(filterTypes) {
+                    taskData.value = listOf()
                     filterStatusSelected.value = it
                 }
             }
@@ -95,7 +97,7 @@ fun CalendarScreen(mainViewModel: MainViewModel) {
                 taskData.value.forEach { item ->
                     Box(modifier = Modifier.padding(vertical = SPACE_SMALL_4_SIZE)) {
                         SwipeActionBox(item = item, onAction = {
-                            // TODO: See details task
+                            onDetailsTask(it.id)
                         })
                         {
                             CalendarTaskItem(
@@ -159,5 +161,5 @@ fun getFilteredTaskInfoData(
 @Preview
 @Composable
 fun CalendarScreenPreview() {
-    CalendarScreen(MainViewModel(null))
+    CalendarScreen(MainViewModel(null)) {}
 }

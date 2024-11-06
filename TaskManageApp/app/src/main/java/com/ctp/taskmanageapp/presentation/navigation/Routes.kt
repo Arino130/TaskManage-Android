@@ -5,5 +5,6 @@ enum class Routes {
     Home,
     Calendar,
     Settings,
-    AddTask
+    AddTask,
+    DetailsTask
 }

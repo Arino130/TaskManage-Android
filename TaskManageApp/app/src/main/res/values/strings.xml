@@ -59,4 +59,7 @@
     <string name="add_task_end_time_error">End date cannot be earlier than the start date.</string>
     <string name="add_task_success_message">Your task has been saved!</string>
 
+    <!--DetailsTaskScreen-->
+    <string name="details_task_screen_title">Details Task</string>
+
 </resources>

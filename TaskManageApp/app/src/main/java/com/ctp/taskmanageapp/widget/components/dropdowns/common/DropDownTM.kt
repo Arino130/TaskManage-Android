@@ -15,6 +15,8 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -43,22 +45,34 @@ import com.ctp.taskmanageapp.widget.components.dropdowns.models.DropDownTMModel
 @Composable
 fun <T> DropDownTM(
     items: List<DropDownTMModel<T>>,
-    selectDefault: DropDownTMModel<T>? = null,
+    selectDefault: T? = null,
+    readOnly: Boolean = false,
     onSelected: (DropDownTMModel<T>) -> Unit
 ) {
     val context = LocalContext.current
-    val selected = remember {
-        mutableStateOf(
-            selectDefault ?: items.first().also { onSelected(it) }
-        )
+    val selected: MutableState<DropDownTMModel<T>?> = remember {
+        mutableStateOf(items.first())
     }
     val isDropdown = remember { mutableStateOf(false) }
+
+    LaunchedEffect(readOnly, selectDefault) {
+        if (readOnly) {
+            isDropdown.value = false
+        }
+        if (selectDefault != null) {
+            selected.value = items.firstOrNull { it.rootData == selectDefault}
+        }
+    }
     Column {
         Card(
             modifier = Modifier
                 .fillMaxWidth()
                 .defaultMinSize(minHeight = DEFAULT_HEIGHT_SIZE)
-                .clickable { isDropdown.value = !isDropdown.value },
+                .clickable {
+                    if (!readOnly) {
+                        isDropdown.value = !isDropdown.value
+                    }
+                },
             elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
             colors = CardDefaults.cardColors(
                 containerColor = context.getColorFromResources(
@@ -80,43 +94,49 @@ fun <T> DropDownTM(
                         .fillMaxWidth()
                         .padding(vertical = SPACE_DEFAULT_SIZE)
                 ) {
-                    Image(
-                        modifier = Modifier
-                            .size(ICON_SMALL_SIZE),
-                        painter = painterResource(id = selected.value.iconId),
-                        contentDescription = null,
-                        contentScale = ContentScale.FillBounds
-                    )
-                    Text(
-                        modifier = Modifier
-                            .padding(
-                                paddingValues =
-                                PaddingValues(
-                                    horizontal = SPACE_SMALL_12_SIZE
+                    selected.value?.iconId?.let {
+                        Image(
+                            modifier = Modifier
+                                .size(ICON_SMALL_SIZE),
+                            painter = painterResource(id = it),
+                            contentDescription = null,
+                            contentScale = ContentScale.FillBounds
+                        )
+                    }
+                    selected.value?.titleId?.let {
+                        Text(
+                            modifier = Modifier
+                                .padding(
+                                    paddingValues =
+                                    PaddingValues(
+                                        horizontal = SPACE_SMALL_12_SIZE
+                                    )
+                                ),
+                            text = context.getString(it),
+                            style = h3TextStyle,
+                            color = Color(
+                                ContextCompat.getColor(
+                                    context,
+                                    R.color.text_blank_color
                                 )
                             ),
-                        text = context.getString(selected.value.titleId),
-                        style = h3TextStyle,
-                        color = Color(
-                            ContextCompat.getColor(
-                                context,
-                                R.color.text_blank_color
-                            )
-                        ),
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
-                    )
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                    }
                     Spacer(modifier = Modifier.weight(1f))
-                    Image(
-                        modifier = Modifier
-                            .size(ICON_DROPDOWN_SIZE),
-                        painter = painterResource(
-                            id = if (isDropdown.value) R.drawable.ic_collapse
-                            else R.drawable.ic_dropdown
-                        ),
-                        contentDescription = null,
-                        contentScale = ContentScale.FillBounds,
-                    )
+                    if (!readOnly) {
+                        Image(
+                            modifier = Modifier
+                                .size(ICON_DROPDOWN_SIZE),
+                            painter = painterResource(
+                                id = if (isDropdown.value) R.drawable.ic_collapse
+                                else R.drawable.ic_dropdown
+                            ),
+                            contentDescription = null,
+                            contentScale = ContentScale.FillBounds,
+                        )
+                    }
                 }
             }
         }

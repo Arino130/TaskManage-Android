@@ -48,11 +48,13 @@ fun InputTM(
     inputType: InputType,
     labelId: Int,
     hintId: Int,
+    value: String? = null,
+    readOnly: Boolean = false,
     onTextChanges: (String) -> Unit
 ) {
     val context = LocalContext.current
-    val textInput = remember { mutableStateOf("") }
-    val isFocusInput = remember { mutableStateOf(false) }
+    val textInput = remember { mutableStateOf(value ?: "") }
+    val isFocusInput = remember { mutableStateOf(!value.isNullOrBlank()) }
 
     val animatedTextSize by animateDpAsState(
         targetValue = if (isFocusInput.value) SPACE_SMALL_12_SIZE else SPACE_CONTENT_SIZE,
@@ -75,7 +77,6 @@ fun InputTM(
         }
     }
     val cardMinHeight = if (isFocusInput.value) defaultHeight else defaultMinHeight
-
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -127,6 +128,7 @@ fun InputTM(
                             onTextChanges(it)
                         }
                     },
+                    readOnly = readOnly,
                     modifier = Modifier
                         .fillMaxWidth()
                         .heightIn(defaultHeight)
@@ -154,6 +156,12 @@ fun InputTM(
                     singleLine = singleLine
                 )
             }
+        }
+    }
+    LaunchedEffect(value) {
+        value?.let {
+            textInput.value = it
+            isFocusInput.value = it.isNotBlank()
         }
     }
 }

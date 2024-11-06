@@ -41,6 +41,8 @@ import java.time.LocalDateTime
 @Composable
 fun DropDownDateTimeTM(
     titleId: Int,
+    readOnly: Boolean = false,
+    value: LocalDateTime? = null,
     onChanged: (LocalDateTime) -> Unit
 ) {
     val context = LocalContext.current
@@ -48,12 +50,24 @@ fun DropDownDateTimeTM(
         mutableStateOf(LocalDateTime.now())
     }
     val isDropdown = remember { mutableStateOf(false) }
+    LaunchedEffect(readOnly, value) {
+        if (readOnly) {
+            isDropdown.value = false
+        }
+        if (value != null) {
+            onChangeLocalDateTime.value = value
+        }
+    }
     Column {
         Card(
             modifier = Modifier
                 .fillMaxWidth()
                 .defaultMinSize(minHeight = DEFAULT_HEIGHT_SIZE)
-                .clickable { isDropdown.value = !isDropdown.value },
+                .clickable {
+                    if (!readOnly) {
+                        isDropdown.value = !isDropdown.value
+                    }
+                },
             elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
             colors = CardDefaults.cardColors(
                 containerColor = context.getColorFromResources(
@@ -110,16 +124,18 @@ fun DropDownDateTimeTM(
                         )
                     }
                     Spacer(modifier = Modifier.weight(1f))
-                    Image(
-                        modifier = Modifier
-                            .size(ICON_DROPDOWN_SIZE),
-                        painter = painterResource(
-                            id = if (isDropdown.value) R.drawable.ic_collapse
-                            else R.drawable.ic_dropdown
-                        ),
-                        contentDescription = null,
-                        contentScale = ContentScale.FillBounds,
-                    )
+                    if (!readOnly) {
+                        Image(
+                            modifier = Modifier
+                                .size(ICON_DROPDOWN_SIZE),
+                            painter = painterResource(
+                                id = if (isDropdown.value) R.drawable.ic_collapse
+                                else R.drawable.ic_dropdown
+                            ),
+                            contentDescription = null,
+                            contentScale = ContentScale.FillBounds,
+                        )
+                    }
                 }
             }
             if (isDropdown.value) {

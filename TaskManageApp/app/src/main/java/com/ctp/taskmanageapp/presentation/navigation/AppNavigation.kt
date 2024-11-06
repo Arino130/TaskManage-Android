@@ -21,10 +21,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.ctp.taskmanageapp.presentation.extensions.navigateAndClearBackStack
 import com.ctp.taskmanageapp.presentation.extensions.popBackStackTo
 import com.ctp.taskmanageapp.presentation.screens.calendar.CalendarScreen
@@ -32,6 +34,7 @@ import com.ctp.taskmanageapp.presentation.screens.home.HomeScreen
 import com.ctp.taskmanageapp.presentation.screens.onboarding.OnBoardingScreen
 import com.ctp.taskmanageapp.presentation.screens.settings.SettingsScreen
 import com.ctp.taskmanageapp.presentation.screens.taskinfo.AddTaskScreen
+import com.ctp.taskmanageapp.presentation.screens.taskinfo.DetailsTaskScreen
 import com.ctp.taskmanageapp.presentation.viewmodels.MainViewModel
 
 
@@ -119,7 +122,9 @@ fun NavigationController(
         }
 
         composable(route = Routes.Calendar.name) {
-            CalendarScreen(mainViewModel = mainViewModel)
+            CalendarScreen(mainViewModel = mainViewModel, onDetailsTask = {
+                navController.navigate(route = "${Routes.DetailsTask.name}/$it")
+            })
         }
 
         composable(route = Routes.Settings.name) {
@@ -128,9 +133,28 @@ fun NavigationController(
 
         composable(route = Routes.AddTask.name) {
             AddTaskScreen(mainViewModel = mainViewModel, onBack = {
-                val previousEntry = navController.previousBackStackEntry
-                navController.popBackStackTo(previousEntry?.destination?.route.toString())
+                onBackScreen(navController)
             })
+        }
+
+        composable(
+            route = "${Routes.DetailsTask.name}/{id}",
+            arguments = listOf(navArgument("id") {
+                type = NavType.IntType
+                defaultValue = -1
+            })
+        ) { navBackStackEntry ->
+            navBackStackEntry.arguments?.getInt("id")?.let { taskId ->
+                DetailsTaskScreen(mainViewModel = mainViewModel, taskId, onBack = {
+                    onBackScreen(navController)
+                })
+            }
         }
     }
 }
+
+fun onBackScreen(navController: NavHostController) {
+    navController.popBackStackTo(
+        navController.previousBackStackEntry?.destination?.route.toString())
+}
+
