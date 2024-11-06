@@ -133,7 +133,7 @@ fun NavigationController(
 
         composable(route = Routes.AddTask.name) {
             AddTaskScreen(mainViewModel = mainViewModel, onBack = {
-                onBackScreen(navController)
+                navController.popBackStack()
             })
         }
 
@@ -146,7 +146,7 @@ fun NavigationController(
         ) { navBackStackEntry ->
             navBackStackEntry.arguments?.getInt("id")?.let { taskId ->
                 DetailsTaskScreen(mainViewModel = mainViewModel, taskId, onBack = {
-                    onBackScreen(navController)
+                    navController.popBackStack()
                 })
             }
         }

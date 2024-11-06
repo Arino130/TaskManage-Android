@@ -24,11 +24,13 @@ import com.ctp.taskmanageapp.domain.models.TaskGroupType
 import com.ctp.taskmanageapp.domain.models.filters.StatusTask
 import com.ctp.taskmanageapp.domain.models.tasks.TaskInfo
 import com.ctp.taskmanageapp.presentation.common.SPACE_CONTENT_40_SIZE
+import com.ctp.taskmanageapp.presentation.common.SPACE_CONTENT_SIZE
 import com.ctp.taskmanageapp.presentation.common.SPACE_DEFAULT_SIZE
 import com.ctp.taskmanageapp.presentation.common.SPACE_SMALL_12_SIZE
 import com.ctp.taskmanageapp.presentation.common.SPACE_SMALL_8_SIZE
 import com.ctp.taskmanageapp.presentation.ui.theme.getColorSchemeBackground
 import com.ctp.taskmanageapp.presentation.viewmodels.MainViewModel
+import com.ctp.taskmanageapp.widget.components.buttons.ButtonLabel
 import com.ctp.taskmanageapp.widget.components.buttons.ButtonTMComponent
 import com.ctp.taskmanageapp.widget.components.buttons.ButtonType
 import com.ctp.taskmanageapp.widget.components.dialogs.DialogNotify
@@ -52,6 +54,7 @@ fun DetailsTaskScreen(
     val taskInfoState: MutableState<TaskInfo?> = remember { mutableStateOf(null) }
     val isEditAllowed = remember { mutableStateOf(false) }
     val showConfirmDoneTask: MutableState<TaskInfo?> = remember { mutableStateOf(null) }
+    val showConfirmDeleteTask: MutableState<TaskInfo?> = remember { mutableStateOf(null) }
     LaunchedEffect(taskId) {
         if (taskInfo.value == null) {
             mainViewModel.getTaskById(taskId) { task ->
@@ -92,16 +95,18 @@ fun DetailsTaskScreen(
                 .padding(horizontal = SPACE_SMALL_12_SIZE)
                 .padding(bottom = SPACE_CONTENT_40_SIZE)
         ) {
+            val actionButtonIcon = taskInfo.value?.takeIf { !it.isTaskDone }?.let {
+                if (isEditAllowed.value) R.drawable.ic_edit_off else R.drawable.ic_edit
+            }
             HeaderSubScreen(
                 titleId = R.string.details_task_screen_title,
-                actionButtonIcon = if (isEditAllowed.value)
-                    R.drawable.ic_edit_off else R.drawable.ic_edit,
+                actionButtonIcon = actionButtonIcon,
                 actionButton = {
-                    if (!isEditAllowed.value) {
-                        isEditAllowed.value = true
-                    } else {
-                        isEditAllowed.value = false
-                        taskInfoState.value = taskInfo.value
+                    if (taskInfo.value?.isTaskDone == false) {
+                        isEditAllowed.value = !isEditAllowed.value
+                        if (!isEditAllowed.value) {
+                            taskInfoState.value = taskInfo.value
+                        }
                     }
                 }
             ) {
@@ -124,8 +129,7 @@ fun DetailsTaskScreen(
                 DropDownTM(
                     taskStatusTypes,
                     selectDefault = taskInfoState.value?.statusTask,
-                    readOnly = (!isEditAllowed.value
-                            || taskInfo.value?.isTaskDone == true)
+                    readOnly = !isEditAllowed.value
                 ) {
                     taskInfoState.value = taskInfoState.value?.copy(statusTask = it.rootData)
                 }
@@ -134,7 +138,8 @@ fun DetailsTaskScreen(
                     labelId = R.string.add_task_screen_task_name_field,
                     hintId = R.string.add_task_screen_task_name_field_hint,
                     value = taskInfoState.value?.titleTask,
-                    readOnly = !isEditAllowed.value
+                    readOnly = !isEditAllowed.value,
+                    isFocusRequester = false
                 ) {
                     taskInfoState.value = taskInfoState.value?.copy(titleTask = it)
                 }
@@ -144,7 +149,8 @@ fun DetailsTaskScreen(
                     labelId = R.string.add_task_screen_description_field,
                     hintId = R.string.add_task_screen_description_field_hint,
                     value = taskInfoState.value?.content,
-                    readOnly = !isEditAllowed.value
+                    readOnly = !isEditAllowed.value,
+                    isFocusRequester = false
                 ) {
                     taskInfoState.value = taskInfoState.value?.copy(content = it)
                 }
@@ -164,6 +170,13 @@ fun DetailsTaskScreen(
                 ) {
                     taskInfoState.value = taskInfoState.value?.copy(endTime = it)
                 }
+                Spacer(modifier = Modifier.padding(top = SPACE_CONTENT_SIZE))
+                if (!isEditAllowed.value) {
+                    ButtonLabel(R.string.delete_task_title) {
+                        showConfirmDeleteTask.value = taskInfoState.value
+                    }
+                }
+
             }
         }
         if (isEditAllowed.value) {
@@ -200,15 +213,32 @@ fun DetailsTaskScreen(
             )
         ) { showConfirmDoneTask.value = null }
     }
+
+    if (showConfirmDeleteTask.value != null) {
+        DialogNotify(
+            DialogInfo(
+                R.string.dialog_confirm_delete_task_title,
+                R.string.dialog_confirm_delete_task_body,
+                DialogType.CONFIRM,
+                onConfirm = {
+                    taskInfo.value?.let { value ->
+                        mainViewModel.removeTaskInfo(value) {
+                            onBack()
+                        }
+                    }
+                }
+            )
+        ) { showConfirmDeleteTask.value = null }
+    }
 }
 
-private fun updateTaskInfo(mainViewModel: MainViewModel, taskInfo: TaskInfo?, onBack: () -> Unit) {
+private fun updateTaskInfo(mainViewModel: MainViewModel, taskInfo: TaskInfo?, onSuccess: () -> Unit) {
     taskInfo?.let { value ->
         mainViewModel.updateStatus(
             value,
             value.statusTask
         ) {
-            onBack()
+            onSuccess()
         }
     }
 }

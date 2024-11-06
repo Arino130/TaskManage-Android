@@ -50,6 +50,7 @@ fun InputTM(
     hintId: Int,
     value: String? = null,
     readOnly: Boolean = false,
+    isFocusRequester: Boolean = true,
     onTextChanges: (String) -> Unit
 ) {
     val context = LocalContext.current
@@ -115,8 +116,8 @@ fun InputTM(
 
             if (isFocusInput.value) {
                 val focusRequester = remember { FocusRequester() }
-                LaunchedEffect(isFocusInput.value) {
-                    if (isFocusInput.value) focusRequester.requestFocus()
+                LaunchedEffect(isFocusInput.value, isFocusRequester) {
+                    if (isFocusInput.value && isFocusRequester) focusRequester.requestFocus()
                 }
 
                 BasicTextField(

@@ -7,9 +7,13 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="see_details">See Details</string>
-
+    <string name="delete_task_title">Delete Task</string>
+    <string name="dialog_confirm_delete_task_title">Confirm Task Deletion</string>
+    <string name="dialog_confirm_delete_task_body">Are you sure you want to delete this task? This action cannot be undone.</string>
     <string name="dialog_confirm_done_task_title">Mark Task as Done?</string>
     <string name="dialog_confirm_done_task_body">Are you sure you want to mark this task as done? This action cannot be undone.</string>
+    <string name="remove_task_success">Your task has been deleted!</string>
+    <string name="change_status_task_success">Your task has been updated!</string>
 
     <!--Navigation-->
     <string name="home_label_nav">Home</string>
@@ -29,7 +33,7 @@
     <string name="home_in_progress">In Progress</string>
     <string name="home_task_group">Task Group</string>
     <string name="home_content_hello">Hello!</string>
-    <string name="home_username_mock">Phuong Minh</string>
+    <string name="home_username_mock">Wishing you a fantastic day!</string>
 
     <!--Type Group-->
     <string name="type_group_office">Office Project</string>
@@ -43,7 +47,6 @@
 
     <!--CalendarScreen-->
     <string name="calendar_title">Today\'s Tasks</string>
-    <string name="calendar_change_status_success">Your task has been updated!</string>
 
     <!--AddTaskScreen-->
     <string name="add_task_screen_title">Add Task</string>

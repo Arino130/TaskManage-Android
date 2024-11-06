@@ -9,6 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="text_blank_color">#24252D</color>
     <color name="text_primary_color">#5F33E1</color>
+    <color name="text_error_color">#EC5957</color>
 
     <color name="button_background_primary">#5F33E1</color>
     <color name="button_content_primary">#FFFFFF</color>

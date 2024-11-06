@@ -93,7 +93,7 @@ class MainViewModel @Inject constructor(
             getAllTasks {
                 SnackBarController.showSnackBar(
                     SnackBarType(
-                        R.string.calendar_change_status_success,
+                        R.string.change_status_task_success,
                         Type.SUCCESS
                     )
                 )
@@ -106,6 +106,24 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch {
             taskUseCases?.getTaskById(taskId)?.let {
                 onSuccess(it)
+            }
+        }
+    }
+
+    fun removeTaskInfo(
+        taskInfo: TaskInfo,
+        onSuccess: () -> Unit
+    ) {
+        viewModelScope.launch {
+            taskUseCases?.deleteTask(taskInfo)
+            getAllTasks {
+                SnackBarController.showSnackBar(
+                    SnackBarType(
+                        R.string.remove_task_success,
+                        Type.SUCCESS
+                    )
+                )
+                onSuccess.invoke()
             }
         }
     }
