@@ -48,8 +48,10 @@ fun CalendarScreen(mainViewModel: MainViewModel, onDetailsTask: (Int) -> Unit) {
         }
     }
     val showConfirmDoneTask: MutableState<TaskInfo?> = remember { mutableStateOf(null) }
-    val filterStatusSelected = remember { mutableStateOf(filterTypes.first()) }
-    val filterDatetimeSelected = remember { mutableStateOf(LocalDate.now()) }
+    val filterStatusSelected = remember {
+        mutableStateOf(mainViewModel.filterStatusLatest ?: filterTypes.first()) }
+    val filterDatetimeSelected = remember {
+        mutableStateOf(mainViewModel.filterDatetimeLatest ?: LocalDate.now()) }
     val taskData = remember {
         mutableStateOf(
             getFilteredTaskInfoData(
@@ -65,11 +67,13 @@ fun CalendarScreen(mainViewModel: MainViewModel, onDetailsTask: (Int) -> Unit) {
             filterStatusSelected.value,
             filterDatetimeSelected.value
         )
+        mainViewModel.filterStatusLatest = filterStatusSelected.value
+        mainViewModel.filterDatetimeLatest = filterDatetimeSelected.value
     }
     Column {
         HeaderScreen(titleId = R.string.calendar_title)
         Spacer(modifier = Modifier.padding(top = SPACE_DEFAULT_SIZE))
-        CalendarScrollPicker {
+        CalendarScrollPicker(value = filterDatetimeSelected.value) {
             taskData.value = listOf()
             filterDatetimeSelected.value = it
         }
@@ -82,7 +86,7 @@ fun CalendarScreen(mainViewModel: MainViewModel, onDetailsTask: (Int) -> Unit) {
             Box(
                 modifier = Modifier.padding(top = SPACE_CONTENT_SIZE)
             ) {
-                SegmentedControl(filterTypes) {
+                SegmentedControl(selectItem = filterStatusSelected.value, filterTypes) {
                     taskData.value = listOf()
                     filterStatusSelected.value = it
                 }

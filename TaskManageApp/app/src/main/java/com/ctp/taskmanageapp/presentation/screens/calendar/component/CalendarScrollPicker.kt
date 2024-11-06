@@ -31,22 +31,21 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun CalendarScrollPicker(
-    selectDate: LocalDate = LocalDate.now(),
+    value: LocalDate = LocalDate.now(),
     onClickDate: (LocalDate) -> Unit
 ) {
     val context = LocalContext.current
-    val dates = generateDateList(selectDate)
+    val dates = generateDateList(value)
     val initialCenterIndex = dates.size / 2
     val listState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
-    var selectedDate by remember { mutableStateOf(dates.first { it == selectDate }) }
     val screenWidth = LocalConfiguration.current.screenWidthDp.dp
     val cardWidth = 60.dp
     val centerOffset =
         with(LocalDensity.current) { (screenWidth / 2 - cardWidth / 2).toPx().toInt() }
 
     // Center the list on the initial selected date
-    LaunchedEffect(Unit) {
+    LaunchedEffect(Unit, value) {
         listState.scrollToItem(initialCenterIndex, -centerOffset)
     }
 
@@ -60,13 +59,12 @@ fun CalendarScrollPicker(
             CardCalendarItem(
                 context = context,
                 localDate = date,
-                isSelected = date == selectedDate,
+                isSelected = date == value,
                 onClick = {
-                    selectedDate = it
                     coroutineScope.launch {
                         listState.animateScrollToItem(index, -centerOffset)
                     }
-                    onClickDate(selectedDate)
+                    onClickDate(it)
                 }
             )
         }
@@ -129,9 +127,13 @@ fun CardCalendarItem(
                 fontWeight = FontWeight.Bold
             )
             Text(
-                text = localDate.dayOfWeek.getDisplayName(
-                    TextStyle.SHORT, Locale.getDefault()
-                ),
+                text = if (localDate == LocalDate.now()) {
+                    context.getString(R.string.today)
+                } else {
+                    localDate.dayOfWeek.getDisplayName(
+                        TextStyle.SHORT, Locale.getDefault()
+                    )
+                },
                 color = textColor, style = h4TextStyle,
                 fontWeight = FontWeight.Normal
             )

@@ -9,6 +9,7 @@ import com.ctp.taskmanageapp.domain.models.Type
 import com.ctp.taskmanageapp.domain.models.tasks.TaskInfo
 import com.ctp.taskmanageapp.domain.usecase.TaskInfoUseCases
 import com.ctp.taskmanageapp.presentation.base.BaseViewModel
+import com.ctp.taskmanageapp.widget.components.buttons.model.SegmentModel
 import com.ctp.taskmanageapp.widget.components.snackbar.SnackBarController
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,17 +25,26 @@ class MainViewModel @Inject constructor(
     private val _showBottomBar = MutableStateFlow(true)
     val showBottomBar = _showBottomBar.asStateFlow()
     private var taskInfoAll: List<TaskInfo> = listOf()
+    var filterStatusLatest: SegmentModel? = null
+    var filterDatetimeLatest: LocalDate? = null
 
     fun initUI() {
         viewModelScope.launch {
-            getAllTasks {}
+            getAllTasks(true) {}
         }
     }
 
-    private suspend fun getAllTasks(onSuccess: () -> Unit) {
+    private suspend fun getAllTasks(isLiveDataChange: Boolean = false, onSuccess: () -> Unit) {
+        var isReloadData = !isLiveDataChange
         taskUseCases?.getAllTasks()?.collect { tasks ->
-            taskInfoAll = tasks
-            onSuccess()
+            if (isReloadData) {
+                taskInfoAll = tasks.sortedBy { it.startTime }
+                isReloadData = false
+                onSuccess()
+            } else if (isLiveDataChange) {
+                taskInfoAll = tasks.sortedBy { it.startTime }
+                onSuccess()
+            }
         }
     }
 
@@ -88,17 +98,22 @@ class MainViewModel @Inject constructor(
         status: StatusTask = StatusTask.IN_PROGRESS,
         onSuccess: () -> Unit
     ) {
-        viewModelScope.launch {
-            taskUseCases?.updateTask(taskInfo.copy(statusTask = status))
-            getAllTasks {
-                SnackBarController.showSnackBar(
-                    SnackBarType(
-                        R.string.change_status_task_success,
-                        Type.SUCCESS
+        val (isValid, errorMessage) = validateTaskInfo(taskInfo)
+        if (isValid) {
+            viewModelScope.launch {
+                taskUseCases?.updateTask(taskInfo.copy(statusTask = status))
+                getAllTasks {
+                    SnackBarController.showSnackBar(
+                        SnackBarType(
+                            R.string.change_status_task_success,
+                            Type.SUCCESS
+                        )
                     )
-                )
-                onSuccess.invoke()
+                    onSuccess.invoke()
+                }
             }
+        } else {
+            SnackBarController.showSnackBar(SnackBarType(errorMessage, Type.ERROR))
         }
     }
 

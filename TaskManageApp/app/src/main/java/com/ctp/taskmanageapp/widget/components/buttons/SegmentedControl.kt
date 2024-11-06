@@ -36,11 +36,14 @@ import com.ctp.taskmanageapp.widget.components.buttons.model.SegmentModel
 
 @Composable
 fun SegmentedControl(
+    selectItem: SegmentModel? = null,
     segmentData: List<SegmentModel>,
     onSegmentSelected: (SegmentModel) -> Unit
 ) {
     val selectedSegment = remember {
-        mutableStateOf(segmentData.firstOrNull { it.isSelected }) }
+        mutableStateOf(selectItem
+            ?: segmentData.firstOrNull { it.isSelected })
+    }
     val context = LocalContext.current
     val listState = rememberLazyListState()
     LazyRow(
@@ -108,6 +111,7 @@ fun SegmentedItem(
 @Composable
 fun SegmentedControlPreview() {
     SegmentedControl(
+        null,
         listOf(
             SegmentModel(textStr = "All"),
             SegmentModel(textStr = "Todo"),

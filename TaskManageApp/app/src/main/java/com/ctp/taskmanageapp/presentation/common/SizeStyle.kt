@@ -5,6 +5,7 @@ import androidx.compose.ui.unit.sp
 
 val AVATAR_DEFAULT_SIZE = 40.dp
 
+val ICON_DOT_SIZE = 4.dp
 val ICON_MINI_SIZE = 18.dp
 val ICON_SMALL_SIZE = 30.dp
 val ICON_LARGE_SIZE = 44.dp
@@ -14,6 +15,8 @@ val ICON_DROPDOWN_SIZE = 12.dp
 val CIRCULAR_SMALL_SIZE = 60.dp
 val CIRCULAR_LARGE_SIZE = 80.dp
 
+val SPACE_SMALL_1_SIZE = 1.dp
+val SPACE_SMALL_2_SIZE = 2.dp
 val SPACE_SMALL_4_SIZE = 4.dp
 val SPACE_SMALL_6_SIZE = 6.dp
 val SPACE_SMALL_8_SIZE = 8.dp

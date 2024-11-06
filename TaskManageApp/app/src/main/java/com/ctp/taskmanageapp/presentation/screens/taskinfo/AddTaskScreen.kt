@@ -12,12 +12,14 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import com.ctp.taskmanageapp.R
+import com.ctp.taskmanageapp.domain.extensions.toLocalDateTimeWithCurrentTime
 import com.ctp.taskmanageapp.domain.models.TaskGroupType
 import com.ctp.taskmanageapp.domain.models.filters.StatusTask
 import com.ctp.taskmanageapp.domain.models.tasks.TaskInfo
@@ -54,12 +56,14 @@ fun AddTaskScreen(mainViewModel: MainViewModel, onBack: () -> Unit) {
     }
     val startTime = remember { LocalDateTime.now() }
     val endTime = remember { LocalDateTime.now() }
-    var taskInfo = remember {
-        TaskInfo(
-            taskGroupType = TaskGroupType.values().toList().first(),
-            startTime = startTime,
-            endTime = endTime,
-            statusTask = StatusTask.TODO
+    val taskInfo = remember {
+        mutableStateOf(
+            TaskInfo(
+                taskGroupType = TaskGroupType.values().toList().first(),
+                startTime = startTime,
+                endTime = endTime,
+                statusTask = StatusTask.TODO
+            )
         )
     }
     Box(
@@ -84,14 +88,14 @@ fun AddTaskScreen(mainViewModel: MainViewModel, onBack: () -> Unit) {
                     .padding(top = SPACE_DEFAULT_SIZE, bottom = SPACE_CONTENT_40_SIZE)
             ) {
                 DropDownTM(taskGroupTypes) {
-                    taskInfo = taskInfo.copy(taskGroupType = it.rootData)
+                    taskInfo.value = taskInfo.value .copy(taskGroupType = it.rootData)
                 }
                 InputTM(
                     inputType = InputType.SINGLE_INPUT,
                     labelId = R.string.add_task_screen_task_name_field,
                     hintId = R.string.add_task_screen_task_name_field_hint
                 ) {
-                    taskInfo = taskInfo.copy(titleTask = it)
+                    taskInfo.value = taskInfo.value.copy(titleTask = it)
                 }
                 Spacer(modifier = Modifier.padding(top = SPACE_SMALL_8_SIZE))
                 InputTM(
@@ -99,15 +103,21 @@ fun AddTaskScreen(mainViewModel: MainViewModel, onBack: () -> Unit) {
                     labelId = R.string.add_task_screen_description_field,
                     hintId = R.string.add_task_screen_description_field_hint
                 ) {
-                    taskInfo = taskInfo.copy(content = it)
+                    taskInfo.value = taskInfo.value.copy(content = it)
                 }
                 Spacer(modifier = Modifier.padding(top = SPACE_SMALL_8_SIZE))
-                DropDownDateTimeTM(titleId = R.string.add_task_screen_start_datetime_title) {
-                    taskInfo = taskInfo.copy(startTime = it)
+                DropDownDateTimeTM(
+                    titleId = R.string.add_task_screen_start_datetime_title,
+                    value = mainViewModel.filterDatetimeLatest?.toLocalDateTimeWithCurrentTime()
+                ) {
+                    taskInfo.value = taskInfo.value.copy(startTime = it)
                 }
                 Spacer(modifier = Modifier.padding(top = SPACE_SMALL_8_SIZE))
-                DropDownDateTimeTM(titleId = R.string.add_task_screen_end_datetime_title) {
-                    taskInfo = taskInfo.copy(endTime = it)
+                DropDownDateTimeTM(
+                    titleId = R.string.add_task_screen_end_datetime_title,
+                    value = mainViewModel.filterDatetimeLatest?.toLocalDateTimeWithCurrentTime()
+                ) {
+                    taskInfo.value = taskInfo.value.copy(endTime = it)
                 }
             }
         }
@@ -121,7 +131,7 @@ fun AddTaskScreen(mainViewModel: MainViewModel, onBack: () -> Unit) {
                 titleButton = context.getString(R.string.add_task_screen_button_save_title),
                 buttonType = ButtonType.Primary
             ) {
-                mainViewModel.createTaskInfo(taskInfo){
+                mainViewModel.createTaskInfo(taskInfo.value) {
                     onBack()
                 }
             }

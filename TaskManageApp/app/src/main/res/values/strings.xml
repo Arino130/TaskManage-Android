@@ -14,6 +14,7 @@
     <string name="dialog_confirm_done_task_body">Are you sure you want to mark this task as done? This action cannot be undone.</string>
     <string name="remove_task_success">Your task has been deleted!</string>
     <string name="change_status_task_success">Your task has been updated!</string>
+    <string name="today">Today</string>
 
     <!--Navigation-->
     <string name="home_label_nav">Home</string>

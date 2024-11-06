@@ -195,7 +195,9 @@ fun DetailsTaskScreen(
                     ) {
                         showConfirmDoneTask.value = taskInfoState.value
                     } else {
-                        updateTaskInfo(mainViewModel, taskInfoState.value) { onBack() }
+                        updateTaskInfo(mainViewModel, taskInfoState.value) {
+                            onBack()
+                        }
                     }
                 }
             }

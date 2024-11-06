@@ -47,16 +47,15 @@ fun DropDownDateTimeTM(
 ) {
     val context = LocalContext.current
     val onChangeLocalDateTime = remember {
-        mutableStateOf(LocalDateTime.now())
+        val adjustedValue = value?.withSecond(0)?.withNano(0)
+        mutableStateOf(adjustedValue?.takeIf { it.isAfter(LocalDateTime.now()) } ?: LocalDateTime.now().withSecond(0).withNano(0))
     }
     val isDropdown = remember { mutableStateOf(false) }
-    LaunchedEffect(readOnly, value) {
+    LaunchedEffect(readOnly, onChangeLocalDateTime.value) {
         if (readOnly) {
             isDropdown.value = false
         }
-        if (value != null) {
-            onChangeLocalDateTime.value = value
-        }
+        onChanged(onChangeLocalDateTime.value)
     }
     Column {
         Card(

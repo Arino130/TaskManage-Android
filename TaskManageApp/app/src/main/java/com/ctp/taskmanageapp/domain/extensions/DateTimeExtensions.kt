@@ -1,6 +1,8 @@
 package com.ctp.taskmanageapp.domain.extensions
 
+import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
 fun LocalDateTime.getAmPm(): String {
@@ -16,4 +18,8 @@ fun LocalDateTime.get12HourFormat(): String {
 fun LocalDateTime.formatDatetimeTask(): String {
     val formatter = DateTimeFormatter.ofPattern("d MMMM, yyyy - hh:mm a")
     return this.format(formatter)
+}
+
+fun LocalDate.toLocalDateTimeWithCurrentTime(): LocalDateTime {
+    return this.atTime(LocalTime.now())
 }
