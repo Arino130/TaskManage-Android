@@ -45,3 +45,5 @@ val TEXT_SIZE_H6 = 10.sp
 val TEXT_SIZE_H7 = 6.sp
 val TEXT_SIZE_H8 = 4.sp
 val TEXT_SIZE_H9 = 2.sp
+
+val HEIGHT_CARD_ABOUT_SIZE = 350.dp

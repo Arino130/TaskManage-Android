@@ -6,6 +6,16 @@ plugins {
     id("com.google.dagger.hilt.android")
 }
 
+fun getGitCommitCount(): String {
+    val process = ProcessBuilder("git", "rev-list", "--count", "--no-merges", "HEAD")
+        .redirectErrorStream(true)
+        .start()
+
+    process.waitFor()
+
+    return process.inputStream.bufferedReader().readText().trim()  // Đọc kết quả từ đầu ra và loại bỏ khoảng trắng thừa
+}
+
 android {
     namespace = "com.ctp.taskmanageapp"
     compileSdk = 34
@@ -14,7 +24,7 @@ android {
         applicationId = "com.ctp.taskmanageapp"
         minSdk = 26
         targetSdk = 34
-        versionCode = 1
+        versionCode = Integer.parseInt(getGitCommitCount())
         versionName = "v1.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

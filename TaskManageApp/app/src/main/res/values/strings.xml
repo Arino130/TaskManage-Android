@@ -71,5 +71,16 @@
     <!--ManageTasksScreen-->
     <string name="manage_task_screen_title">Manage Tasks</string>
 
+    <!--SettingsScreen-->
+    <string name="settings_screen_title">Settings</string>
+    <string name="settings_screen_button_rating_title">Rate Us</string>
+    <string name="settings_screen_button_store_more_title">Discover More</string>
+    <string name="settings_screen_button_about_title">About App</string>
+    <string name="settings_screen_button_share_title">Share App</string>
+    <string name="settings_screen_button_reset_data_title">Reset All Data</string>
+    <string name="settings_screen_version_name">Version Name: %1$s</string>
+    <string name="settings_screen_code_name">Build Code: %1$d</string>
+    <string name="about_app">The task management app allows users to create tasks, track their status, and view detailed information about each task, such as descriptions and completion time. Tasks can be grouped into specific categories, making it easier to organize and manage work within different projects. This feature helps track progress and improve team collaboration efficiency.</string>
+
 
 </resources>
