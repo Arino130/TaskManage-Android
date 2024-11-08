@@ -30,7 +30,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import com.ctp.taskmanageapp.R
-import com.ctp.taskmanageapp.domain.models.TaskGroupType
+import com.ctp.taskmanageapp.domain.models.taskgroups.TaskGroupType
 import com.ctp.taskmanageapp.presentation.common.DEFAULT_HEIGHT_SIZE
 import com.ctp.taskmanageapp.presentation.common.ICON_DROPDOWN_SIZE
 import com.ctp.taskmanageapp.presentation.common.ICON_SMALL_SIZE

@@ -1,6 +1,7 @@
 package com.ctp.taskmanageapp.presentation.screens.home.component
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -28,7 +29,7 @@ import androidx.compose.ui.unit.dp
 import com.ctp.taskmanageapp.R
 import com.ctp.taskmanageapp.presentation.common.h3TextStyle
 import com.ctp.taskmanageapp.presentation.extensions.getColorFromResources
-import com.ctp.taskmanageapp.domain.models.TaskGroupType
+import com.ctp.taskmanageapp.domain.models.taskgroups.TaskGroupType
 import com.ctp.taskmanageapp.presentation.common.COLUMN_CONTENT_SIZE
 import com.ctp.taskmanageapp.presentation.common.ELEVATION_DEFAULT_SIZE
 import com.ctp.taskmanageapp.presentation.common.ICON_SMALL_SIZE
@@ -43,13 +44,14 @@ import com.ctp.taskmanageapp.widget.components.reports.LineProgressBar
 fun CardTaskGroup(
     groupType: TaskGroupType,
     groupTitle: String,
-    progress: Int
+    progress: Int,
+    onClick: (TaskGroupType) -> Unit
 ) {
     val context = LocalContext.current
     Card(
         modifier = Modifier
             .height(COLUMN_CONTENT_SIZE)
-            .width(260.dp),
+            .width(260.dp).clickable { onClick(groupType) },
         elevation = CardDefaults.cardElevation(defaultElevation = ELEVATION_DEFAULT_SIZE),
         colors = CardDefaults.cardColors(
             containerColor = context.getColorFromResources(
@@ -125,5 +127,5 @@ fun CardTaskGroupPreview() {
         groupType = TaskGroupType.OfficeProject,
         "Grocery shopping app design",
         progress = 80
-    )
+    ) {}
 }

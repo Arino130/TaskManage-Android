@@ -20,7 +20,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import com.ctp.taskmanageapp.R
 import com.ctp.taskmanageapp.domain.extensions.toLocalDateTimeWithCurrentTime
-import com.ctp.taskmanageapp.domain.models.TaskGroupType
+import com.ctp.taskmanageapp.domain.models.taskgroups.TaskGroupType
 import com.ctp.taskmanageapp.domain.models.filters.StatusTask
 import com.ctp.taskmanageapp.domain.models.tasks.TaskInfo
 import com.ctp.taskmanageapp.presentation.common.SPACE_CONTENT_40_SIZE
@@ -42,6 +42,7 @@ import java.time.LocalDateTime
 @Composable
 fun AddTaskScreen(mainViewModel: MainViewModel, onBack: () -> Unit) {
     val context = LocalContext.current
+    val plusEndHourDefault = remember { 1L }
     LaunchedEffect(Unit) {
         mainViewModel.toggleBottomBar(false)
     }
@@ -88,7 +89,7 @@ fun AddTaskScreen(mainViewModel: MainViewModel, onBack: () -> Unit) {
                     .padding(top = SPACE_DEFAULT_SIZE, bottom = SPACE_CONTENT_40_SIZE)
             ) {
                 DropDownTM(taskGroupTypes) {
-                    taskInfo.value = taskInfo.value .copy(taskGroupType = it.rootData)
+                    taskInfo.value = taskInfo.value.copy(taskGroupType = it.rootData)
                 }
                 InputTM(
                     inputType = InputType.SINGLE_INPUT,
@@ -115,7 +116,8 @@ fun AddTaskScreen(mainViewModel: MainViewModel, onBack: () -> Unit) {
                 Spacer(modifier = Modifier.padding(top = SPACE_SMALL_8_SIZE))
                 DropDownDateTimeTM(
                     titleId = R.string.add_task_screen_end_datetime_title,
-                    value = mainViewModel.filterDatetimeLatest?.toLocalDateTimeWithCurrentTime()
+                    value = mainViewModel.filterDatetimeLatest?.toLocalDateTimeWithCurrentTime(),
+                    plusHours = plusEndHourDefault
                 ) {
                     taskInfo.value = taskInfo.value.copy(endTime = it)
                 }

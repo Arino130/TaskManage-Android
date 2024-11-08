@@ -1,7 +1,7 @@
 package com.ctp.taskmanageapp.data.local.converters
 
 import androidx.room.TypeConverter
-import com.ctp.taskmanageapp.domain.models.TaskGroupType
+import com.ctp.taskmanageapp.domain.models.taskgroups.TaskGroupType
 
 object TaskGroupTypeConverter {
     @TypeConverter

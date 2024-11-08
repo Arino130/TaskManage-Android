@@ -4,9 +4,10 @@ import androidx.lifecycle.viewModelScope
 import com.ctp.taskmanageapp.R
 import com.ctp.taskmanageapp.common.utils.validateTaskInfo
 import com.ctp.taskmanageapp.domain.models.SnackBarType
-import com.ctp.taskmanageapp.domain.models.TaskGroup
+import com.ctp.taskmanageapp.domain.models.taskgroups.TaskGroup
 import com.ctp.taskmanageapp.domain.models.filters.StatusTask
 import com.ctp.taskmanageapp.domain.models.Type
+import com.ctp.taskmanageapp.domain.models.taskgroups.TaskGroupType
 import com.ctp.taskmanageapp.domain.models.tasks.TaskInfo
 import com.ctp.taskmanageapp.domain.usecase.TaskCalculationsUseCases
 import com.ctp.taskmanageapp.domain.usecase.TaskInfoUseCases
@@ -56,13 +57,15 @@ class MainViewModel @Inject constructor(
     }
 
     fun getTaskInfoData(
-        statusFilter: StatusTask = StatusTask.ALL,
-        filterDate: LocalDate = LocalDate.now()
+        statusFilter: StatusTask? = null,
+        filterDate: LocalDate? = null,
+        groupType: TaskGroupType? = null
     ): List<TaskInfo> {
         return taskInfoAll.filter {
-            (it.statusTask == statusFilter
-                    || statusFilter == StatusTask.ALL)
-                    && it.startTime.toLocalDate() == filterDate
+            (statusFilter == null || statusFilter == StatusTask.ALL
+                    || it.statusTask == statusFilter) &&
+                    (filterDate == null || it.startTime.toLocalDate() == filterDate) &&
+                    (groupType == null || it.taskGroupType == groupType)
         }
     }
 

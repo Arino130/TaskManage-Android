@@ -1,4 +1,4 @@
-package com.ctp.taskmanageapp.domain.models
+package com.ctp.taskmanageapp.domain.models.taskgroups
 
 import com.ctp.taskmanageapp.R
 

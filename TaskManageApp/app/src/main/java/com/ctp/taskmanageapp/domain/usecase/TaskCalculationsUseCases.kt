@@ -1,6 +1,6 @@
 package com.ctp.taskmanageapp.domain.usecase
 
-import com.ctp.taskmanageapp.domain.models.TaskGroupType
+import com.ctp.taskmanageapp.domain.models.taskgroups.TaskGroupType
 import com.ctp.taskmanageapp.domain.models.filters.StatusTask
 import com.ctp.taskmanageapp.domain.models.tasks.TaskInfo
 import java.time.LocalDate

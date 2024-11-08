@@ -27,6 +27,7 @@ fun LineProgressBar(
 ) {
     val animatedValue = remember { Animatable(0f) }
     val durationMillis = remember { 500 }
+    val progressColorLine = if (progress > 0) progressColor else backgroundColor
     Canvas(modifier = modifier.height(barHeight)) {
         val canvasWidth = size.width
         val canvasHeight = size.height
@@ -40,7 +41,7 @@ fun LineProgressBar(
         )
 
         drawLine(
-            color = progressColor,
+            color = progressColorLine,
             start = Offset(x = 0f, y = canvasHeight / 2),
             end = Offset(x = canvasWidth * (animatedValue.value * 0.01).toFloat(), y = canvasHeight / 2),
             strokeWidth = barHeight.toPx(),

@@ -9,7 +9,7 @@ import com.ctp.taskmanageapp.data.local.converters.LocalDateTimeConverter
 import com.ctp.taskmanageapp.data.local.converters.StatusTaskConverter
 import com.ctp.taskmanageapp.data.local.converters.TaskGroupTypeConverter
 import com.ctp.taskmanageapp.domain.models.filters.StatusTask
-import com.ctp.taskmanageapp.domain.models.TaskGroupType
+import com.ctp.taskmanageapp.domain.models.taskgroups.TaskGroupType
 import java.time.LocalDate
 import java.time.LocalDateTime
 

@@ -26,10 +26,13 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.ctp.taskmanageapp.domain.models.filters.StatusTask
+import com.ctp.taskmanageapp.domain.models.taskgroups.TaskGroupType
 import com.ctp.taskmanageapp.presentation.extensions.navigateAndClearBackStack
 import com.ctp.taskmanageapp.presentation.extensions.popBackStackTo
 import com.ctp.taskmanageapp.presentation.screens.calendar.CalendarScreen
 import com.ctp.taskmanageapp.presentation.screens.home.HomeScreen
+import com.ctp.taskmanageapp.presentation.screens.managetasks.ManageTaskScreen
 import com.ctp.taskmanageapp.presentation.screens.onboarding.OnBoardingScreen
 import com.ctp.taskmanageapp.presentation.screens.settings.SettingsScreen
 import com.ctp.taskmanageapp.presentation.screens.taskinfo.AddTaskScreen
@@ -84,7 +87,7 @@ fun AppNavigation(mainViewModel: MainViewModel) {
     LaunchedEffect(navBackStackEntry) {
         val currentRoute = navController.currentBackStackEntry?.destination?.route
         getBottomNavScreen().firstOrNull {
-            it.route.name == currentRoute
+            it.route.name == currentRoute?.substringBefore("/")
         }?.let { currentScreen.value = it }
     }
 }
@@ -98,13 +101,13 @@ fun NavigationController(
 ) {
     NavHost(
         navController = navController,
-        startDestination = Routes.Home.name,
+        startDestination = Routes.ManageTasks.name,
         Modifier.padding(innerPadding ?: PaddingValues()),
         enterTransition = {
-            fadeIn(animationSpec = tween(700))
+            fadeIn(animationSpec = tween(mainViewModel.enterTransition))
         },
         exitTransition = {
-            fadeOut(animationSpec = tween(700))
+            fadeOut(animationSpec = tween(mainViewModel.exitTransition))
         }
     ) {
         composable(route = Routes.OnBoarding.name) {
@@ -117,16 +120,58 @@ fun NavigationController(
         }
 
         composable(route = Routes.Home.name) {
-            HomeScreen(mainViewModel = mainViewModel) {
-                mainViewModel.clearDataCalendarScreen()
-                navController.navigate(route = Routes.Calendar.name)
-            }
+            HomeScreen(
+                mainViewModel = mainViewModel,
+                onClickViewTask = {
+                    mainViewModel.clearDataCalendarScreen()
+                    navController.navigate(route = Routes.Calendar.name)
+                },
+                onClickGroupTask = { groupType, status ->
+                    navController.navigate(route = "${Routes.ManageTasks.name}/$groupType/$status")
+                }
+            )
         }
 
         composable(route = Routes.Calendar.name) {
             CalendarScreen(mainViewModel = mainViewModel, onDetailsTask = {
                 navController.navigate(route = "${Routes.DetailsTask.name}/$it")
             })
+        }
+
+        composable(route = Routes.ManageTasks.name) {
+            ManageTaskScreen(mainViewModel = mainViewModel,
+                defaultTypeGroup = null,
+                onDetailsTask = {
+                    navController.navigate(route = "${Routes.DetailsTask.name}/$it")
+                }
+            )
+        }
+
+        composable(
+            route = "${Routes.ManageTasks.name}/{type_group}/{status_task}",
+            arguments = listOf(
+                navArgument("type_group") {
+                    type = NavType.StringType
+                    defaultValue = ""
+                },
+                navArgument("status_task") {
+                    type = NavType.StringType
+                    defaultValue = ""
+                }
+            )
+        ) { navBackStackEntry ->
+            val typeGroup = navBackStackEntry.arguments?.getString("type_group")
+            val statusTask = navBackStackEntry.arguments?.getString("status_task")
+            ManageTaskScreen(mainViewModel = mainViewModel,
+                defaultStatusTask = StatusTask.values().firstOrNull {
+                    it.name == statusTask.takeIf { item -> item.toString().isNotBlank() }
+                },
+                defaultTypeGroup = TaskGroupType.values().firstOrNull {
+                    it.name == typeGroup.takeIf { item -> item.toString().isNotBlank() }
+                },
+                onDetailsTask = {
+                    navController.navigate(route = "${Routes.DetailsTask.name}/$it")
+                })
         }
 
         composable(route = Routes.Settings.name) {
@@ -157,6 +202,7 @@ fun NavigationController(
 
 fun onBackScreen(navController: NavHostController) {
     navController.popBackStackTo(
-        navController.previousBackStackEntry?.destination?.route.toString())
+        navController.previousBackStackEntry?.destination?.route.toString()
+    )
 }
 

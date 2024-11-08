@@ -1,6 +1,7 @@
 package com.ctp.taskmanageapp.presentation.screens.home.component
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -25,7 +26,7 @@ import androidx.core.content.ContextCompat
 import com.ctp.taskmanageapp.R
 import com.ctp.taskmanageapp.presentation.common.h4TextStyle
 import com.ctp.taskmanageapp.presentation.extensions.getColorFromResources
-import com.ctp.taskmanageapp.domain.models.TaskGroupType
+import com.ctp.taskmanageapp.domain.models.taskgroups.TaskGroupType
 import com.ctp.taskmanageapp.presentation.common.CIRCULAR_SMALL_SIZE
 import com.ctp.taskmanageapp.presentation.common.ELEVATION_DEFAULT_SIZE
 import com.ctp.taskmanageapp.presentation.common.ICON_LARGE_SIZE
@@ -36,12 +37,17 @@ import com.ctp.taskmanageapp.presentation.common.h3TextStyle
 import com.ctp.taskmanageapp.widget.components.reports.CircularProgressBar
 
 @Composable
-fun CardGroupTaskItem(groupType: TaskGroupType, taskCount: Int = 0, progress: Int) {
+fun CardGroupTaskItem(
+    groupType: TaskGroupType,
+    taskCount: Int = 0,
+    progress: Int,
+    onClick: (TaskGroupType) -> Unit
+) {
     val context = LocalContext.current
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .height(90.dp),
+            .height(90.dp).clickable { onClick(groupType) },
         elevation = CardDefaults.cardElevation(defaultElevation = ELEVATION_DEFAULT_SIZE),
         colors = CardDefaults.cardColors(
             containerColor = context.getColorFromResources(
@@ -121,5 +127,5 @@ fun CardGroupTaskItem(groupType: TaskGroupType, taskCount: Int = 0, progress: In
 @Preview
 @Composable
 fun CardGroupTaskItemPreview() {
-    CardGroupTaskItem(TaskGroupType.OfficeProject, 5, 80)
+    CardGroupTaskItem(TaskGroupType.OfficeProject, 5, 80) {}
 }

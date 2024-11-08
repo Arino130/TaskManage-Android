@@ -43,14 +43,27 @@ fun DropDownDateTimeTM(
     titleId: Int,
     readOnly: Boolean = false,
     value: LocalDateTime? = null,
+    plusHours: Long? = null,
     onChanged: (LocalDateTime) -> Unit
 ) {
     val context = LocalContext.current
     val onChangeLocalDateTime = remember {
         val adjustedValue = value?.withSecond(0)?.withNano(0)
-        mutableStateOf(adjustedValue?.takeIf { it.isAfter(LocalDateTime.now()) } ?: LocalDateTime.now().withSecond(0).withNano(0))
+        mutableStateOf(adjustedValue?.takeIf { it.isAfter(LocalDateTime.now()) }
+            ?: LocalDateTime.now()
+                .withSecond(0)
+                .withNano(0).apply {
+                    plusHours?.let { plusHours(plusHours) }
+                }
+        )
     }
     val isDropdown = remember { mutableStateOf(false) }
+    LaunchedEffect(plusHours) {
+        plusHours?.let {
+            onChangeLocalDateTime.value = onChangeLocalDateTime.value.plusHours(it)
+            onChanged(onChangeLocalDateTime.value)
+        }
+    }
     LaunchedEffect(readOnly, onChangeLocalDateTime.value, value) {
         if (readOnly) {
             isDropdown.value = false

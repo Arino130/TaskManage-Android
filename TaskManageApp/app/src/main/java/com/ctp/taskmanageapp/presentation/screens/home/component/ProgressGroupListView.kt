@@ -9,12 +9,12 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.ctp.taskmanageapp.domain.models.TaskGroup
-import com.ctp.taskmanageapp.domain.models.TaskGroupType
+import com.ctp.taskmanageapp.domain.models.taskgroups.TaskGroup
+import com.ctp.taskmanageapp.domain.models.taskgroups.TaskGroupType
 import com.ctp.taskmanageapp.presentation.common.SPACE_SMALL_8_SIZE
 
 @Composable
-fun ProgressGroupListView(taskGroups: List<TaskGroup>) {
+fun ProgressGroupListView(taskGroups: List<TaskGroup>, onClickTaskGroup: (TaskGroupType) -> Unit) {
     Row(modifier = Modifier.horizontalScroll(rememberScrollState())) {
         taskGroups.forEach { item ->
             Box(
@@ -26,7 +26,9 @@ fun ProgressGroupListView(taskGroups: List<TaskGroup>) {
                     groupType = item.taskGroupType,
                     item.titleGroup,
                     progress = item.progressNumber
-                )
+                ) {
+                    onClickTaskGroup(it)
+                }
             }
         }
     }
@@ -58,5 +60,5 @@ fun ProgressGroupListViewPreview() {
                 taskGroupType = TaskGroupType.OfficeProject
             )
         )
-    )
+    ) {}
 }

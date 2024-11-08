@@ -18,6 +18,8 @@
 
     <!--Navigation-->
     <string name="home_label_nav">Home</string>
+    <string name="calendar_label_nav">Calendar</string>
+    <string name="manage_tasks_label_nav">Manage Tasks</string>
     <string name="setting_label_nav">Settings</string>
 
     <!--OnBoarding page-->
@@ -65,5 +67,9 @@
 
     <!--DetailsTaskScreen-->
     <string name="details_task_screen_title">Details Task</string>
+
+    <!--ManageTasksScreen-->
+    <string name="manage_task_screen_title">Manage Tasks</string>
+
 
 </resources>

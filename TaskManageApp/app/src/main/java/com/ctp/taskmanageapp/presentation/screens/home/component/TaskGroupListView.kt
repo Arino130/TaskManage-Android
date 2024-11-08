@@ -7,12 +7,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.ctp.taskmanageapp.domain.models.TaskGroup
-import com.ctp.taskmanageapp.domain.models.TaskGroupType
+import com.ctp.taskmanageapp.domain.models.taskgroups.TaskGroup
+import com.ctp.taskmanageapp.domain.models.taskgroups.TaskGroupType
 import com.ctp.taskmanageapp.presentation.common.SPACE_SMALL_4_SIZE
 
 @Composable
-fun TaskGroupListView(taskGroups: List<TaskGroup>) {
+fun TaskGroupListView(taskGroups: List<TaskGroup>, onClickGroupTask: (TaskGroupType) -> Unit) {
     Column {
         taskGroups.forEach { item ->
             Box(
@@ -20,7 +20,13 @@ fun TaskGroupListView(taskGroups: List<TaskGroup>) {
                     paddingValues = PaddingValues(vertical = SPACE_SMALL_4_SIZE)
                 )
             ) {
-                CardGroupTaskItem(item.taskGroupType, item.taskCountsByStatus(), item.progressNumber)
+                CardGroupTaskItem(
+                    item.taskGroupType,
+                    item.taskCountsByStatus(),
+                    item.progressNumber
+                ) {
+                    onClickGroupTask(it)
+                }
             }
         }
     }
@@ -52,5 +58,5 @@ fun TaskGroupListViewPreview() {
                 taskGroupType = TaskGroupType.OfficeProject
             )
         )
-    )
+    ) {}
 }

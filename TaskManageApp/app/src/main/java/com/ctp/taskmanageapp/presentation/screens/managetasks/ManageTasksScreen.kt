@@ -1,4 +1,4 @@
-package com.ctp.taskmanageapp.presentation.screens.calendar
+package com.ctp.taskmanageapp.presentation.screens.managetasks
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -21,11 +21,10 @@ import com.ctp.taskmanageapp.domain.models.filters.StatusTask
 import com.ctp.taskmanageapp.domain.models.taskgroups.TaskGroupType
 import com.ctp.taskmanageapp.domain.models.tasks.TaskInfo
 import com.ctp.taskmanageapp.presentation.common.SPACE_CONTENT_SIZE
-import com.ctp.taskmanageapp.presentation.common.SPACE_DEFAULT_SIZE
 import com.ctp.taskmanageapp.presentation.common.SPACE_SMALL_4_SIZE
 import com.ctp.taskmanageapp.presentation.common.SPACE_SMALL_8_SIZE
-import com.ctp.taskmanageapp.presentation.screens.calendar.component.CalendarScrollPicker
 import com.ctp.taskmanageapp.presentation.screens.calendar.component.CalendarTaskItem
+import com.ctp.taskmanageapp.presentation.screens.calendar.getFilteredTaskInfoData
 import com.ctp.taskmanageapp.presentation.viewmodels.MainViewModel
 import com.ctp.taskmanageapp.widget.components.buttons.SegmentedControl
 import com.ctp.taskmanageapp.widget.components.buttons.model.SegmentModel
@@ -34,43 +33,61 @@ import com.ctp.taskmanageapp.widget.components.dialogs.models.DialogInfo
 import com.ctp.taskmanageapp.widget.components.dialogs.models.DialogType
 import com.ctp.taskmanageapp.widget.components.headers.HeaderScreen
 import com.ctp.taskmanageapp.widget.components.swipe.SwipeActionBox
-import java.time.LocalDate
 
 @Composable
-fun CalendarScreen(mainViewModel: MainViewModel, onDetailsTask: (Int) -> Unit) {
+fun ManageTaskScreen(
+    mainViewModel: MainViewModel,
+    defaultStatusTask: StatusTask? = null,
+    defaultTypeGroup: TaskGroupType? = null,
+    onDetailsTask: (Int) -> Unit
+) {
     LaunchedEffect(Unit) {
         mainViewModel.toggleBottomBar(true)
     }
-    val filterTypes: List<SegmentModel> = remember {
+    val filterGroupTypes: List<SegmentModel> = remember {
+        listOf(
+            SegmentModel(textId = R.string.all_type).apply {
+                isSelected = true
+            }
+        ) + TaskGroupType.values().map { item ->
+            SegmentModel(textId = item.typeTitleId).apply {
+                isSelected = false
+            }
+        }
+    }
+    val showConfirmDoneTask: MutableState<TaskInfo?> = remember { mutableStateOf(null) }
+    val filterGroupTypeSelected = remember {
+        mutableStateOf(defaultTypeGroup?.let {
+            filterGroupTypes.firstOrNull {
+                it.textId == defaultTypeGroup.typeTitleId
+            }
+        } ?: filterGroupTypes.firstOrNull { it.isSelected })
+    }
+    val filterStatus: List<SegmentModel> = remember {
         StatusTask.values().toList().mapIndexed { index, item ->
             SegmentModel(textId = item.fullNameId).apply {
                 isSelected = (index == 0)
             }
         }
     }
-    val showConfirmDoneTask: MutableState<TaskInfo?> = remember { mutableStateOf(null) }
     val filterStatusSelected = remember {
-        mutableStateOf(mainViewModel.filterStatusLatest ?: filterTypes.first())
-    }
-    val filterDatetimeSelected = remember {
-        mutableStateOf(mainViewModel.filterDatetimeLatest ?: LocalDate.now())
+        mutableStateOf(defaultStatusTask?.let {
+            filterStatus.firstOrNull {
+                it.textId == defaultStatusTask.fullNameId
+            }
+        } ?: filterStatus.firstOrNull { it.isSelected })
     }
     val taskData = remember {
         mutableStateOf(
             getFilteredTaskInfoData(
                 mainViewModel,
-                filterStatusSelected.value,
-                filterDatetimeSelected.value
+                filterStatusSelected = filterStatusSelected.value,
+                filterGroupTypeSelected = filterGroupTypeSelected.value
             )
         )
     }
     Column {
-        HeaderScreen(titleId = R.string.calendar_title)
-        Spacer(modifier = Modifier.padding(top = SPACE_DEFAULT_SIZE))
-        CalendarScrollPicker(value = filterDatetimeSelected.value) {
-            taskData.value = listOf()
-            filterDatetimeSelected.value = it
-        }
+        HeaderScreen(titleId = R.string.manage_task_screen_title)
         Column(
             modifier = Modifier
                 .fillMaxHeight()
@@ -80,7 +97,14 @@ fun CalendarScreen(mainViewModel: MainViewModel, onDetailsTask: (Int) -> Unit) {
             Box(
                 modifier = Modifier.padding(top = SPACE_CONTENT_SIZE)
             ) {
-                SegmentedControl(selectItem = filterStatusSelected.value, filterTypes) {
+                SegmentedControl(selectItem = filterGroupTypeSelected.value, filterGroupTypes) {
+                    filterGroupTypeSelected.value = it
+                }
+            }
+            Box(
+                modifier = Modifier.padding(top = SPACE_CONTENT_SIZE)
+            ) {
+                SegmentedControl(selectItem = filterStatusSelected.value, filterStatus) {
                     taskData.value = listOf()
                     filterStatusSelected.value = it
                 }
@@ -107,8 +131,8 @@ fun CalendarScreen(mainViewModel: MainViewModel, onDetailsTask: (Int) -> Unit) {
                                     mainViewModel.onNextStatusTask(it) {
                                         taskData.value = getFilteredTaskInfoData(
                                             mainViewModel,
-                                            filterStatusSelected.value,
-                                            filterDatetimeSelected.value
+                                            filterStatusSelected = filterStatusSelected.value,
+                                            filterGroupTypeSelected = filterGroupTypeSelected.value
                                         )
                                     }
                                 }
@@ -131,8 +155,8 @@ fun CalendarScreen(mainViewModel: MainViewModel, onDetailsTask: (Int) -> Unit) {
                         mainViewModel.onNextStatusTask(it) {
                             taskData.value = getFilteredTaskInfoData(
                                 mainViewModel,
-                                filterStatusSelected.value,
-                                filterDatetimeSelected.value
+                                filterStatusSelected = filterStatusSelected.value,
+                                filterGroupTypeSelected = filterGroupTypeSelected.value
                             )
                             showConfirmDoneTask.value = null
                         }
@@ -141,37 +165,28 @@ fun CalendarScreen(mainViewModel: MainViewModel, onDetailsTask: (Int) -> Unit) {
             )
         ) { showConfirmDoneTask.value = null }
     }
-
-    LaunchedEffect(filterStatusSelected.value, filterDatetimeSelected.value) {
+    LaunchedEffect(
+        defaultStatusTask, defaultTypeGroup,
+        filterStatusSelected.value, filterGroupTypeSelected.value
+    ) {
+        defaultStatusTask?.let {
+            filterStatusSelected.value =
+                filterStatus.firstOrNull { item -> item.textId == it.fullNameId }
+        }
+        defaultTypeGroup?.let {
+            filterGroupTypeSelected.value =
+                filterGroupTypes.firstOrNull { item -> item.textId == it.typeTitleId }
+        }
         taskData.value = getFilteredTaskInfoData(
             mainViewModel,
-            filterStatusSelected.value,
-            filterDatetimeSelected.value
+            filterStatusSelected = filterStatusSelected.value,
+            filterGroupTypeSelected = filterGroupTypeSelected.value
         )
-        mainViewModel.filterStatusLatest = filterStatusSelected.value
-        mainViewModel.filterDatetimeLatest = filterDatetimeSelected.value
     }
-}
-
-fun getFilteredTaskInfoData(
-    mainViewModel: MainViewModel,
-    filterStatusSelected: SegmentModel? = null,
-    filterDatetimeSelected: LocalDate? = null,
-    filterGroupTypeSelected: SegmentModel? = null
-): List<TaskInfo> {
-    return mainViewModel.getTaskInfoData(
-        statusFilter = StatusTask.values().firstOrNull {
-            it.fullNameId == filterStatusSelected?.textId
-        },
-        filterDate = filterDatetimeSelected,
-        groupType = TaskGroupType.values().firstOrNull {
-            it.typeTitleId == filterGroupTypeSelected?.textId
-        }
-    )
 }
 
 @Preview
 @Composable
-fun CalendarScreenPreview() {
-    CalendarScreen(MainViewModel(null, null)) {}
+fun ManageTaskScreenPreview() {
+    ManageTaskScreen(MainViewModel(null, null)) {}
 }

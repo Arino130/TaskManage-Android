@@ -42,7 +42,11 @@ import com.ctp.taskmanageapp.presentation.viewmodels.MainViewModel
 import com.ctp.taskmanageapp.widget.components.labels.LabelCircular
 
 @Composable
-fun HomeScreen(mainViewModel: MainViewModel, onClickViewTask: () -> Unit) {
+fun HomeScreen(
+    mainViewModel: MainViewModel,
+    onClickViewTask: () -> Unit,
+    onClickGroupTask: (String, String?) -> Unit
+) {
     val context = LocalContext.current
     val taskGroupsInProgress = mainViewModel.getPercentGroupStatus(StatusTask.IN_PROGRESS)
     val taskGroups = mainViewModel.getPercentGroupStatus(StatusTask.DONE)
@@ -142,7 +146,9 @@ fun HomeScreen(mainViewModel: MainViewModel, onClickViewTask: () -> Unit) {
                         }
                     }
                     Box(modifier = Modifier.padding(vertical = SPACE_DEFAULT_SIZE)) {
-                        ProgressGroupListView(taskGroupsInProgress)
+                        ProgressGroupListView(taskGroupsInProgress) {
+                            onClickGroupTask(it.name, StatusTask.IN_PROGRESS.name)
+                        }
                     }
                     Row(
                         modifier = Modifier.padding(top = SPACE_SMALL_8_SIZE),
@@ -169,7 +175,9 @@ fun HomeScreen(mainViewModel: MainViewModel, onClickViewTask: () -> Unit) {
                         }
                     }
                     Box(modifier = Modifier.padding(vertical = SPACE_CONTENT_SIZE)) {
-                        TaskGroupListView(taskGroups)
+                        TaskGroupListView(taskGroups) {
+                            onClickGroupTask(it.name, StatusTask.ALL.name)
+                        }
                     }
                 }
             }
@@ -180,5 +188,5 @@ fun HomeScreen(mainViewModel: MainViewModel, onClickViewTask: () -> Unit) {
 @Preview
 @Composable
 fun HomeScreenReview() {
-    HomeScreen(MainViewModel(null, null)) {}
+    HomeScreen(MainViewModel(null, null), {}) {_, _ -> }
 }
