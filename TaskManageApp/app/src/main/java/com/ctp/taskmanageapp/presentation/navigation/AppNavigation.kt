@@ -117,7 +117,10 @@ fun NavigationController(
         }
 
         composable(route = Routes.Home.name) {
-            HomeScreen(mainViewModel = mainViewModel)
+            HomeScreen(mainViewModel = mainViewModel) {
+                mainViewModel.clearDataCalendarScreen()
+                navController.navigate(route = Routes.Calendar.name)
+            }
         }
 
         composable(route = Routes.Calendar.name) {

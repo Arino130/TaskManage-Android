@@ -24,8 +24,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.content.ContextCompat
 import com.ctp.taskmanageapp.R
-import com.ctp.taskmanageapp.domain.models.TaskGroup
-import com.ctp.taskmanageapp.domain.models.TaskGroupType
+import com.ctp.taskmanageapp.domain.models.filters.StatusTask
 import com.ctp.taskmanageapp.presentation.common.AVATAR_DEFAULT_SIZE
 import com.ctp.taskmanageapp.presentation.common.SPACE_CONTENT_SIZE
 import com.ctp.taskmanageapp.presentation.common.SPACE_DEFAULT_SIZE
@@ -33,7 +32,7 @@ import com.ctp.taskmanageapp.presentation.common.SPACE_SMALL_4_SIZE
 import com.ctp.taskmanageapp.presentation.common.SPACE_SMALL_6_SIZE
 import com.ctp.taskmanageapp.presentation.common.SPACE_SMALL_8_SIZE
 import com.ctp.taskmanageapp.presentation.common.h1TitleStyle
-import com.ctp.taskmanageapp.presentation.common.h2TextStyle
+import com.ctp.taskmanageapp.presentation.common.h3TextStyle
 import com.ctp.taskmanageapp.presentation.common.h4TextStyle
 import com.ctp.taskmanageapp.presentation.common.h5TextStyle
 import com.ctp.taskmanageapp.presentation.screens.home.component.CardOverviewTask
@@ -43,32 +42,13 @@ import com.ctp.taskmanageapp.presentation.viewmodels.MainViewModel
 import com.ctp.taskmanageapp.widget.components.labels.LabelCircular
 
 @Composable
-fun HomeScreen(mainViewModel: MainViewModel) {
+fun HomeScreen(mainViewModel: MainViewModel, onClickViewTask: () -> Unit) {
     val context = LocalContext.current
-    val inProgressNumber = 10
-    val taskGroupNumber = 4
-    val taskGroups = listOf(
-        TaskGroup(
-            titleGroup = "Grocery shopping app design by Phuong",
-            taskGroupType = TaskGroupType.OfficeProject
-        ),
-        TaskGroup(
-            titleGroup = "Grocery shopping app design by Phuong",
-            taskGroupType = TaskGroupType.PersonalProject
-        ),
-        TaskGroup(
-            titleGroup = "Grocery shopping app design by Phuong  by Phuong by Phuong",
-            taskGroupType = TaskGroupType.OfficeProject
-        ),
-        TaskGroup(
-            titleGroup = "Grocery shopping app design by Phuong",
-            taskGroupType = TaskGroupType.PersonalProject
-        ),
-        TaskGroup(
-            titleGroup = "Grocery shopping app design by Phuong",
-            taskGroupType = TaskGroupType.OfficeProject
-        )
-    )
+    val taskGroupsInProgress = mainViewModel.getPercentGroupStatus(StatusTask.IN_PROGRESS)
+    val taskGroups = mainViewModel.getPercentGroupStatus(StatusTask.DONE)
+    val inProgressCount = taskGroupsInProgress.sumOf {
+        it.taskCountsByStatus(StatusTask.IN_PROGRESS)
+    }
 
     LaunchedEffect(Unit) {
         mainViewModel.toggleBottomBar(true)
@@ -104,7 +84,7 @@ fun HomeScreen(mainViewModel: MainViewModel) {
                 )
                 Text(
                     text = context.getString(R.string.home_username_mock),
-                    style = h2TextStyle,
+                    style = h3TextStyle,
                     color = Color(
                         ContextCompat.getColor(
                             context,
@@ -129,7 +109,9 @@ fun HomeScreen(mainViewModel: MainViewModel) {
                         .padding(horizontal = SPACE_SMALL_4_SIZE),
                 ) {
                     Box(modifier = Modifier.padding(top = SPACE_CONTENT_SIZE)) {
-                        CardOverviewTask()
+                        CardOverviewTask(mainViewModel.percentCompleteTaskToday()) {
+                            onClickViewTask()
+                        }
                     }
                     Row(
                         modifier = Modifier.padding(
@@ -153,11 +135,14 @@ fun HomeScreen(mainViewModel: MainViewModel) {
                         Box(
                             modifier = Modifier.padding(horizontal = SPACE_SMALL_6_SIZE)
                         ) {
-                            LabelCircular(inProgressNumber.toString(), textStyle = h5TextStyle)
+                            LabelCircular(
+                                inProgressCount.toString(),
+                                textStyle = h5TextStyle
+                            )
                         }
                     }
                     Box(modifier = Modifier.padding(vertical = SPACE_DEFAULT_SIZE)) {
-                        ProgressGroupListView(taskGroups)
+                        ProgressGroupListView(taskGroupsInProgress)
                     }
                     Row(
                         modifier = Modifier.padding(top = SPACE_SMALL_8_SIZE),
@@ -177,7 +162,10 @@ fun HomeScreen(mainViewModel: MainViewModel) {
                         Box(
                             modifier = Modifier.padding(horizontal = SPACE_SMALL_6_SIZE)
                         ) {
-                            LabelCircular(taskGroupNumber.toString(), textStyle = h5TextStyle)
+                            LabelCircular(
+                                taskGroups.size.toString(),
+                                textStyle = h5TextStyle
+                            )
                         }
                     }
                     Box(modifier = Modifier.padding(vertical = SPACE_CONTENT_SIZE)) {
@@ -192,5 +180,5 @@ fun HomeScreen(mainViewModel: MainViewModel) {
 @Preview
 @Composable
 fun HomeScreenReview() {
-    HomeScreen(MainViewModel(null))
+    HomeScreen(MainViewModel(null, null)) {}
 }

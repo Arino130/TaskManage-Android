@@ -165,5 +165,5 @@ fun getFilteredTaskInfoData(
 @Preview
 @Composable
 fun CalendarScreenPreview() {
-    CalendarScreen(MainViewModel(null)) {}
+    CalendarScreen(MainViewModel(null, null)) {}
 }

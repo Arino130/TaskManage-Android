@@ -6,6 +6,7 @@ import com.ctp.taskmanageapp.data.local.dao.TaskInfoDao
 import com.ctp.taskmanageapp.data.local.dbstore.TaskInfoDatabase
 import com.ctp.taskmanageapp.data.repositories.TaskInfoRepository
 import com.ctp.taskmanageapp.domain.repository.TaskInfoRepositoryInterface
+import com.ctp.taskmanageapp.domain.usecase.TaskCalculationsUseCases
 import com.ctp.taskmanageapp.domain.usecase.TaskInfoUseCases
 import dagger.Module
 import dagger.Provides
@@ -41,5 +42,10 @@ object AppModule {
     @Provides
     fun provideTaskUseCases(taskInfoRepository: TaskInfoRepositoryInterface): TaskInfoUseCases {
         return TaskInfoUseCases(taskInfoRepository)
+    }
+
+    @Provides
+    fun provideTaskCalculationsUseCases() : TaskCalculationsUseCases {
+        return TaskCalculationsUseCases()
     }
 }

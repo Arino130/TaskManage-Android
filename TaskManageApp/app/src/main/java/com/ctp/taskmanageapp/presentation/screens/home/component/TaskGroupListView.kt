@@ -20,7 +20,7 @@ fun TaskGroupListView(taskGroups: List<TaskGroup>) {
                     paddingValues = PaddingValues(vertical = SPACE_SMALL_4_SIZE)
                 )
             ) {
-                CardGroupTaskItem(item.taskGroupType, item.taskCounts, item.progressNumber)
+                CardGroupTaskItem(item.taskGroupType, item.taskCountsByStatus(), item.progressNumber)
             }
         }
     }

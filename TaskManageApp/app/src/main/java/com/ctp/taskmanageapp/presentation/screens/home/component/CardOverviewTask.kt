@@ -39,7 +39,8 @@ import com.ctp.taskmanageapp.widget.components.buttons.ButtonType
 import com.ctp.taskmanageapp.widget.components.reports.CircularProgressBar
 
 @Composable
-fun CardOverviewTask() {
+fun CardOverviewTask(valuePercent: Int,
+                     onClickViewTask: () -> Unit) {
     val context = LocalContext.current
     Card(
         modifier = Modifier
@@ -84,7 +85,7 @@ fun CardOverviewTask() {
                         titleButton = context.getString(R.string.home_view_task_button),
                         buttonType = ButtonType.Normal,
                     ) {
-                        // TODO: OnClick View Task
+                        onClickViewTask()
                     }
                 }
             }
@@ -94,7 +95,7 @@ fun CardOverviewTask() {
                 )
             ) {
                 CircularProgressBar(
-                    initialValue = 50,
+                    initialValue = valuePercent,
                     size = CIRCULAR_LARGE_SIZE,
                     primaryColor =
                         context.getColorFromResources(R.color.CircularProgressBarPrimary),
@@ -117,5 +118,5 @@ fun CardOverviewTask() {
 @Preview
 @Composable
 fun CardOverviewTaskReview() {
-    CardOverviewTask()
+    CardOverviewTask(50) {}
 }

@@ -61,5 +61,5 @@ fun OnBoardingScreen(mainViewModel: MainViewModel, onFinishScreen: (route: Strin
 @Preview
 @Composable
 fun OnBoardingScreenReview() {
-    OnBoardingScreen(MainViewModel(null)) {}
+    OnBoardingScreen(MainViewModel(null, null)) {}
 }

@@ -4,9 +4,11 @@ import androidx.lifecycle.viewModelScope
 import com.ctp.taskmanageapp.R
 import com.ctp.taskmanageapp.common.utils.validateTaskInfo
 import com.ctp.taskmanageapp.domain.models.SnackBarType
+import com.ctp.taskmanageapp.domain.models.TaskGroup
 import com.ctp.taskmanageapp.domain.models.filters.StatusTask
 import com.ctp.taskmanageapp.domain.models.Type
 import com.ctp.taskmanageapp.domain.models.tasks.TaskInfo
+import com.ctp.taskmanageapp.domain.usecase.TaskCalculationsUseCases
 import com.ctp.taskmanageapp.domain.usecase.TaskInfoUseCases
 import com.ctp.taskmanageapp.presentation.base.BaseViewModel
 import com.ctp.taskmanageapp.widget.components.buttons.model.SegmentModel
@@ -20,7 +22,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val taskUseCases: TaskInfoUseCases?
+    private val taskUseCases: TaskInfoUseCases?,
+    private val taskCalcUseCases: TaskCalculationsUseCases?
 ) : BaseViewModel() {
     private val _showBottomBar = MutableStateFlow(true)
     val showBottomBar = _showBottomBar.asStateFlow()
@@ -141,5 +144,27 @@ class MainViewModel @Inject constructor(
                 onSuccess.invoke()
             }
         }
+    }
+
+    fun percentCompleteTaskToday(): Int {
+        return taskCalcUseCases?.percentCompleteTaskToday(taskInfoAll) ?: 0
+    }
+
+    fun getPercentGroupStatus(status: StatusTask): List<TaskGroup> {
+        return taskInfoAll.groupBy { it.taskGroupType }.map { item ->
+            TaskGroup(
+                titleGroup = "Grocery shopping app design by Phuong",
+                taskGroupType = item.key,
+                taskInfo = item.value
+            ).apply {
+                progressNumber =
+                    taskCalcUseCases?.percentStatusTaskByGroup(item.value, item.key, status) ?: 0
+            }
+        }
+    }
+
+    fun clearDataCalendarScreen() {
+        filterStatusLatest = null
+        filterDatetimeLatest = null
     }
 }

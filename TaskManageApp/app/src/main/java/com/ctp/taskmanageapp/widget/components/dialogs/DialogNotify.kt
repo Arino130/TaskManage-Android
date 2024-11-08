@@ -24,7 +24,7 @@ import com.ctp.taskmanageapp.presentation.common.SPACE_CONTENT_20_SIZE
 import com.ctp.taskmanageapp.presentation.common.SPACE_CONTENT_SIZE
 import com.ctp.taskmanageapp.presentation.common.SPACE_DEFAULT_SIZE
 import com.ctp.taskmanageapp.presentation.common.SPACE_SMALL_8_SIZE
-import com.ctp.taskmanageapp.presentation.common.h1TitleStyle
+import com.ctp.taskmanageapp.presentation.common.h2TextStyle
 import com.ctp.taskmanageapp.presentation.common.h3TextLightStyle
 import com.ctp.taskmanageapp.presentation.common.h3TextStyle
 import com.ctp.taskmanageapp.presentation.extensions.getColorFromResources
@@ -50,7 +50,7 @@ fun DialogNotify(info: DialogInfo, onDismissRequest: () -> Unit) {
                 Text(
                     text = context.getString(info.title),
                     color = context.getColorFromResources(R.color.text_blank_color),
-                    style = h1TitleStyle
+                    style = h2TextStyle
                 )
                 Spacer(modifier = Modifier.padding(top = SPACE_SMALL_8_SIZE))
                 Text(

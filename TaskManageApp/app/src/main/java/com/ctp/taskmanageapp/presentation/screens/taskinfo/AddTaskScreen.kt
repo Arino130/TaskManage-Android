@@ -142,5 +142,5 @@ fun AddTaskScreen(mainViewModel: MainViewModel, onBack: () -> Unit) {
 @Preview
 @Composable
 fun AddTaskScreenPreview() {
-    AddTaskScreen(MainViewModel(null)) {}
+    AddTaskScreen(MainViewModel(null, null)) {}
 }

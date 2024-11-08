@@ -51,9 +51,12 @@ fun DropDownDateTimeTM(
         mutableStateOf(adjustedValue?.takeIf { it.isAfter(LocalDateTime.now()) } ?: LocalDateTime.now().withSecond(0).withNano(0))
     }
     val isDropdown = remember { mutableStateOf(false) }
-    LaunchedEffect(readOnly, onChangeLocalDateTime.value) {
+    LaunchedEffect(readOnly, onChangeLocalDateTime.value, value) {
         if (readOnly) {
             isDropdown.value = false
+        }
+        value?.let {
+            onChangeLocalDateTime.value = it
         }
         onChanged(onChangeLocalDateTime.value)
     }
