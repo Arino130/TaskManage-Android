@@ -7,5 +7,6 @@ enum class Routes {
     ManageTasks,
     Settings,
     AddTask,
-    DetailsTask
+    DetailsTask,
+    AboutUs
 }

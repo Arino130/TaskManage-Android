@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
@@ -20,11 +22,15 @@ import com.ctp.taskmanageapp.presentation.extensions.getColorFromResources
 import com.ctp.taskmanageapp.presentation.viewmodels.MainViewModel
 import com.ctp.taskmanageapp.widget.components.buttons.ButtonTMComponent
 import com.ctp.taskmanageapp.widget.components.buttons.ButtonType
+import com.ctp.taskmanageapp.widget.components.dialogs.DialogNotify
+import com.ctp.taskmanageapp.widget.components.dialogs.models.DialogInfo
+import com.ctp.taskmanageapp.widget.components.dialogs.models.DialogType
 import com.ctp.taskmanageapp.widget.components.headers.HeaderScreen
 
 @Composable
-fun SettingsScreen(mainViewModel: MainViewModel) {
+fun SettingsScreen(mainViewModel: MainViewModel, onClickAboutUs: () -> Unit) {
     val context = LocalContext.current
+    val showConfirmResetData = remember { mutableStateOf(false) }
     LaunchedEffect(Unit) {
         mainViewModel.toggleBottomBar(true)
     }
@@ -42,7 +48,7 @@ fun SettingsScreen(mainViewModel: MainViewModel) {
                 iconButtonR = R.drawable.ic_rate_us,
                 buttonType = ButtonType.Primary,
             ) {
-                // TODO: RATE US
+                mainViewModel.rateUs(context)
             }
             Spacer(modifier = Modifier.padding(top = SPACE_SMALL_8_SIZE))
             ButtonTMComponent(
@@ -50,7 +56,7 @@ fun SettingsScreen(mainViewModel: MainViewModel) {
                 iconButtonR = R.drawable.ic_discover,
                 buttonType = ButtonType.Primary,
             ) { 
-                // TODO: Discover More
+                mainViewModel.discoverMore(context)
             }
             Spacer(modifier = Modifier.padding(top = SPACE_SMALL_8_SIZE))
             ButtonTMComponent(
@@ -58,7 +64,7 @@ fun SettingsScreen(mainViewModel: MainViewModel) {
                 iconButtonR = R.drawable.ic_about_app,
                 buttonType = ButtonType.Primary,
             ) {
-                // TODO: About US
+                onClickAboutUs()
             }
             Spacer(modifier = Modifier.padding(top = SPACE_SMALL_8_SIZE))
             ButtonTMComponent(
@@ -66,7 +72,7 @@ fun SettingsScreen(mainViewModel: MainViewModel) {
                 iconButtonR = R.drawable.ic_share_app,
                 buttonType = ButtonType.Primary,
             ) {
-                // TODO: Share App
+                mainViewModel.shareMyApp(context)
             }
             Spacer(modifier = Modifier.padding(top = SPACE_SMALL_8_SIZE))
             ButtonTMComponent(
@@ -74,7 +80,7 @@ fun SettingsScreen(mainViewModel: MainViewModel) {
                 iconButtonR = R.drawable.ic_restart_data,
                 buttonType = ButtonType.Primary,
             ) {
-                // TODO: Reset data
+                showConfirmResetData.value = true
             }
             Spacer(modifier = Modifier.weight(1f))
             Text(
@@ -101,10 +107,23 @@ fun SettingsScreen(mainViewModel: MainViewModel) {
             Spacer(modifier = Modifier.padding(bottom = SPACE_SMALL_8_SIZE))
         }
     }
+    if (showConfirmResetData.value) {
+        DialogNotify(
+            DialogInfo(
+                R.string.dialog_confirm_reset_data_title,
+                R.string.dialog_confirm_reset_data_body,
+                DialogType.CONFIRM,
+                onConfirm = {
+                    showConfirmResetData.value = false
+                    mainViewModel.resetAllData()
+                }
+            )
+        ) { showConfirmResetData.value = false }
+    }
 }
 
 @Preview
 @Composable
 fun SettingsScreenReview() {
-    SettingsScreen(MainViewModel(null, null))
+    SettingsScreen(MainViewModel(null, null)) {}
 }

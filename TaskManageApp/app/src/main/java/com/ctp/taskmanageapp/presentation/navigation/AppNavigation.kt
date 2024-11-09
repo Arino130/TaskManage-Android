@@ -30,6 +30,7 @@ import com.ctp.taskmanageapp.domain.models.filters.StatusTask
 import com.ctp.taskmanageapp.domain.models.taskgroups.TaskGroupType
 import com.ctp.taskmanageapp.presentation.extensions.navigateAndClearBackStack
 import com.ctp.taskmanageapp.presentation.extensions.popBackStackTo
+import com.ctp.taskmanageapp.presentation.screens.aboutus.AboutUsScreen
 import com.ctp.taskmanageapp.presentation.screens.calendar.CalendarScreen
 import com.ctp.taskmanageapp.presentation.screens.home.HomeScreen
 import com.ctp.taskmanageapp.presentation.screens.managetasks.ManageTaskScreen
@@ -101,7 +102,7 @@ fun NavigationController(
 ) {
     NavHost(
         navController = navController,
-        startDestination = Routes.ManageTasks.name,
+        startDestination = Routes.OnBoarding.name,
         Modifier.padding(innerPadding ?: PaddingValues()),
         enterTransition = {
             fadeIn(animationSpec = tween(mainViewModel.enterTransition))
@@ -175,7 +176,9 @@ fun NavigationController(
         }
 
         composable(route = Routes.Settings.name) {
-            SettingsScreen(mainViewModel = mainViewModel)
+            SettingsScreen(mainViewModel = mainViewModel) {
+                navController.navigate(route = Routes.AboutUs.name)
+            }
         }
 
         composable(route = Routes.AddTask.name) {
@@ -196,6 +199,12 @@ fun NavigationController(
                     navController.popBackStack()
                 })
             }
+        }
+
+        composable(route = Routes.AboutUs.name) {
+            AboutUsScreen(mainViewModel, onBack = {
+                navController.popBackStack()
+            })
         }
     }
 }

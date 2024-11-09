@@ -15,6 +15,7 @@
     <string name="remove_task_success">Your task has been deleted!</string>
     <string name="change_status_task_success">Your task has been updated!</string>
     <string name="today">Today</string>
+    <string name="tag_line" translatable="false" />
 
     <!--Navigation-->
     <string name="home_label_nav">Home</string>
@@ -35,8 +36,8 @@
     <string name="home_view_task_button">View Task</string>
     <string name="home_in_progress">In Progress</string>
     <string name="home_task_group">Task Group</string>
-    <string name="home_content_hello">Hello!</string>
-    <string name="home_username_mock">Wishing you a fantastic day!</string>
+    <string name="home_content_hello">Welcome back!</string>
+    <string name="home_username_mock">Hope all is great with you.</string>
 
     <!--Type Group-->
     <string name="type_group_office">Office Project</string>
@@ -80,7 +81,12 @@
     <string name="settings_screen_button_reset_data_title">Reset All Data</string>
     <string name="settings_screen_version_name">Version Name: %1$s</string>
     <string name="settings_screen_code_name">Build Code: %1$d</string>
-    <string name="about_app">The task management app allows users to create tasks, track their status, and view detailed information about each task, such as descriptions and completion time. Tasks can be grouped into specific categories, making it easier to organize and manage work within different projects. This feature helps track progress and improve team collaboration efficiency.</string>
+    <string name="reset_all_data_success">Data has been reset successfully!</string>
+    <string name="dialog_confirm_reset_data_title">Reset All Data</string>
+    <string name="dialog_confirm_reset_data_body">Are you sure you want to reset all data? This action cannot be undone and will delete all saved information.</string>
 
+    <!--SettingsScreen-->
+    <string name="about_us_screen_title">About App</string>
+    <string name="about_app_body">The task management app allows users to create tasks, track their status, and view detailed information about each task, such as descriptions and completion time.\nTasks can be grouped into specific categories, making it easier to organize and manage work within different projects.\nThis feature helps track progress and improve team collaboration efficiency.</string>
 
 </resources>

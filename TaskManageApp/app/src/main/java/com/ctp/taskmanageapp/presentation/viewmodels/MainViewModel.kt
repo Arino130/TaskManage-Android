@@ -170,4 +170,18 @@ class MainViewModel @Inject constructor(
         filterStatusLatest = null
         filterDatetimeLatest = null
     }
+
+    fun resetAllData() {
+        viewModelScope.launch {
+            taskUseCases?.deleteAllTasks()
+            getAllTasks {
+                SnackBarController.showSnackBar(
+                    SnackBarType(
+                        R.string.reset_all_data_success,
+                        Type.SUCCESS
+                    )
+                )
+            }
+        }
+    }
 }
