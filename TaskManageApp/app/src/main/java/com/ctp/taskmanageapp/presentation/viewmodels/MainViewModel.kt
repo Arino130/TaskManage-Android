@@ -165,10 +165,10 @@ class MainViewModel @Inject constructor(
         return taskCalcUseCases?.percentCompleteTaskToday(taskInfoAll) ?: 0
     }
 
-    fun getPercentGroupStatus(status: StatusTask): List<TaskGroup> {
+    fun getPercentGroupStatus(titleGroup: String, status: StatusTask): List<TaskGroup> {
         return taskInfoAll.groupBy { it.taskGroupType }.map { item ->
             TaskGroup(
-                titleGroup = item.value.firstOrNull()?.titleTask ?: "",
+                titleGroup = titleGroup,
                 taskGroupType = item.key,
                 taskInfo = item.value
             ).apply {

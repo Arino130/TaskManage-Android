@@ -43,6 +43,7 @@
     <string name="home_task_group">Task Group</string>
     <string name="home_content_hello">Welcome back!</string>
     <string name="home_username_mock">Hope all is great with you.</string>
+    <string name="home_description_group_in_progress">Track task progress with a completion percentage.</string>
 
     <!--Type Group-->
     <string name="type_group_office">Office Project</string>

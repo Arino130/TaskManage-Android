@@ -49,8 +49,10 @@ fun HomeScreen(
     onClickActionMore: () -> Unit
 ) {
     val context = LocalContext.current
-    val taskGroupsInProgress = mainViewModel.getPercentGroupStatus(StatusTask.IN_PROGRESS)
-    val taskGroups = mainViewModel.getPercentGroupStatus(StatusTask.DONE)
+    val taskGroupsInProgress = mainViewModel.getPercentGroupStatus(
+        context.getString(R.string.home_description_group_in_progress), StatusTask.IN_PROGRESS)
+    val taskGroups = mainViewModel.getPercentGroupStatus(
+        context.getString(R.string.home_description_group_in_progress), StatusTask.DONE)
     val inProgressCount = taskGroupsInProgress.sumOf {
         it.taskCountsByStatus(StatusTask.IN_PROGRESS)
     }
