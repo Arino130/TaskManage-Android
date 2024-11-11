@@ -99,7 +99,7 @@ fun AddTaskScreen(
                     .verticalScroll(rememberScrollState())
                     .padding(top = SPACE_DEFAULT_SIZE, bottom = SPACE_CONTENT_40_SIZE)
             ) {
-                DropDownTM(taskGroupTypes) {
+                DropDownTM(taskGroupTypes, selectDefault = mainViewModel.filterGroupTypeLatest) {
                     taskInfo.value = taskInfo.value.copy(taskGroupType = it.rootData)
                 }
                 InputTM(

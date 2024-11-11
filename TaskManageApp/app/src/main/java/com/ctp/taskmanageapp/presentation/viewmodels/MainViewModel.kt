@@ -34,6 +34,7 @@ class MainViewModel @Inject constructor(
     private var taskInfoAll: List<TaskInfo> = listOf()
     var filterStatusLatest: SegmentModel? = null
     var filterDatetimeLatest: LocalDate? = null
+    var filterGroupTypeLatest: TaskGroupType? = null
 
     fun initUI() {
         viewModelScope.launch {

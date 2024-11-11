@@ -132,7 +132,13 @@ fun NavigationController(
                     navController.navigate(route = Routes.Calendar.name)
                 },
                 onClickGroupTask = { groupType, status ->
-                    navController.navigate(route = "${Routes.ManageTasks.name}/$groupType/$status")
+                    mainViewModel.filterGroupTypeLatest = TaskGroupType.values().firstOrNull {
+                        it.name == groupType.takeIf { item -> item.isNotBlank() }
+                    }
+                    navController.navigate(route = "${Routes.ManageTasks.name}/$status")
+                },
+                onClickActionMore = {
+                    navController.navigate(route = Routes.ManageTasks.name)
                 }
             )
         }
@@ -145,7 +151,6 @@ fun NavigationController(
 
         composable(route = Routes.ManageTasks.name) {
             ManageTaskScreen(mainViewModel = mainViewModel,
-                defaultTypeGroup = null,
                 onDetailsTask = {
                     navController.navigate(route = "${Routes.DetailsTask.name}/$it")
                 }
@@ -153,31 +158,25 @@ fun NavigationController(
         }
 
         composable(
-            route = "${Routes.ManageTasks.name}/{type_group}/{status_task}",
+            route = "${Routes.ManageTasks.name}/{status_task}",
             arguments = listOf(
-                navArgument("type_group") {
-                    type = NavType.StringType
-                    defaultValue = ""
-                },
                 navArgument("status_task") {
                     type = NavType.StringType
                     defaultValue = ""
                 }
             )
         ) { navBackStackEntry ->
-            val typeGroup = navBackStackEntry.arguments?.getString("type_group")
             val statusTask = navBackStackEntry.arguments?.getString("status_task")
             ManageTaskScreen(mainViewModel = mainViewModel,
                 defaultStatusTask = StatusTask.values().firstOrNull {
                     it.name == statusTask.takeIf { item -> item.toString().isNotBlank() }
                 },
-                defaultTypeGroup = TaskGroupType.values().firstOrNull {
-                    it.name == typeGroup.takeIf { item -> item.toString().isNotBlank() }
-                },
                 onDetailsTask = {
                     navController.navigate(route = "${Routes.DetailsTask.name}/$it")
-                })
+                }
+            )
         }
+
 
         composable(route = Routes.Settings.name) {
             SettingsScreen(mainViewModel = mainViewModel) {
@@ -187,12 +186,12 @@ fun NavigationController(
 
         composable(route = Routes.AddTask.name) {
             AddTaskScreen(mainViewModel = mainViewModel, onBack = { isFirstOnBoarding ->
-                    if (isFirstOnBoarding) {
-                        navController.navigateAndClearBackStack(Routes.Home.name)
-                    } else {
-                        navController.popBackStack()
-                    }
+                if (isFirstOnBoarding) {
+                    navController.navigateAndClearBackStack(Routes.Home.name)
+                } else {
+                    navController.popBackStack()
                 }
+            }
             )
         }
 

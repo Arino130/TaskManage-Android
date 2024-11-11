@@ -1,6 +1,7 @@
 package com.ctp.taskmanageapp.presentation.screens.home.component
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -39,8 +40,11 @@ import com.ctp.taskmanageapp.widget.components.buttons.ButtonType
 import com.ctp.taskmanageapp.widget.components.reports.CircularProgressBar
 
 @Composable
-fun CardOverviewTask(valuePercent: Int,
-                     onClickViewTask: () -> Unit) {
+fun CardOverviewTask(
+    valuePercent: Int,
+    onClickViewTask: () -> Unit,
+    onClickActionMore: () -> Unit
+) {
     val context = LocalContext.current
     Card(
         modifier = Modifier
@@ -98,15 +102,15 @@ fun CardOverviewTask(valuePercent: Int,
                     initialValue = valuePercent,
                     size = CIRCULAR_LARGE_SIZE,
                     primaryColor =
-                        context.getColorFromResources(R.color.CircularProgressBarPrimary),
+                    context.getColorFromResources(R.color.CircularProgressBarPrimary),
                     secondaryColor =
-                        context.getColorFromResources(R.color.CircularProgressBarSecondary),
+                    context.getColorFromResources(R.color.CircularProgressBarSecondary),
                     textColor = context.getColorFromResources(R.color.white)
                 )
             }
             Image(
                 modifier = Modifier
-                    .size(ICON_SMALL_SIZE),
+                    .size(ICON_SMALL_SIZE).clickable { onClickActionMore() },
                 painter = painterResource(id = R.drawable.ic_button_three_dot),
                 contentDescription = null,
                 contentScale = ContentScale.FillBounds
@@ -118,5 +122,5 @@ fun CardOverviewTask(valuePercent: Int,
 @Preview
 @Composable
 fun CardOverviewTaskReview() {
-    CardOverviewTask(50) {}
+    CardOverviewTask(50, {}) {}
 }

@@ -38,7 +38,6 @@ import com.ctp.taskmanageapp.widget.components.swipe.SwipeActionBox
 fun ManageTaskScreen(
     mainViewModel: MainViewModel,
     defaultStatusTask: StatusTask? = null,
-    defaultTypeGroup: TaskGroupType? = null,
     onDetailsTask: (Int) -> Unit
 ) {
     LaunchedEffect(Unit) {
@@ -57,9 +56,9 @@ fun ManageTaskScreen(
     }
     val showConfirmDoneTask: MutableState<TaskInfo?> = remember { mutableStateOf(null) }
     val filterGroupTypeSelected = remember {
-        mutableStateOf(defaultTypeGroup?.let {
+        mutableStateOf(mainViewModel.filterGroupTypeLatest?.let { filterGroupType ->
             filterGroupTypes.firstOrNull {
-                it.textId == defaultTypeGroup.typeTitleId
+                it.textId == filterGroupType.typeTitleId
             }
         } ?: filterGroupTypes.firstOrNull { it.isSelected })
     }
@@ -99,6 +98,8 @@ fun ManageTaskScreen(
             ) {
                 SegmentedControl(selectItem = filterGroupTypeSelected.value, filterGroupTypes) {
                     filterGroupTypeSelected.value = it
+                    mainViewModel.filterGroupTypeLatest =
+                        TaskGroupType.values().firstOrNull { item -> item.typeTitleId == it.textId }
                 }
             }
             Box(
@@ -166,17 +167,20 @@ fun ManageTaskScreen(
         ) { showConfirmDoneTask.value = null }
     }
     LaunchedEffect(
-        defaultStatusTask, defaultTypeGroup,
-        filterStatusSelected.value, filterGroupTypeSelected.value
+        defaultStatusTask, mainViewModel.filterGroupTypeLatest
     ) {
         defaultStatusTask?.let {
             filterStatusSelected.value =
                 filterStatus.firstOrNull { item -> item.textId == it.fullNameId }
         }
-        defaultTypeGroup?.let {
+        mainViewModel.filterGroupTypeLatest?.let {
             filterGroupTypeSelected.value =
                 filterGroupTypes.firstOrNull { item -> item.textId == it.typeTitleId }
         }
+    }
+    LaunchedEffect(
+        filterStatusSelected.value, filterGroupTypeSelected.value
+    ) {
         taskData.value = getFilteredTaskInfoData(
             mainViewModel,
             filterStatusSelected = filterStatusSelected.value,

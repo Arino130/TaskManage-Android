@@ -61,6 +61,7 @@ fun <T> DropDownTM(
         }
         if (selectDefault != null) {
             selected.value = items.firstOrNull { it.rootData == selectDefault}
+            selected.value?.let { onSelected(it) }
         }
     }
     Column {

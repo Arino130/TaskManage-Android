@@ -45,7 +45,8 @@ import com.ctp.taskmanageapp.widget.components.labels.LabelCircular
 fun HomeScreen(
     mainViewModel: MainViewModel,
     onClickViewTask: () -> Unit,
-    onClickGroupTask: (String, String?) -> Unit
+    onClickGroupTask: (String, String?) -> Unit,
+    onClickActionMore: () -> Unit
 ) {
     val context = LocalContext.current
     val taskGroupsInProgress = mainViewModel.getPercentGroupStatus(StatusTask.IN_PROGRESS)
@@ -66,8 +67,7 @@ fun HomeScreen(
             modifier = Modifier.padding(horizontal = SPACE_CONTENT_SIZE)
         ) {
             Image(
-                modifier = Modifier
-                    .size(AVATAR_DEFAULT_SIZE),
+                modifier = Modifier.size(AVATAR_DEFAULT_SIZE),
                 painter = painterResource(id = R.drawable.ic_generic_avatar),
                 contentDescription = null,
                 contentScale = ContentScale.FillBounds
@@ -81,8 +81,7 @@ fun HomeScreen(
                     style = h4TextStyle,
                     color = Color(
                         ContextCompat.getColor(
-                            context,
-                            R.color.sub_text_dark
+                            context, R.color.sub_text_dark
                         )
                     )
                 )
@@ -91,8 +90,7 @@ fun HomeScreen(
                     style = h3TextStyle,
                     color = Color(
                         ContextCompat.getColor(
-                            context,
-                            R.color.text_blank_color
+                            context, R.color.text_blank_color
                         )
                     )
                 )
@@ -109,13 +107,14 @@ fun HomeScreen(
             ) {
                 Column(
                     horizontalAlignment = Alignment.Start,
-                    modifier = Modifier
-                        .padding(horizontal = SPACE_SMALL_4_SIZE),
+                    modifier = Modifier.padding(horizontal = SPACE_SMALL_4_SIZE),
                 ) {
                     Box(modifier = Modifier.padding(top = SPACE_CONTENT_SIZE)) {
-                        CardOverviewTask(mainViewModel.percentCompleteTaskToday()) {
-                            onClickViewTask()
-                        }
+                        CardOverviewTask(mainViewModel.percentCompleteTaskToday(),
+                            onClickViewTask = {
+                                onClickViewTask()
+                            },
+                            onClickActionMore = { onClickActionMore() })
                     }
                     Row(
                         modifier = Modifier.padding(
@@ -131,8 +130,7 @@ fun HomeScreen(
                             style = h1TitleStyle,
                             color = Color(
                                 ContextCompat.getColor(
-                                    context,
-                                    R.color.text_blank_color
+                                    context, R.color.text_blank_color
                                 )
                             )
                         )
@@ -140,8 +138,7 @@ fun HomeScreen(
                             modifier = Modifier.padding(horizontal = SPACE_SMALL_6_SIZE)
                         ) {
                             LabelCircular(
-                                inProgressCount.toString(),
-                                textStyle = h5TextStyle
+                                inProgressCount.toString(), textStyle = h5TextStyle
                             )
                         }
                     }
@@ -160,8 +157,7 @@ fun HomeScreen(
                             style = h1TitleStyle,
                             color = Color(
                                 ContextCompat.getColor(
-                                    context,
-                                    R.color.text_blank_color
+                                    context, R.color.text_blank_color
                                 )
                             )
                         )
@@ -169,8 +165,7 @@ fun HomeScreen(
                             modifier = Modifier.padding(horizontal = SPACE_SMALL_6_SIZE)
                         ) {
                             LabelCircular(
-                                taskGroups.size.toString(),
-                                textStyle = h5TextStyle
+                                taskGroups.size.toString(), textStyle = h5TextStyle
                             )
                         }
                     }
@@ -188,5 +183,6 @@ fun HomeScreen(
 @Preview
 @Composable
 fun HomeScreenReview() {
-    HomeScreen(MainViewModel(null, null, null), {}) {_, _ -> }
+    HomeScreen(MainViewModel(null, null, null), {},
+        { _, _ -> }, {})
 }
