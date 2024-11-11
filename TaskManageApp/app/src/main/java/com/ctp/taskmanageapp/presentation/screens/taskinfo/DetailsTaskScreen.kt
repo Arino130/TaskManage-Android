@@ -249,6 +249,6 @@ private fun updateTaskInfo(mainViewModel: MainViewModel, taskInfo: TaskInfo?, on
 @Composable
 fun DetailsTaskScreenPreview() {
     DetailsTaskScreen(
-        MainViewModel(null, null), -1
+        MainViewModel(null, null, null), -1
     ) {}
 }

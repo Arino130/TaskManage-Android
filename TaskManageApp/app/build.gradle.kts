@@ -10,10 +10,8 @@ fun getGitCommitCount(): String {
     val process = ProcessBuilder("git", "rev-list", "--count", "--no-merges", "HEAD")
         .redirectErrorStream(true)
         .start()
-
     process.waitFor()
-
-    return process.inputStream.bufferedReader().readText().trim()  // Đọc kết quả từ đầu ra và loại bỏ khoảng trắng thừa
+    return process.inputStream.bufferedReader().readText().trim()
 }
 
 android {
@@ -24,7 +22,7 @@ android {
         applicationId = "com.ctp.taskmanageapp"
         minSdk = 26
         targetSdk = 34
-        versionCode = Integer.parseInt(getGitCommitCount())
+        versionCode = 1800 + Integer.parseInt(getGitCommitCount())
         versionName = "v1.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

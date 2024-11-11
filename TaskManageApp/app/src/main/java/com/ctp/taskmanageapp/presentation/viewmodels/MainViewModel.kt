@@ -2,6 +2,7 @@ package com.ctp.taskmanageapp.presentation.viewmodels
 
 import androidx.lifecycle.viewModelScope
 import com.ctp.taskmanageapp.R
+import com.ctp.taskmanageapp.common.utils.SharedKeys.HAS_DONE_ONBOARDING
 import com.ctp.taskmanageapp.common.utils.validateTaskInfo
 import com.ctp.taskmanageapp.domain.models.SnackBarType
 import com.ctp.taskmanageapp.domain.models.taskgroups.TaskGroup
@@ -9,6 +10,7 @@ import com.ctp.taskmanageapp.domain.models.filters.StatusTask
 import com.ctp.taskmanageapp.domain.models.Type
 import com.ctp.taskmanageapp.domain.models.taskgroups.TaskGroupType
 import com.ctp.taskmanageapp.domain.models.tasks.TaskInfo
+import com.ctp.taskmanageapp.domain.usecase.SharedUseCases
 import com.ctp.taskmanageapp.domain.usecase.TaskCalculationsUseCases
 import com.ctp.taskmanageapp.domain.usecase.TaskInfoUseCases
 import com.ctp.taskmanageapp.presentation.base.BaseViewModel
@@ -24,7 +26,8 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val taskUseCases: TaskInfoUseCases?,
-    private val taskCalcUseCases: TaskCalculationsUseCases?
+    private val taskCalcUseCases: TaskCalculationsUseCases?,
+    private val sharedUseCases: SharedUseCases?
 ) : BaseViewModel() {
     private val _showBottomBar = MutableStateFlow(true)
     val showBottomBar = _showBottomBar.asStateFlow()
@@ -37,6 +40,14 @@ class MainViewModel @Inject constructor(
             getAllTasks(true) {}
         }
     }
+
+    fun onFinishedOnBoarding() {
+        sharedUseCases?.saveBoolean(HAS_DONE_ONBOARDING, true)
+    }
+
+    fun shouldSkipOnboarding(): Boolean = sharedUseCases?.getBoolean(
+        HAS_DONE_ONBOARDING, false
+    ) ?: false
 
     private suspend fun getAllTasks(isLiveDataChange: Boolean = false, onSuccess: () -> Unit) {
         var isReloadData = !isLiveDataChange

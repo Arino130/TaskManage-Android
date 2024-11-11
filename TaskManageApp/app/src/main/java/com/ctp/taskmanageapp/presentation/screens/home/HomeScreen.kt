@@ -188,5 +188,5 @@ fun HomeScreen(
 @Preview
 @Composable
 fun HomeScreenReview() {
-    HomeScreen(MainViewModel(null, null), {}) {_, _ -> }
+    HomeScreen(MainViewModel(null, null, null), {}) {_, _ -> }
 }

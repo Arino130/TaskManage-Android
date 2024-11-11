@@ -3,7 +3,7 @@ package com.ctp.taskmanageapp.domain.repository
 import com.ctp.taskmanageapp.domain.models.tasks.TaskInfo
 import kotlinx.coroutines.flow.Flow
 
-interface TaskInfoRepositoryInterface {
+interface ITaskInfoRepository {
     suspend fun insertTask(task: TaskInfo)
     suspend fun deleteTask(task: TaskInfo)
     suspend fun updateTask(task: TaskInfo)

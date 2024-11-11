@@ -43,7 +43,7 @@ import com.ctp.taskmanageapp.presentation.viewmodels.MainViewModel
 
 @ExperimentalAnimationApi
 @Composable
-fun AppNavigation(mainViewModel: MainViewModel) {
+fun AppNavigation(mainViewModel: MainViewModel, hasSeenOnboarding: Boolean) {
     val navController = rememberNavController()
     val showBottomBar by mainViewModel.showBottomBar.collectAsState()
     val currentScreen: MutableState<BottomNavScreen> = remember {
@@ -72,7 +72,7 @@ fun AppNavigation(mainViewModel: MainViewModel) {
                 )
             }
         ) { innerPadding ->
-            NavigationController(mainViewModel, navController, innerPadding)
+            NavigationController(mainViewModel, navController, innerPadding, hasSeenOnboarding)
         }
     } else {
         Box(
@@ -80,7 +80,10 @@ fun AppNavigation(mainViewModel: MainViewModel) {
                 .displayCutoutPadding()
                 .navigationBarsPadding()
         ) {
-            NavigationController(mainViewModel, navController)
+            NavigationController(
+                mainViewModel, navController,
+                hasSeenOnboarding = hasSeenOnboarding
+            )
         }
     }
 
@@ -98,11 +101,12 @@ fun AppNavigation(mainViewModel: MainViewModel) {
 fun NavigationController(
     mainViewModel: MainViewModel,
     navController: NavHostController,
-    innerPadding: PaddingValues? = null
+    innerPadding: PaddingValues? = null,
+    hasSeenOnboarding: Boolean
 ) {
     NavHost(
         navController = navController,
-        startDestination = Routes.OnBoarding.name,
+        startDestination = if (hasSeenOnboarding) Routes.Home.name else Routes.OnBoarding.name,
         Modifier.padding(innerPadding ?: PaddingValues()),
         enterTransition = {
             fadeIn(animationSpec = tween(mainViewModel.enterTransition))
@@ -114,8 +118,8 @@ fun NavigationController(
         composable(route = Routes.OnBoarding.name) {
             OnBoardingScreen(
                 mainViewModel = mainViewModel,
-                onFinishScreen = {
-                    navController.navigateAndClearBackStack(Routes.Home.name)
+                onAddTask = {
+                    navController.navigate(route = "${Routes.AddTask.name}/true")
                 }
             )
         }
@@ -182,9 +186,37 @@ fun NavigationController(
         }
 
         composable(route = Routes.AddTask.name) {
-            AddTaskScreen(mainViewModel = mainViewModel, onBack = {
-                navController.popBackStack()
+            AddTaskScreen(mainViewModel = mainViewModel, onBack = { isFirstOnBoarding ->
+                    if (isFirstOnBoarding) {
+                        navController.navigateAndClearBackStack(Routes.Home.name)
+                    } else {
+                        navController.popBackStack()
+                    }
+                }
+            )
+        }
+
+        composable(
+            route = "${Routes.AddTask.name}/{isFirstOnBoarding}",
+            arguments = listOf(navArgument("isFirstOnBoarding") {
+                type = NavType.BoolType
+                defaultValue = false
             })
+        ) { navBackStackEntry ->
+            navBackStackEntry.arguments?.getBoolean("isFirstOnBoarding")
+                ?.let {
+                    AddTaskScreen(
+                        mainViewModel = mainViewModel,
+                        isFirstOnBoarding = it,
+                        onBack = { isFirstOnBoarding ->
+                            if (isFirstOnBoarding) {
+                                navController.navigateAndClearBackStack(Routes.Home.name)
+                            } else {
+                                navController.popBackStack()
+                            }
+                        }
+                    )
+                }
         }
 
         composable(

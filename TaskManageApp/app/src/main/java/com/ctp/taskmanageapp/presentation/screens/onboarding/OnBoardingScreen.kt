@@ -15,13 +15,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.ctp.taskmanageapp.presentation.navigation.Routes
+import com.ctp.taskmanageapp.presentation.screens.onboarding.component.OnBoardingFinishPageComponent
 import com.ctp.taskmanageapp.presentation.screens.onboarding.component.OnBoardingPageComponent
 import com.ctp.taskmanageapp.presentation.viewmodels.MainViewModel
 
 @ExperimentalAnimationApi
 @Composable
-fun OnBoardingScreen(mainViewModel: MainViewModel, onFinishScreen: (route: String) -> Unit) {
+fun OnBoardingScreen(mainViewModel: MainViewModel, onAddTask: () -> Unit) {
     LaunchedEffect(Unit) {
         mainViewModel.toggleBottomBar(false)
     }
@@ -46,12 +46,13 @@ fun OnBoardingScreen(mainViewModel: MainViewModel, onFinishScreen: (route: Strin
             )
         }
     ) { targetState ->
-        OnBoardingPageComponent(pages[targetState]) {
-            if (currentPage.value < pages.size - 1) {
+        if (targetState < pages.size) {
+            OnBoardingPageComponent(pages[targetState]) {
                 currentPage.value += 1
-            } else {
-                // Finished
-                onFinishScreen(Routes.Home.name)
+            }
+        } else {
+            OnBoardingFinishPageComponent {
+                onAddTask()
             }
         }
     }
@@ -61,5 +62,5 @@ fun OnBoardingScreen(mainViewModel: MainViewModel, onFinishScreen: (route: Strin
 @Preview
 @Composable
 fun OnBoardingScreenReview() {
-    OnBoardingScreen(MainViewModel(null, null)) {}
+    OnBoardingScreen(MainViewModel(null, null, null)) {}
 }

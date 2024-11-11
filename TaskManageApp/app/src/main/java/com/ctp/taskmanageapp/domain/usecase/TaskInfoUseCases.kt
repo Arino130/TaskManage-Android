@@ -1,12 +1,12 @@
 package com.ctp.taskmanageapp.domain.usecase
 
 import com.ctp.taskmanageapp.domain.models.tasks.TaskInfo
-import com.ctp.taskmanageapp.domain.repository.TaskInfoRepositoryInterface
+import com.ctp.taskmanageapp.domain.repository.ITaskInfoRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class TaskInfoUseCases @Inject constructor(
-    private val taskInfoRepository: TaskInfoRepositoryInterface
+    private val taskInfoRepository: ITaskInfoRepository
 ) {
     suspend fun insertTask(task: TaskInfo) {
         taskInfoRepository.insertTask(task)

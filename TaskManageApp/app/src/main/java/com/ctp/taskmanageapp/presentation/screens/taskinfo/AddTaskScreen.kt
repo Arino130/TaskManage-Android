@@ -40,7 +40,11 @@ import com.ctp.taskmanageapp.widget.components.inputs.InputType
 import java.time.LocalDateTime
 
 @Composable
-fun AddTaskScreen(mainViewModel: MainViewModel, onBack: () -> Unit) {
+fun AddTaskScreen(
+    mainViewModel: MainViewModel,
+    isFirstOnBoarding: Boolean = false,
+    onBack: (Boolean) -> Unit
+) {
     val context = LocalContext.current
     val plusEndHourDefault = remember { 1L }
     LaunchedEffect(Unit) {
@@ -78,8 +82,15 @@ fun AddTaskScreen(mainViewModel: MainViewModel, onBack: () -> Unit) {
                 .padding(horizontal = SPACE_SMALL_12_SIZE)
                 .padding(bottom = SPACE_CONTENT_40_SIZE)
         ) {
-            HeaderSubScreen(titleId = R.string.add_task_screen_title) {
-                onBack()
+            if (isFirstOnBoarding) {
+                HeaderSubScreen(
+                    titleId = R.string.add_task_screen_title,
+                    onBackButtonIcon = null
+                ) {}
+            } else {
+                HeaderSubScreen(titleId = R.string.add_task_screen_title) {
+                    onBack(false)
+                }
             }
             Column(
                 modifier = Modifier
@@ -134,7 +145,8 @@ fun AddTaskScreen(mainViewModel: MainViewModel, onBack: () -> Unit) {
                 buttonType = ButtonType.Primary
             ) {
                 mainViewModel.createTaskInfo(taskInfo.value) {
-                    onBack()
+                    if (isFirstOnBoarding) { mainViewModel.onFinishedOnBoarding() }
+                    onBack(isFirstOnBoarding)
                 }
             }
         }
@@ -144,5 +156,5 @@ fun AddTaskScreen(mainViewModel: MainViewModel, onBack: () -> Unit) {
 @Preview
 @Composable
 fun AddTaskScreenPreview() {
-    AddTaskScreen(MainViewModel(null, null)) {}
+    AddTaskScreen(MainViewModel(null, null, null)) {}
 }

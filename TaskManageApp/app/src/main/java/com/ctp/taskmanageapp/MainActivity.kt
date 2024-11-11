@@ -29,7 +29,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             ThemeApp {
-                AppNavigation(mainViewModel)
+                AppNavigation(mainViewModel, mainViewModel.shouldSkipOnboarding())
                 SnackBarApp()
             }
         }

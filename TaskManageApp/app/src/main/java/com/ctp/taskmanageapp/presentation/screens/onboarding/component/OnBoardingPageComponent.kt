@@ -19,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -38,10 +39,9 @@ fun OnBoardingPageComponent(pageData: PageData, onclickDone: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .fillMaxHeight()
-            .padding(8.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White)
+            .fillMaxHeight(),
+        colors = CardDefaults.cardColors(containerColor = Color.White),
+        shape = RectangleShape
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
             Box(

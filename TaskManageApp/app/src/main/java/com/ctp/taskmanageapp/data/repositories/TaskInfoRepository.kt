@@ -2,13 +2,13 @@ package com.ctp.taskmanageapp.data.repositories
 
 import com.ctp.taskmanageapp.data.local.dao.TaskInfoDao
 import com.ctp.taskmanageapp.domain.models.tasks.TaskInfo
-import com.ctp.taskmanageapp.domain.repository.TaskInfoRepositoryInterface
+import com.ctp.taskmanageapp.domain.repository.ITaskInfoRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class TaskInfoRepository @Inject constructor(
     private val taskDao: TaskInfoDao
-) : TaskInfoRepositoryInterface {
+) : ITaskInfoRepository {
 
     override suspend fun insertTask(task: TaskInfo) = taskDao.insertTask(task)
 

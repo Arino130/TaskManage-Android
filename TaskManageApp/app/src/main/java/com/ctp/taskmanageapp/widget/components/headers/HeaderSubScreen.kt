@@ -29,6 +29,7 @@ fun HeaderSubScreen(
     titleStr: String = "",
     actionButtonIcon: Int? = null,
     actionButton: () -> Unit = {},
+    onBackButtonIcon: Int? = R.drawable.ic_arrow_back,
     onBack: () -> Unit
 ) {
     val context = LocalContext.current
@@ -38,14 +39,16 @@ fun HeaderSubScreen(
             .padding(bottom = SPACE_BODY_WITH_HEADER_SIZE),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Image(
-            modifier = Modifier
-                .size(ICON_BACK_SCREEN_SIZE)
-                .clickable { onBack() },
-            painter = painterResource(id = R.drawable.ic_arrow_back),
-            contentDescription = null,
-            contentScale = ContentScale.FillBounds,
-        )
+        if (onBackButtonIcon != null) {
+            Image(
+                modifier = Modifier
+                    .size(ICON_BACK_SCREEN_SIZE)
+                    .clickable { onBack() },
+                painter = painterResource(id = R.drawable.ic_arrow_back),
+                contentDescription = null,
+                contentScale = ContentScale.FillBounds,
+            )
+        }
 
         Text(
             modifier = Modifier

@@ -62,5 +62,5 @@ fun AboutUsScreen(mainViewModel: MainViewModel, onBack: () -> Unit) {
 @Preview
 @Composable
 fun AboutUsScreenPreview() {
-    AboutUsScreen(MainViewModel(null, null)) {}
+    AboutUsScreen(MainViewModel(null, null, null)) {}
 }

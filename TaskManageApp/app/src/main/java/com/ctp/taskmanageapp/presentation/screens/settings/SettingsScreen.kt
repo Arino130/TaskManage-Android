@@ -125,5 +125,5 @@ fun SettingsScreen(mainViewModel: MainViewModel, onClickAboutUs: () -> Unit) {
 @Preview
 @Composable
 fun SettingsScreenReview() {
-    SettingsScreen(MainViewModel(null, null)) {}
+    SettingsScreen(MainViewModel(null, null, null)) {}
 }

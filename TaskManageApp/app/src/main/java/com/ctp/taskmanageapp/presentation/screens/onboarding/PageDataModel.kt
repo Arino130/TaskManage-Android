@@ -13,14 +13,14 @@ data class PageData(
     val onBoardingPage: List<PageData>
         get() = listOf(
             PageData(
-                backgroundImage = R.drawable.background_onboarding,
+                backgroundImage = null,
                 imageContent = R.drawable.on_boarding_first_bg,
                 titlePage = R.string.onboarding_first_title,
                 contentDescription = R.string.onboarding_first_description,
                 titleButton = R.string.onboarding_first_button_title,
                 pageIndex = 1
             ), PageData(
-                backgroundImage = R.drawable.background_onboarding,
+                backgroundImage = null,
                 imageContent = R.drawable.on_boarding_first_bg,
                 titlePage = R.string.onboarding_Second_title,
                 contentDescription = R.string.onboarding_Second_description,

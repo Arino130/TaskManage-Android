@@ -188,5 +188,5 @@ fun ManageTaskScreen(
 @Preview
 @Composable
 fun ManageTaskScreenPreview() {
-    ManageTaskScreen(MainViewModel(null, null)) {}
+    ManageTaskScreen(MainViewModel(null, null, null)) {}
 }
