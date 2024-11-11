@@ -55,6 +55,7 @@ fun ManageTaskScreen(
         }
     }
     val showConfirmDoneTask: MutableState<TaskInfo?> = remember { mutableStateOf(null) }
+    val isFirstLoad = remember { mutableStateOf(true) }
     val filterGroupTypeSelected = remember {
         mutableStateOf(mainViewModel.filterGroupTypeLatest?.let { filterGroupType ->
             filterGroupTypes.firstOrNull {
@@ -169,13 +170,16 @@ fun ManageTaskScreen(
     LaunchedEffect(
         defaultStatusTask, mainViewModel.filterGroupTypeLatest
     ) {
-        defaultStatusTask?.let {
-            filterStatusSelected.value =
-                filterStatus.firstOrNull { item -> item.textId == it.fullNameId }
-        }
-        mainViewModel.filterGroupTypeLatest?.let {
-            filterGroupTypeSelected.value =
-                filterGroupTypes.firstOrNull { item -> item.textId == it.typeTitleId }
+        if (isFirstLoad.value) {
+            defaultStatusTask?.let {
+                filterStatusSelected.value =
+                    filterStatus.firstOrNull { item -> item.textId == it.fullNameId }
+            }
+            mainViewModel.filterGroupTypeLatest?.let {
+                filterGroupTypeSelected.value =
+                    filterGroupTypes.firstOrNull { item -> item.textId == it.typeTitleId }
+            }
+            isFirstLoad.value = false
         }
     }
     LaunchedEffect(
