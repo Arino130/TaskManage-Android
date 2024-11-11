@@ -168,7 +168,7 @@ class MainViewModel @Inject constructor(
     fun getPercentGroupStatus(status: StatusTask): List<TaskGroup> {
         return taskInfoAll.groupBy { it.taskGroupType }.map { item ->
             TaskGroup(
-                titleGroup = "Grocery shopping app design by Phuong",
+                titleGroup = item.value.firstOrNull()?.titleTask ?: "",
                 taskGroupType = item.key,
                 taskInfo = item.value
             ).apply {
