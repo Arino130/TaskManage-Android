@@ -32,7 +32,7 @@
     <string name="onboarding_second_button_title">Next</string>
     <string name="onboarding_third_title">Manage Tasks by Group</string>
     <string name="onboarding_third_description">Organize tasks by groups and track overall progress.</string>
-    <string name="onboarding_third_button_title">Next</string>
+    <string name="onboarding_third_button_title">Finish</string>
     <string name="onboarding_finish_title">Welcome to %1$s</string>
     <string name="onboarding_finish_content">Press the + button to add your first task</string>
 

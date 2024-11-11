@@ -24,6 +24,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import com.ctp.taskmanageapp.R
 import com.ctp.taskmanageapp.presentation.common.ON_BOARDING_IMAGE_CONTENT
@@ -101,7 +102,9 @@ fun OnBoardingPageComponent(pageData: PageData, onclickDone: () -> Unit) {
                                 ),
                             text = context.getString(it),
                             style = h3TextStyle,
-                            textAlign = TextAlign.Center
+                            textAlign = TextAlign.Center,
+                            maxLines = 2,
+                            overflow = TextOverflow.Ellipsis
                         )
                     }
                     Spacer(modifier = Modifier.padding(top = SPACE_CONTENT_28_SIZE))
