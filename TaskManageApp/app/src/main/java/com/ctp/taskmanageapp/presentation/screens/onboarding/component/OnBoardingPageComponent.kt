@@ -5,7 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -25,8 +25,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.ctp.taskmanageapp.R
+import com.ctp.taskmanageapp.presentation.common.ON_BOARDING_IMAGE_CONTENT
+import com.ctp.taskmanageapp.presentation.common.SPACE_CONTENT_28_SIZE
+import com.ctp.taskmanageapp.presentation.common.SPACE_DEFAULT_SIZE
 import com.ctp.taskmanageapp.presentation.common.h1TitleStyle
 import com.ctp.taskmanageapp.presentation.common.h3TextStyle
 import com.ctp.taskmanageapp.presentation.screens.onboarding.PageData
@@ -67,7 +69,7 @@ fun OnBoardingPageComponent(pageData: PageData, onclickDone: () -> Unit) {
                     Image(
                         painter = painterResource(id = it),
                         contentDescription = null,
-                        Modifier.size(200.dp),
+                        Modifier.size(ON_BOARDING_IMAGE_CONTENT),
                         contentScale = ContentScale.Fit
                     )
                 }
@@ -94,24 +96,19 @@ fun OnBoardingPageComponent(pageData: PageData, onclickDone: () -> Unit) {
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .wrapContentSize(Alignment.Center)
-                                .padding(PaddingValues.Absolute(top = 29.dp)),
+                                .padding(
+                                    vertical = SPACE_DEFAULT_SIZE
+                                ),
                             text = context.getString(it),
                             style = h3TextStyle,
                             textAlign = TextAlign.Center
                         )
                     }
+                    Spacer(modifier = Modifier.padding(top = SPACE_CONTENT_28_SIZE))
                     pageData.titleButton?.let {
                         Box(
                             modifier = Modifier
-                                .padding(
-                                    paddingValues =
-                                    PaddingValues.Absolute(
-                                        left = 15.dp,
-                                        right = 15.dp,
-                                        bottom = 46.dp,
-                                        top = 30.dp
-                                    )
-                                )
+                                .padding(SPACE_DEFAULT_SIZE)
                         ) {
                             Box(modifier = Modifier.fillMaxWidth()) {
                                 ButtonTMComponent(
