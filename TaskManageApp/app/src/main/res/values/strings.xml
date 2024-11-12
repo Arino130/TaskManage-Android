@@ -1,6 +1,6 @@
 <resources>
     <!--Common-->
-    <string name="app_name">TaskManageApp</string>
+    <string name="app_name">ZenTasks</string>
     <string name="task_count">%1$d Tasks</string>
     <string name="date_time_picker_title">Pick a Date and Time</string>
     <string name="confirm">Confirm</string>

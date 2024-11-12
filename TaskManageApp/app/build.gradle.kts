@@ -15,11 +15,11 @@ fun getGitCommitCount(): String {
 }
 
 android {
-    namespace = "com.ctp.taskmanageapp"
+    namespace = "com.ctp.zentasks"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.ctp.taskmanageapp"
+        applicationId = "com.ctp.zentasks"
         minSdk = 26
         targetSdk = 34
         versionCode = 1800 + Integer.parseInt(getGitCommitCount())
