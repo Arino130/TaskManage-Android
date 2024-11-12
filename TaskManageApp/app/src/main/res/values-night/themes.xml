@@ -6,7 +6,7 @@
         <item name="android:statusBarColor">#FFFFFF</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="windowSplashScreenBackground">#161A30</item>
-        <item name="android:windowSplashScreenAnimatedIcon">@drawable/ic_launcher_background</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/ic_logo_app</item>
         <item name="windowSplashScreenAnimationDuration">1000</item>
         <item name="postSplashScreenTheme">@style/Theme.TaskManager</item>
     </style>
