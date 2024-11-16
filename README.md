@@ -10,6 +10,23 @@
     ManageTask is an application designed for personal and team task management, developed using <strong>Clean Architecture</strong> to ensure maintainable, scalable, and testable code. The app focuses on helping users manage tasks effectively with diverse features like task status management, progress tracking, and reporting.
   </p>
 
+  <h2>📸 Screenshots</h2>
+  <div>
+    <img src="https://github.com/user-attachments/assets/3e84f018-495f-4b9f-bae5-a0611b591ff1" alt="Frame 1" width="138" style="border-radius: 10px;">
+    <img src="https://github.com/user-attachments/assets/25201ba9-345d-4712-be51-9f0c18f73762" alt="Frame 2" width="135" style="border-radius: 10px;">
+    <img src="https://github.com/user-attachments/assets/6cc4d951-7b92-4bc1-ba20-6d8c830298f2" alt="Frame 3" width="135" style="border-radius: 10px;">
+    <img src="https://github.com/user-attachments/assets/ab39c711-14b1-4f00-82d8-daff4d88ae26" alt="Frame 4" width="135" style="border-radius: 10px;">
+    <img src="https://github.com/user-attachments/assets/e9de78c4-20f8-4f62-9feb-1a0758b95466" alt="Frame 5" width="135" style="border-radius: 10px;">
+  </div>
+
+  <h2>📱 Download on Google Play</h2>
+  <p>
+    Get the app now on Google Play: 
+    <a href="https://play.google.com/store/apps/details?id=com.ctp.zentasks" target="_blank">
+      Zentasks: List It & Do It
+    </a>
+  </p>
+
   <h2>📌 Key Features</h2>
   <ul>
     <li>
@@ -129,15 +146,5 @@ cd managetask
 
   <h2>📧 Contact</h2>
   <p>For questions or feedback, please contact us at <a href="mailto:phuongtm130@gmail.com">phuongtm130@gmail.com</a>.</p>
-
-  <h2>📱 Download on Google Play</h2>
-  <p>
-    Get the app now on Google Play: 
-    <a href="https://play.google.com/store/apps/details?id=com.ctp.zentasks" target="_blank">
-      Zentasks: List It & Do It on Google Play
-    </a>
-  </p>
-
-  <p><strong>Thank you for using ManageTask!</strong></p>
 </body>
 </html>
