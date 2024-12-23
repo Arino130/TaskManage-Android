@@ -1,5 +1,7 @@
 package com.ctp.zentasks.widget.components.headers
 
+import android.annotation.SuppressLint
+import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -21,6 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.ctp.zentasks.R
 import com.ctp.zentasks.presentation.common.ICON_BACK_SCREEN_SIZE
 import com.ctp.zentasks.presentation.common.SPACE_BODY_WITH_HEADER_SIZE
+import com.ctp.zentasks.presentation.common.SPACE_CONTENT_40_SIZE
 import com.ctp.zentasks.presentation.common.h2TextStyle
 
 @Composable
@@ -33,6 +36,10 @@ fun HeaderSubScreen(
     onBack: () -> Unit
 ) {
     val context = LocalContext.current
+    val isGestureMode = isGestureNavigationEnabled(context)
+    if (!isGestureMode) {
+        Spacer(modifier = Modifier.padding(top = SPACE_CONTENT_40_SIZE))
+    }
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -72,6 +79,12 @@ fun HeaderSubScreen(
             Spacer(modifier = Modifier.size(ICON_BACK_SCREEN_SIZE))
         }
     }
+}
+
+@SuppressLint("DiscouragedApi")
+fun isGestureNavigationEnabled(context: Context): Boolean {
+    val resourceId = context.resources.getIdentifier("config_navBarInteractionMode", "integer", "android")
+    return resourceId > 0 && context.resources.getInteger(resourceId) == 2
 }
 
 @Preview
