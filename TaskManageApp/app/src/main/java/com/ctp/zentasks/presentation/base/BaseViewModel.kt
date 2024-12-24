@@ -17,7 +17,7 @@ abstract class BaseViewModel : ViewModel() {
         context.packageManager.getPackageInfo(context.packageName, 0).versionCode
 
     fun rateUs(context: Context) {
-        val appUrl = Constants.PLAY_STORE_BASE_URL + context.packageName
+        val appUrl = Constants.PLAY_STORE_BASE_URL
         openUrl(context, appUrl)
     }
 
